@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lydia Kwon | LinkedIn Writing Portfolio</title>
+    <meta name="description"
+        content="권지윤 (Lydia Kwon) — B2B SaaS SDR·AE | Sales in SaaS X MarTech X AI LinkedIn Writing Portfolio" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@300;400;500;700&family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;600;700&family=Nanum+Gothic:wght@400;700;800&family=Nanum+Myeongjo:wght@400;700;800&family=Black+Han+Sans&family=Noto+Serif+KR:wght@400;600;700&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="portfolio.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+</head>
+
+<body>
+
+    <!-- ===================== NAV ===================== -->
+    <nav class="nav">
+        <div class="nav-inner">
+            <a class="nav-logo" href="#">Lydia Kwon</a>
+            <div class="nav-links">
+                <a href="#"
+                    onclick="document.getElementById('archive').scrollIntoView({behavior:'smooth'});return false;">Writing</a>
+                <a href="#"
+                    onclick="document.getElementById('about-section').scrollIntoView({behavior:'smooth'});return false;">About</a>
+                <a class="nav-cta" href="https://www.linkedin.com/in/" target="_blank" rel="noopener">LinkedIn →</a>
+                <button id="adminLoginBtn" class="nav-admin-btn" onclick="openLoginModal()" title="관리자 로그인"
+                    style="display:none">🔐 로그인</button>
+                <button id="adminChangePwBtn" class="nav-admin-btn" onclick="openSetPasswordModal(true)" title="비밀번호 변경"
+                    style="display:none">🔑 비밀번호 변경</button>
+                <button id="adminLogoutBtn" class="nav-admin-btn nav-logout-btn" onclick="adminLogout()" title="로그아웃"
+                    style="display:none">🔓 로그아웃</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===================== HERO (LinkedIn Profile Style) ===================== -->
+    <section id="hero">
+        <!-- Banner -->
+        <div class="hero-banner" id="hero-banner-wrap">
+            <img src="banner.jpg" alt="Lydia Kwon Banner" id="heroBannerImg" class="banner-img"
+                onerror="this.style.display='none'" />
+            <div class="banner-overlay"></div>
+        </div>
+
+        <!-- Profile card -->
+        <div class="hero-profile-card">
+            <div class="hero-avatar-wrap" id="hero-avatar-wrap">
+                <img src="face.jpg" alt="Lydia Kwon" id="heroAvatarImg" class="hero-avatar"
+                    onerror="this.style.display='none'" />
+                <div class="avatar-placeholder" id="heroAvatarPlaceholder">LK</div>
+            </div>
+            <div class="hero-info">
+                <!-- Language toggle -->
+                <div class="lang-toggle-wrap">
+                    <button id="langToggleBtn" class="lang-toggle-btn" onclick="toggleLanguage()">🌐 English
+                        Version</button>
+                </div>
+                <!-- Archive tagline above name -->
+                <p id="heroArchiveTagline" class="hero-archive-tagline">Lydia의 링크드인 컨텐츠 아카이브입니다.</p>
+                <h1 class="hero-name"><span id="heroNameKo">권지윤</span> <span id="heroNameEn" class="hero-name-en">(Lydia
+                        Kwon)</span></h1>
+                <p id="heroHeadline" class="hero-headline">B2B SaaS SDR·AE | Global Sales | Aspiring AI Transformation
+                    Sales Consultant | AdTech X MarTech</p>
+                <p id="heroSub" class="hero-sub">Sales in SaaS X Marketing Tech X AI &middot; 대한민국 서울</p>
+                <div id="heroTagsWrap" class="hero-tags">
+                    <span class="htag">#B2BSales</span>
+                    <span class="htag">#SaaS</span>
+                    <span class="htag">#MarTech</span>
+                    <span class="htag">#AdTech</span>
+                    <span class="htag">#AI</span>
+                </div>
+                <div class="hero-ctas">
+                    <button class="btn-primary" id="heroScrollBtn"
+                        onclick="document.getElementById('archive').scrollIntoView({behavior:'smooth'})">글 보러가기
+                        ↓</button>
+                    <a class="btn-ghost" id="heroLinkedInLink" href="https://www.linkedin.com/in/" target="_blank"
+                        rel="noopener">LinkedIn 연결하기</a>
+                </div>
+            </div>
+            <div class="hero-stats-box">
+                <div class="hstat"><span id="statN1" class="hstat-n">12</span><span id="statL1"
+                        class="hstat-l">Posts</span></div>
+                <div class="hstat-div"></div>
+                <div class="hstat"><span id="statN2" class="hstat-n">4</span><span id="statL2"
+                        class="hstat-l">Topics</span></div>
+                <div class="hstat-div"></div>
+                <div class="hstat"><span id="statN3" class="hstat-n">70+</span><span id="statL3"
+                        class="hstat-l">Meetings</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== ARCHIVE ===================== -->
+    <section id="archive">
+        <div class="archive-inner">
+            <div class="sec-header">
+                <h2 class="sec-title">Writing Archive</h2>
+                <p class="sec-sub">Sales · MarTech · AI · Career에 관한 생각들</p>
+            </div>
+
+            <!-- Search -->
+            <div class="search-wrap">
+                <svg class="search-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8" />
+                    <path d="m21 21-4.35-4.35" />
+                </svg>
+                <input id="searchInput" type="text" placeholder="글 제목이나 키워드로 검색..." autocomplete="off" />
+                <button id="clearSearch" style="display:none" onclick="clearSearch()">✕</button>
+            </div>
+
+            <!-- Tabs (dynamically rendered by JS) -->
+            <div class="tabs-wrap" id="tabsWrap">
+                <button class="tab active" data-cat="all" onclick="filterPosts('all',this)">전체</button>
+                <button class="tab" data-cat="career" onclick="filterPosts('career',this)">🚀 커리어 여정</button>
+                <button class="tab" data-cat="sales" onclick="filterPosts('sales',this)">📊 세일즈 플레이북</button>
+                <button class="tab" data-cat="martech" onclick="filterPosts('martech',this)">🔮 마테크 &amp; 소비자</button>
+                <button class="tab" data-cat="ai" onclick="filterPosts('ai',this)">🤖 AI 실험실</button>
+            </div>
+
+            <div id="resultsCount" class="results-count"></div>
+            <div id="postGrid" class="post-grid"></div>
+            <div id="emptyState" class="empty-state" style="display:none;">
+                <div style="font-size:2.5rem;margin-bottom:1rem">🔍</div>
+                <h3>검색 결과가 없습니다</h3>
+                <p>다른 키워드로 검색해보세요</p>
+                <button class="btn-ghost" onclick="clearSearch()">전체 보기</button>
+            </div>
+            <!-- Write post button (only visible when logged in as admin) -->
+            <div class="write-post-wrap" style="display:none">
+                <button class="write-post-btn" onclick="openPostEditor(null)">
+                    <span class="write-icon">✍️</span>
+                    새 글 작성하기
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== ABOUT ===================== -->
+    <section id="about-section">
+        <div class="about-inner">
+            <div class="about-left">
+                <div id="aboutPhotoWrap" class="about-photo-wrap">
+                    <img src="face.jpg" id="aboutPhotoImg" alt="Lydia Kwon" class="about-photo"
+                        onerror="this.style.display='none'" />
+                </div>
+            </div>
+            <div class="about-right">
+                <p id="aboutLabel" class="sec-sub" style="margin-bottom:.5rem">About Me</p>
+                <h2 id="aboutName" class="sec-title" style="text-align:left;margin-bottom:1.5rem">권지윤 (Lydia Kwon)</h2>
+                <p id="aboutP1" class="about-p">K-뷰티 글로벌 세일즈 인턴을 시작으로, SaaS/IT 영업 인턴을 거치며 <strong>B2B 세일즈</strong>에 푹
+                    빠진 주니어입니다.</p>
+                <p id="aboutP2" class="about-p">콜드콜 5주 만에 <strong>70개 미팅</strong>을 만들고, 7개 이상의 산업에서 파이프라인을 구축한 경험을
+                    가지고 있습니다. 고객의 언어로 솔루션을 번역하는 것이 세일즈의 본질이라고 믿습니다.</p>
+                <p id="aboutP3" class="about-p">링크드인에 글을 쓰는 이유는 하나입니다 — 긴 고민에 마침표를 찍고, 같은 고민을 하는 주니어들과 나누기
+                    위해서입니다.</p>
+                <div id="aboutTagsWrap" class="about-tags">
+                    <span class="about-tag">#B2BSales</span><span class="about-tag">#SaaS</span>
+                    <span class="about-tag">#콜드콜</span><span class="about-tag">#커리어전환</span>
+                    <span class="about-tag">#SalesOps</span><span class="about-tag">#MarTech</span>
+                </div>
+                <a id="aboutLinkedInLink" class="btn-primary" href="https://www.linkedin.com/in/" target="_blank"
+                    rel="noopener">LinkedIn 연결하기 →</a>
+            </div>
+        </div>
+    </section>
+
+    <div id="postModal" class="modal-overlay" onclick="handleOverlayClick(event)">
+        <div class="modal-card">
+            <div class="modal-header">
+                <button class="modal-back" onclick="closeModalDirect()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M19 12H5" />
+                        <path d="m12 19-7-7 7-7" />
+                    </svg>
+                    목록으로
+                </button>
+                <div class="modal-nav">
+                    <button class="modal-nav-btn" onclick="navigatePost(-1)">‹ 이전</button>
+                    <button class="modal-nav-btn" onclick="navigatePost(1)">다음 ›</button>
+                </div>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Image / PDF area -->
+                <div id="modalImage" class="modal-image-wrap"></div>
+                <!-- Meta row -->
+                <div class="modal-meta" id="modalMeta">
+                    <span id="modalBadge" class="modal-badge"></span>
+                    <span id="modalDate" class="modal-meta-date"></span>
+                    <span id="modalReadTime" class="modal-meta-readtime"></span>
+                </div>
+                <h1 class="modal-title" id="modalTitle"></h1>
+                <div class="modal-edit-row" style="display:none">
+                    <button class="btn-ghost btn-sm" onclick="editCurrentPost()">✏️ 이 글 수정하기</button>
+                </div>
+                <div class="modal-content" id="modalContent"></div>
+                <!-- PDF attachment carousel -->
+                <div id="pdfAttachCarousel" class="pdf-attach-carousel" style="display:none"></div>
+                <!-- Hashtags -->
+                <div class="modal-hashtags" id="modalHashtags"></div>
+                <!-- Share bar -->
+                <div class="modal-share-bar">
+                    <button id="copyBtn" class="share-btn" onclick="copyPostLink()">&#128279; 링크 복사</button>
+                    <button class="share-btn" onclick="shareLinkedIn()">in LinkedIn</button>
+                </div>
+                <div class="modal-attachments" id="modalAttachments"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast notification -->
+    <div id="toast" class="toast"></div>
+
+    <!-- ===== ADMIN FAB ===== -->
+    <div id="adminBar" class="admin-bar" style="display:none">
+        <span>✏️ 수정 모드</span>
+        <button class="admin-save-btn" onclick="saveSiteSettings()">💾 변경사항 저장</button>
+        <button onclick="exitAdminMode()" class="admin-exit-btn">종료</button>
+    </div>
+    <button id="adminFab" class="admin-fab" onclick="openPostEditor(null)" title="새 글 작성"
+        style="display:none">+</button>
+
+    <!-- Hidden file inputs for image uploads -->
+    <input type="file" id="uploadBannerInput" accept="image/*" style="display:none"
+        onchange="handleSiteImageUpload(this,'banner')">
+    <input type="file" id="uploadAvatarInput" accept="image/*" style="display:none"
+        onchange="handleSiteImageUpload(this,'avatar')">
+    <input type="file" id="uploadAboutInput" accept="image/*" style="display:none"
+        onchange="handleSiteImageUpload(this,'about')">
+
+    <!-- ===== ADMIN EDITOR MODAL ===== -->
+    <div id="adminModal" class="admin-modal-overlay" onclick="handleAdminOverlay(event)">
+        <div class="admin-modal-card">
+            <div class="admin-modal-header">
+                <h2 id="editorTitle">새 글 작성</h2>
+                <button class="admin-close" onclick="closeAdminModal()">✕</button>
+            </div>
+            <div class="admin-modal-body">
+                <!-- Hidden state fields -->
+                <input type="hidden" id="editPostId" />
+                <input type="hidden" id="editImageData" />
+                <input type="hidden" id="editAttachData" />
+
+                <div class="field-group">
+                    <label>제목</label>
+                    <input type="text" id="editPostTitle" placeholder="글 제목을 입력하세요" />
+                </div>
+
+                <div class="field-group">
+                    <label>LinkedIn 주소 (선택)</label>
+                    <input type="url" id="editLinkedInUrl" placeholder="https://www.linkedin.com/posts/..." />
+                </div>
+
+                <div class="field-group">
+                    <label style="display:flex;justify-content:space-between;align-items:center;">
+                        <span>카테고리</span>
+                        <button type="button" class="tab-add-btn" style="padding:4px 8px;font-size:0.8rem;opacity:1;"
+                            onclick="addCategoryUI()">+ 새 유형 추가</button>
+                    </label>
+                    <!-- Dynamically populated by renderCatSelect() -->
+                    <select id="editCat"
+                        style="width:100%;padding:8px 12px;border:1px solid var(--border2);border-radius:var(--radius);background:var(--surface);color:var(--text);font-family:inherit;font-size:0.9rem"></select>
+                </div>
+
+                <div class="field-group">
+                    <label>날짜</label>
+                    <input type="month" id="editDate" placeholder="YYYY-MM"
+                        style="width:100%;padding:8px 12px;border:1px solid var(--border2);border-radius:var(--radius);background:var(--surface);color:var(--text);font-family:inherit" />
+                </div>
+
+                <div class="field-group">
+                    <label>이미지 썬네일 <span style="font-weight:400;font-size:0.8rem">(선택 · PDF 첫 슬라이드 자동 생성)</span></label>
+                    <div class="edit-image-upload-wrap" onclick="document.getElementById('editImageInput').click()">
+                        <img id="editImagePreview"
+                            style="display:none;max-width:100%;max-height:180px;border-radius:8px;margin-bottom:6px" />
+                        <span id="editImageLabel">클릭하여 이미지 업로드</span>
+                    </div>
+                    <input type="file" id="editImageInput" accept="image/*" style="display:none"
+                        onchange="handleImageUpload(this)" />
+                </div>
+
+                <div class="field-group">
+                    <label>본문</label>
+                    <textarea id="editContent" rows="12" placeholder="글 내용을 입력하세요. 빈 줄로 단락을 구분합니다."></textarea>
+                </div>
+
+                <div class="field-group">
+                    <label>요약 <span style="font-weight:400;font-size:0.8rem">(카드에 표시되는 한 줄 요약)</span></label>
+                    <input type="text" id="editExcerpt" placeholder="요약을 입력하세요" />
+                </div>
+
+                <div class="field-group">
+                    <label>태그 <span style="font-weight:400;font-size:0.8rem">(쉼표로 구분)</span></label>
+                    <input type="text" id="editHashtags" placeholder="SaaS, 콜드콜, B2BSales" />
+                </div>
+
+                <div class="field-group">
+                    <label>첨부파일 <span style="font-weight:400;font-size:0.8rem">(PDF 첨부시 첫 슬라이드가 썬네일로 자동
+                            설정)</span></label>
+                    <div class="attach-drop-zone" onclick="document.getElementById('attachFilesInput').click()">
+                        <span>📎 파일 클릭하여 업로드 (PDF, 이미지 등)</span>
+                    </div>
+                    <input type="file" id="attachFilesInput" multiple style="display:none"
+                        onchange="handleAttachFiles(this)" />
+                    <div id="attachFileList" class="attach-file-list"></div>
+                </div>
+            </div>
+            <div class="admin-modal-footer">
+                <button class="btn-ghost" onclick="closeAdminModal()">취소</button>
+                <button id="deletePostBtn" class="btn-danger" onclick="deleteCurrentPost()"
+                    style="display:none">삭제</button>
+                <button class="btn-primary" onclick="savePost()">저장</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== LOGIN MODAL ===== -->
+    <div id="loginModal" class="modal-overlay" onclick="if(event.target===this)closeLoginModal()">
+        <div class="login-modal-card">
+            <div class="login-modal-header">
+                <h3>🔐 관리자 로그인</h3>
+                <button class="admin-close" onclick="closeLoginModal()">✕</button>
+            </div>
+            <div class="login-modal-body">
+                <label for="loginPwInput">비밀번호</label>
+                <input type="password" id="loginPwInput" placeholder="비밀번호를 입력하세요" autocomplete="current-password" />
+                <p id="loginError" class="login-error" style="display:none">❌ 비밀번호가 올바르지 않습니다</p>
+            </div>
+            <div class="login-modal-footer">
+                <button class="btn-ghost" onclick="closeLoginModal()">취소</button>
+                <button class="btn-primary" onclick="submitLogin()">로그인</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== SET / CHANGE PASSWORD MODAL ===== -->
+    <div id="setPwModal" class="modal-overlay" onclick="if(event.target===this)closeSetPasswordModal()">
+        <div class="login-modal-card">
+            <div class="login-modal-header">
+                <h3 id="setPwTitle">비밀번호 변경</h3>
+                <button class="admin-close" onclick="closeSetPasswordModal()">✕</button>
+            </div>
+            <div class="login-modal-body">
+                <p id="setPwDesc" style="font-size:0.85rem;color:var(--text2);margin-bottom:0.5rem">현재 비밀번호를 먼저 확인하세요.
+                </p>
+                <label for="setPwCurrentInput">현재 비밀번호</label>
+                <input type="password" id="setPwCurrentInput" placeholder="현재 비밀번호 입력"
+                    autocomplete="current-password" />
+                <label for="setPwInput">새 비밀번호 <span style="font-weight:400;color:var(--text3)">(4자 이상)</span></label>
+                <input type="password" id="setPwInput" placeholder="새 비밀번호 입력" autocomplete="new-password" />
+                <label for="setPwConfirm">새 비밀번호 확인</label>
+                <input type="password" id="setPwConfirm" placeholder="새 비밀번호 다시 입력" autocomplete="new-password" />
+                <p id="setPwError" class="login-error" style="display:none"></p>
+            </div>
+            <div class="login-modal-footer">
+                <button class="btn-ghost" onclick="closeSetPasswordModal()">취소</button>
+                <button class="btn-primary" onclick="submitSetPassword()">변경</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== RICH TEXT FORMAT TOOLBAR ===== -->
+    <div id="formatToolbar" class="format-toolbar" style="display:none">
+        <div class="fmt-group">
+            <select id="fmtFont" class="fmt-select fmt-font" onchange="applyFmt('fontName',this.value)" title="글씨체">
+                <optgroup label="한국어">
+                    <option value="'Noto Sans KR', sans-serif">Noto Sans KR</option>
+                    <option value="'Nanum Gothic', sans-serif">Nanum Gothic</option>
+                    <option value="'Nanum Myeongjo', serif">Nanum Myeongjo</option>
+                    <option value="'Black Han Sans', sans-serif">Black Han Sans</option>
+                    <option value="'Noto Serif KR', serif">Noto Serif KR</option>
+                </optgroup>
+                <optgroup label="English">
+                    <option value="'Outfit', sans-serif">Outfit</option>
+                    <option value="'Inter', sans-serif">Inter</option>
+                    <option value="'Playfair Display', serif">Playfair Display</option>
+                    <option value="Georgia, serif">Georgia</option>
+                    <option value="'Courier New', monospace">Courier New</option>
+                </optgroup>
+            </select>
+        </div>
+        <div class="fmt-group">
+            <select id="fmtSize" class="fmt-select fmt-size" onchange="applyFmt('fontSize',this.value)" title="크기">
+                <option value="1">10px</option>
+                <option value="2">12px</option>
+                <option value="3" selected>14px</option>
+                <option value="4">18px</option>
+                <option value="5">24px</option>
+                <option value="6">32px</option>
+                <option value="7">48px</option>
+            </select>
+        </div>
+        <div class="fmt-group fmt-divider"></div>
+        <div class="fmt-group">
+            <button class="fmt-btn" onclick="applyFmt('bold')" title="Bold"><b>B</b></button>
+            <button class="fmt-btn fmt-it" onclick="applyFmt('italic')" title="Italic"><i>I</i></button>
+            <button class="fmt-btn fmt-ul" onclick="applyFmt('underline')" title="Underline"><u>U</u></button>
+        </div>
+        <div class="fmt-group fmt-divider"></div>
+        <div class="fmt-group">
+            <label class="fmt-color-wrap" title="글자 색상">
+                <span class="fmt-color-ic">🎨 A</span>
+                <input type="color" id="fmtColor" value="#0f172a" oninput="applyFmt('foreColor',this.value)" />
+            </label>
+        </div>
+        <div class="fmt-group fmt-divider"></div>
+        <div class="fmt-group">
+            <button class="fmt-btn" onclick="applyFmt('justifyLeft')" title="왼쪽 정렬">≡</button>
+            <button class="fmt-btn" onclick="applyFmt('justifyCenter')" title="가운데 정렬">≣</button>
+            <button class="fmt-btn" onclick="applyFmt('justifyRight')" title="오른쪽 정렬">≡</button>
+        </div>
+        <div class="fmt-group fmt-divider"></div>
+        <div class="fmt-group">
+            <button class="fmt-btn fmt-close" onclick="hideFormatToolbar()" title="닫기">×</button>
+        </div>
+    </div>
+
+    <!-- ===== CROP MODAL ===== -->
+    <div id="cropModal" class="crop-modal-overlay" style="display:none">
+        <div class="crop-modal-card">
+            <div class="crop-modal-header">
+                <h3>크롭 영역 선택</h3>
+                <p class="crop-hint">마우스로 드래그하여 크롭할 영역을 선택하세요</p>
+            </div>
+            <div class="crop-canvas-wrap">
+                <canvas id="cropCanvas" class="crop-canvas"></canvas>
+                <div id="cropOverlay" class="crop-overlay">
+                    <div id="cropRect" class="crop-rect"></div>
+                </div>
+            </div>
+            <div class="crop-controls">
+                <label class="crop-ratio-label">Ratio:</label>
+                <button class="crop-ratio-btn active" onclick="setCropRatio(null,this)">Free</button>
+                <button class="crop-ratio-btn" onclick="setCropRatio(1,this)">1:1</button>
+                <button class="crop-ratio-btn" onclick="setCropRatio(4/3,this)">4:3</button>
+                <button class="crop-ratio-btn" onclick="setCropRatio(16/9,this)">16:9</button>
+                <button class="crop-ratio-btn" onclick="setCropRatio(3/1,this)">3:1 (배너)</button>
+            </div>
+            <div class="crop-modal-footer">
+                <button class="btn-ghost" onclick="closeCropModal()">취소</button>
+                <button class="btn-primary" onclick="confirmCrop()">✓ 적용</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Error catcher -->
+    <script>
+        window.onerror = function (msg, url, line, col, error) {
+            alert("Error in JS!\n" + msg + "\nLine: " + line);
+        };
+    </script>
+    <script src="portfolio.js"></script>
+
+</body>
+
+</html>

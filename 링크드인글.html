@@ -1,0 +1,715 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>링크드인 글</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="317e882d-c310-8006-8554-c592414ae63c" class="page sans"><header><h1 class="page-title" dir="auto">링크드인 글</h1><p class="page-description" dir="auto"></p></header><div class="page-body"><div style="display:contents" dir="auto"><ul id="317e882d-c310-80aa-ab12-fca3a296a027" class="toggle"><li><details open=""><summary>[K-뷰티를 팔던 내가, SaaS를 선택한 이유]</summary><div style="display:contents" dir="auto"><p id="317e882d-c310-80fa-a272-d0a647015963" class="">“지금 K-뷰티 안 하면 안 돼.”</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8096-9331-c88381bca536" class="">“Global Sales는 2~3년만 지나면 부르는 곳 진짜 많아.”</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8073-a074-f2ff410867ff" class="">첫 인턴 때 자주 들었던 말입니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80f6-92ad-f2af9fa4d08c" class="">처음 실리콘투 방문 미팅을 가던 날의 설렘을 아직도 기억합니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80b7-aa32-c239468e4c79" class="">사내 외국인 직원들이 숏폼 콘텐츠를 촬영하고, 라운지는 유명한 국내 인디 브랜드들이 빼곡히 채워져 있습니다. 화장품에 관심이 없는 사람조차 ‘K-뷰티의 성장’을 실감할 수 있는 공간이었습니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8062-aecd-c09f05b73453" class="">해외 바이어 미팅도 마찬가지였습니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8087-9757-d14565760505" class="">덴마크, 폴란드, 인도네시아, 카자흐스탄…</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8047-b4b0-c9d4f286c65e" class="">런칭한 지 3개월 된 신생 브랜드를 확보하기 위해, 바이어들은 자신의 유통 역량과 시장 인사이트를 열렬하게 어필합니다. 그들의 준비된 발표를 들으며, 오히려 제가 더 긴장했던 순간도 많았습니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8068-8ad1-cc4208aa51bf" class="">——————</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8037-9e3d-e0fd86c4aecd" class="">하지만 7개월 동안 제가 했던 세일즈는 명확히 2가지로 나뉩니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8050-85fe-de0033bc55fd" class="">☑️ 이미 유명 브랜드를 많이 보유한 유통사에 “우리도 라인업에 넣어달라”고 설득하는 세일즈</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8078-89ca-d505df895ae4" class="">☑️ 수요가 높은 글로벌 시장에서는 MOQ/공급가 조건을 최대한 지키기 위해 ‘조건’으로 싸우는 세일즈</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80f9-993e-e2bf4ec018ef" class="">미팅에서 제가 더 자주 듣고, 더 오래 이야기하게 되는 건</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-808c-bed5-f56938ba0fa0" class="">&quot;이 제품이 실제로 어떤 변화를 만드는지&quot;보다</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80e8-9db5-d83520b1c710" class="">“이 브랜드를 시장에서 어떻게 보여주고, 어떻게 런칭할지”였어요.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8080-b95b-f2982005eb19" class="">그 뜨거운 열기 속에서 제가 세일즈 하려는 이유가 선명해졌습니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8076-9dd2-c697b2ae0e41" class="">저는 시장에서 팔리는 제품을 설명하는 것보다,</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8035-bf4a-f4f39e3b9a54" class="">사용 후에 결과로 확인되는 가치를 더 좋아하는 사람이더라고요.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-804a-b51f-c0ac565a7d96" class="">그래서 SaaS를 선택했어요.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80b0-94b3-f4323b7cfbde" class="">SaaS 세일즈에서 특히 좋아했던 점은 3가지입니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-805d-84f0-fa8662a1926e" class="">❶ 문제 이해가 먼저다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8052-a079-fff45aa554ed" class="">고객이 가진 문제를 깊이 이해해야 우리 제품의 존재 이유가 생깁니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80c0-a52c-daf6cca5f997" class="">❷ 계약은 끝이 아니라 시작이다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8057-873b-da499d68fb00" class="">연동부터 온보딩, 업데이트, 사용 정착까지—</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80e3-b2b5-f684646d7f7a" class="">말했던 가치가 실제로 실현되도록 고객의 비즈니스 안에서 계속 증명해야 합니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8048-a2a0-db9c1ed05020" class="">❸ 설득의 언어가 다르다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8029-b025-d3125f52be7a" class="">시장 모멘텀이 아니라 고객의 운영 환경을 기준으로, 제품이 만들어낼 수 있는 구체적인 변화와 개선을 설명하고 확인받아야 합니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80ca-ac12-e03fe65ccc16" class="">——————</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80a8-9a75-dc5cc608c10b" class="">화장품도 SaaS도 결국 제품력이 중요합니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80c3-8304-da8af260a8db" class="">다만 제가 경험한 화장품 세일즈가 “시장에서 팔릴 구조”를 중심으로 확장되는 게임이었다면,</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8010-a902-fa7962700df5" class="">SaaS 세일즈는 “고객의 문제를 기준으로 성과를 만드는 구조”에 더 가까웠습니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8009-94fb-f5329d675f71" class="">그래서 저는 지금, 콜드콜에서 멈추지 않고 필드로 나가는 세일즈를 꿈꿉니다. 동시에 Sales Ops 영역에서 고객의 문제를 제품으로 풀어보는 시도도 함께 하고 있어요.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-807c-ac9e-efb88b650bed" class="">결국 제가 팔고 싶은 건 ‘기대감’이 아니라,</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80d8-827b-f2c6e25a065b" class="">고객의 비즈니스 안에서 실제로 확인되는 변화니까요.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-806d-b8fd-d9fcf8c2f3f2" class="">여러분은 커리어에서 “내가 팔던 것”과 “내가 진짜 좋아하는 것”이 갈라졌던 순간이 있었나요?</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80b3-b08c-cef274414a2f" class=""><strong><a href="https://www.linkedin.com/search/results/all/?keywords=%23%EC%BB%A4%EB%A6%AC%EC%96%B4%EC%A0%84%ED%99%98&amp;origin=HASH_TAG_FROM_FEED">해시태그#커리어전환</a></strong></p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80ec-b11b-fdf60a111fa7" class=""><strong><a href="https://www.linkedin.com/search/results/all/?keywords=%23saas&amp;origin=HASH_TAG_FROM_FEED">해시태그#SaaS</a></strong></p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80a6-8732-f858fe92011f" class=""><strong><a href="https://www.linkedin.com/search/results/all/?keywords=%23b2bsales&amp;origin=HASH_TAG_FROM_FEED">해시태그#B2BSales</a></strong></p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8094-8806-e2ac43ea989b" class=""><strong><a href="https://www.linkedin.com/search/results/all/?keywords=%23globalsales&amp;origin=HASH_TAG_FROM_FEED">해시태그#GlobalSales</a></strong></p></div><div style="display:contents" dir="ltr"><figure id="317e882d-c310-80d2-a56c-de439d5d56d3"><div class="source"><a href="%EB%A7%81%ED%81%AC%EB%93%9C%EC%9D%B8%20%EA%B8%80/1771376001511.pdf">1771376001511.pdf</a></div></figure></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8095-81aa-cd13e9cfb3fd" class="">
+</p></div></details></li></ul></div><div style="display:contents" dir="auto"><ul id="317e882d-c310-8021-95a9-f4e2a88a37fc" class="toggle"><li><details open=""><summary>“지금 당장 뭐부터 해야 할지 모르겠어요” [이제 막 취준 시작한 주니어들이 모르는 사실]</summary><div style="display:contents" dir="auto"><p id="317e882d-c310-8032-a7fc-c0dc8b8a9041" class="">주말에 학교 후배를 만났는데, 1년 반 전 막막하던 제가 떠올랐습니다. 취준 초반의 막막함은 이상하게 정리되지 않습니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80e1-85a7-e83950a84337" class="">그저 주변을 보며 오픽, 토익, 컴활…</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8089-acef-fc4a35ce8e70" class="">“나는 준비가 하나도 안 돼 있구나”라는 생각만 또렷해지죠.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80db-b073-e13925c90c8a" class="">⛔️취업 준비가 막막한 이유는 하나입니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80a7-b80b-d6fb7faaed24" class="">➔ 아직 &quot;내 데이터&quot;가 없어서입니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80c8-8b56-ea24449201c9" class="">우리는 채용 플랫폼을 보고, 주변 선배 이야기를 들으며 정보가 많다고 생각합니다. 그런데 그 많은 정보를 통해 나의 생각이 정리가 되었나요? 아닐 것입니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80d2-b701-f2e09d557285" class="">그건 정보일 뿐, 내가 직접 얻은 데이터는 아니니까요.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80b4-8408-d2aa5039572b" class="">경험이 없는 상태에서 어떤 직무를 택해야 할지, 어떤 인턴을 해야 할지 모르는 건 너무나 자연스러운 일입니다. 하지만 우리는 이를 “내가 부족해서”, &quot;내가 의지가 약해서&quot;라고 생각하죠.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8047-af31-c89afe0f68af" class="">아니요. 아직 직접 해본 게 없어서입니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8028-9746-e52c459d5938" class="">——————</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80e4-a2ea-ecce008d1bf1" class="">저도 똑같았어요. 사람이랑 소통하는 게 좋다는 이유 하나로 화장품 영업 인턴으로 시작했습니다. 해보니 나쁘지는 않았어요.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-808d-aa9a-e60e51edb52c" class="">그리고 이런 생각이 들었습니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80a5-818a-f1af0694df09" class="">“눈에 보이는 걸 팔았으면, 안 보이는 것도 팔아볼까?”</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80af-afc6-d8435d0332c9" class="">그래서 SaaS/IT 영업 인턴을 하게 되었고, 거기서 극도의 재미와 몰입감을 경험했습니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8067-9ea1-dba2de81ed2f" class="">근데 두 번의 스타트업 인턴을 하니 또 질문이 생겼습니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8023-a20d-e45dbf9699d9" class="">“스타트업이 과연 나에게 가장 잘 맞는 환경일까?”</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8054-94f5-fa3abee765f8" class="">그래서 대기업 공채에 지원했고, 최종면접까지 갔지만 불합격했습니다. 하지만 그 과정은 의미 없는 시간이 아니었습니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80aa-96f6-d3ec33978607" class="">면접을 준비하고 참여하면서 회사마다 기대하는 영업의 역할과 방식, 그리고 실제 하게 될 일의 결이 조금씩 다르다는 걸 알게 됐기 때문입니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8080-be48-fe17070df471" class="">그때 자연스럽게 깨달았습니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80c1-b2d8-f31629af9847" class="">내가 재미를 느꼈던 영업의 모습과 이 환경에서 기대되는 영업의 모습은 차이가 크다는 것을.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8085-bbb7-e20806e68f69" class="">돌이켜보면 제가 한 건 단순했습니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-809a-a893-eb8bb693e575" class="">➀직무 → ➁산업 → ➂기업 형태</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-808b-87cc-d0f36464167f" class="">이 순서로 경험하며 Yes / No 데이터를 쌓았습니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8066-8d8f-da3f8fd34a95" class="">그래서 언제 바뀔지는 모르지만</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80ed-a413-d2a1707b5fa9" class="">지금은 IT 산업, 외국계/스타트업이라는 방향이 생겼습니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8010-ba1a-cb2d300a7359" class="">——————</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8011-9b3d-f1d343389b68" class="">그런데 주변에서는 종종 이렇게 말합니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80d6-ab5b-c9e5a0369a24" class="">“하고 싶은 게 확고해서 좋겠다.”</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-808b-8292-fc646990d159" class="">하지만 저는 절대 커리어 목표가 확고하지 않습니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8079-9b94-f5e5eba417cf" class="">그저 지금 당장 뭘 해야 할지가 확고할 뿐입니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80d3-843c-fddeb4205c25" class="">지금 하는 선택은 커리어의 종착지를 결정하는 선택이 아닙니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8045-b388-f71b4ea63982" class="">많은 사람들이 “내가 뭘 하고 싶은지 모르겠다”고 말하지만, 실제로 필요한 건 &quot;내가 지금 뭘 해볼지 결정하는 것&quot;입니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80f8-9f01-ce8048e1fe78" class="">그 결정을 위해 3가지부터 해보세요.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80da-80bd-f700bb9f3846" class="">➊ 채용공고를 충분히 많이 보기</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80ca-b1e5-f1db72aca05c" class="">다양한 공고를 보다 보면 공통적으로 눈이 가는 산업과 직무가 생깁니다. “이거 잘할 것 같고, 재밌어 보이고, 한번 해보고 싶다”는 감각이 올라올 때 그 느낌이 탐색의 출발점이 됩니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80d5-bcec-e581bea7ddd7" class="">➋ 직무 중심으로 인턴 지원하기</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8044-b73c-f5b5e63a4650" class="">회사 네임밸류보다 직무 경험 가능성을 기준으로 지원해 보세요. 지원서 작성과 면접 과정만으로도 직무의 실제 역할과 환경이 구체화됩니다. 그리고 인턴을 하며 내가 상상한 일과 실제 일이 얼마나 맞는지 검증되는 순간, 막연했던 커리어 가치관이 선명해지기 시작합니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8071-baf7-cbfbee022d36" class="">➌ 경험 후 질문 하나 던지기</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-800f-9eb8-e0dce235cbec" class="">인턴 경험이 끝나면 단순한 만족도가 아니라 한 가지를 물어보세요. “이 일을 계속 하고싶은가?”Yes면 더 깊게, No면 다른 선택지로 이동하면 됩니다. 근데 No가 되어도 내 이전 경험은 큰 자산으로 남게 됩니다. 그리고 이 반복이 결국 커리어의 방향을 만들어 주고요.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-809d-a353-d987713720b9" class="">——————</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8035-b2e6-dba3d7e7e7e2" class="">취준은 확신을 갖고 시작하는 과정이 아니라</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8057-9d70-e744afa3a33d" class="">확신을 만들어가는 과정입니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80cf-a994-d313e70a2592" class="">완벽한 선택을 찾으려 하지 마세요.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8046-9d8c-f30cc7297ec2" class="">틀려도 괜찮습니다. 확실한 데이터가 생기니까요.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-809f-a208-da3e95c7e356" class="">지금 필요한 건</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-805e-a46c-fd7372d83358" class="">완벽한 계획이 아니라</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-809c-b949-c415047224eb" class="">[다음 행동 하나]입니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-805b-9e51-ecee02ae68b5" class="">여러분은 지금 확신을 찾고 있나요,</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-807a-bfc4-f28c46853866" class="">아니면 나의 데이터를 쌓고 있나요?</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8090-9f6c-ce7c5fb32739" class=""><strong><a href="https://www.linkedin.com/search/results/all/?keywords=%23%EC%8B%A0%EC%9E%85&amp;origin=HASH_TAG_FROM_FEED">해시태그#신입</a></strong></p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80d5-bc48-c72b7e0e8be6" class=""><strong><a href="https://www.linkedin.com/search/results/all/?keywords=%23%EC%BB%A4%EB%A6%AC%EC%96%B4%EA%B3%A0%EB%AF%BC&amp;origin=HASH_TAG_FROM_FEED">해시태그#커리어고민</a></strong></p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8015-acef-ef613d7ae8c9" class=""><strong><a href="https://www.linkedin.com/search/results/all/?keywords=%23%EC%B7%A8%EC%97%85%EC%A4%80%EB%B9%84&amp;origin=HASH_TAG_FROM_FEED">해시태그#취업준비</a></strong></p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80c8-9294-e1f39eb6798b" class=""><strong><a href="https://www.linkedin.com/search/results/all/?keywords=%23%EC%9D%B8%ED%84%B4&amp;origin=HASH_TAG_FROM_FEED">해시태그#인턴</a></strong></p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80d9-a4ed-ca4abfdaee8a" class=""><strong><a href="https://www.linkedin.com/search/results/all/?keywords=%23%EC%A3%BC%EB%8B%88%EC%96%B4&amp;origin=HASH_TAG_FROM_FEED">해시태그#주니어</a></strong></p></div><div style="display:contents" dir="ltr"><figure id="317e882d-c310-8088-9f9f-f0fd62893243"><div class="source"><a href="%EB%A7%81%ED%81%AC%EB%93%9C%EC%9D%B8%20%EA%B8%80/1771855999666.pdf">1771855999666.pdf</a></div></figure></div></details></li></ul></div><div style="display:contents" dir="auto"><ul id="317e882d-c310-806a-8135-c9f1d5b472e8" class="toggle"><li><details open=""><summary>스타트업에서 인턴을 해야 하는 이유</summary><div style="display:contents" dir="auto"><p id="317e882d-c310-8053-afc2-d861c30a9503" class="">왜 저는 세 번의 인턴십을 모두 &#x27;스타트업&#x27;을 선택했을까요?<br/>대기업, 공기업, 전문직.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8085-91fa-cda30ffdd1cb" class="">문과생인 제 주변 친구들이 선택한 &#x27;정답&#x27; 같은 길들입니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-806d-a80a-d06993227001" class="">하지만 저는 조금 다른 선택지를 눌러봤습니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-800a-a07b-ff1dcb08f5f3" class="">현재 세 번째 스타트업에서 인턴으로 실무를 경험하고 있으며, 그중 두 번은 SaaS 산업이었습니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8084-81ca-c0c14f0247e7" class="">물론 &#x27;괜찮은 스타트업&#x27;이라는 전제가 필요합니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-808e-8a04-cbff40e2179a" class="">제가 직접 경험하며 느낀 스타트업의 장점과, “괜찮은”회사를 고르는 노하우를 공유합니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80f1-b9b8-e9726cfa703a" class="">——————</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8057-8125-f83ab689f472" class="">⭐️ 스타트업 인턴의 장점 3가지</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8010-a7c8-fa626bc33b4e" class="">❶ 수평적 협업과 존중의 문화</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-802b-a994-e16e58d90394" class="">수평 문화의 핵심은 &#x27;위축되지 않는 환경&#x27;입니다. 인턴이라도 팀 리드에게 &quot;이런 제안을 해보고 싶다&quot;고 자유롭게 의견을 낼 수 있습니다. 업무가 개인의 할 일이 아닌 &#x27;우리 모두의 목표&#x27;가 되는 과정에서, 존중받으며 일하는 법을 배웁니다. 이는 스스로 더 잘하고 싶게 만드는 최고의 동기부여가 됩니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-804f-a9e8-e4a4d4b25e9e" class="">❷ 효율적인 업무 방식과 SaaS 툴 활용</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80c3-ad31-dbb55ba6e811" class="">Slack으로 소통하고, Notion으로 자료를 공유하며, Google 캘린더와 Meet로 기민하게 연결되는 하루. &quot;어떻게 더 빠르고 효율적으로 일할까?&quot;에 집중하는 환경은 업무의 탄력을 만듭니다. 또한 빠르게 발전하는 SaaS 툴을 익히는 경험은 그 자체로 커리어 자산이 됩니다. 좋은 도구를 써야 일하는 재미가 있다는 것을 매일 체감합니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8081-8a1b-e0d00c2b408d" class="">❸ 인턴이지만, 주도적으로 운영하는 포트폴리오</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8056-887c-c8e83d8c3514" class="">&quot;인턴이지만 정규직처럼 일해요.&quot;라는 말이 때로는 책임감으로 다가오지만, 그만큼 경험치는 빠르게 쌓입니다. 고객사와 직접 미팅하고 KPI를 점검하며, 보조가 아니라 &#x27;내 프로젝트&#x27;로 움직이는 자신을 발견하게 됩니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8071-a632-fa5deff374c3" class="">대기업 면접에서 “이걸 정말 인턴이 한거에요?“라는 질문을 받았을 때 확신이 들었습니다. 환경이 다르면 성장 속도도 다르다는 걸요.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8069-bc58-de5cd8768484" class="">——————</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80bf-a80e-e7a4d4e1ac55" class="">💭 이런 회사는 어떻게 고를까? (나만의 기준 3가지)</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8082-942c-cbd96b7cde98" class="">❶ 문화에 얼마나 진심인가</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8035-9cae-ddf7cf8c97f1" class="">수평과 협업을 강조하는 공고는 많지만, 실제 사내 문화를 아티클이나 인터뷰로 세심하게 정리해둔 곳은 생각보다 적습니다. HR의 언어가 얼마나 솔직하고 사람 냄새가 나는지 살펴보세요. 그 안에 조직의 결이 묻어 있습니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80fd-8d60-e68aa2b3748c" class="">❷ 인턴 공고의 ‘하게 될 업무’가 구체적인가</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-808b-9d18-c665f07b8ecd" class="">추상적인 문장은 유심히 보셔야 합니다.</p></div><div style="display:contents" dir="auto"><ul id="317e882d-c310-803c-a8a3-ca3d9e9b8bf7" class="bulleted-list"><li style="list-style-type:disc">모호한 예: “경쟁사 리서치 및 인사이트 도출” , “운영 전반 서포트”는 그럴듯해보이지만 단순 조사만 반복하거나 그때그때 생기는 업무를 쳐내는 데에 머무를 가능성이 있습니다.</li></ul></div><div style="display:contents" dir="auto"><p id="317e882d-c310-801a-bd80-c2a0490115ba" class="">어떤 관점에서 제품을 분석하고 어떤 결과물을 만들어내야 하는지 명확히 적힌 곳을 추천합니다. 업무가 구체적일수록 회사가 해당 포지션을 하나의 독립된 실행 단위로 존중한다는 신호입니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80f1-9a2a-e13f3a20112c" class="">❸ 면접이 끝나고 어떤 여운이 남는가</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-803b-b052-e4cd22e8924f" class="">면접관의 태도는 회사의 분위기를 가장 잘 보여줍니다. 압박 질문보다는 사고 과정을 궁금해하는지, 지원자의 경험을 진지하게 경청하는지 확인해 보세요. 건강한 조직은 면접 과정에서도 지원자를 팀의 잠재적 파트너로 대우합니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80f4-8b5a-ead78b5a73ae" class="">스타트업은 대기업처럼 정형화된 관례가 심하지 않습니다. 그래서 면접관의 태도와 질문 방식이 그 회사의 공기를 더 직접적으로 보여준다고 생각합니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8005-9076-ccb554ff7a1d" class="">면접을 보고 나왔을 때 긴장했지만 존중받았는지, 괜히 위축되었는지를 한번 생각해보세요.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-809a-92d7-d7fce9a9cf33" class="">——————</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-800f-b02a-d8acad39596f" class="">⭐️ 첫 커리어에서 배우는 일하는 방식과 태도는 생각보다 오래 남습니다. 어디서 시작하느냐가 이후의 커리어 방향성을 결정짓기도 하죠.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80e4-8838-e6c9e3c81e41" class="">☺️안정적인 길도 훌륭한 선택지입니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8023-8041-ff7188568886" class="">하지만 내 역량의 한계를 시험해 보고 비즈니스의 최전선에서 빠르게 성장하고 싶은 분들이라면, 스타트업이라는 선택지를 꼭 한 번 눌러보셨으면 합니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8073-9ef2-d8f098ae927e" class=""><strong><a href="https://www.linkedin.com/search/results/all/?keywords=%23%EC%9D%B8%ED%84%B4&amp;origin=HASH_TAG_FROM_FEED">해시태그#인턴</a></strong></p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8028-a6a6-d73c85250768" class=""><strong><a href="https://www.linkedin.com/search/results/all/?keywords=%23%EC%B7%A8%EC%97%85%EC%A4%80%EB%B9%84&amp;origin=HASH_TAG_FROM_FEED">해시태그#취업준비</a></strong></p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8039-ac90-c33c4ed82663" class=""><strong><a href="https://www.linkedin.com/search/results/all/?keywords=%23%EC%8A%A4%ED%83%80%ED%8A%B8%EC%97%85&amp;origin=HASH_TAG_FROM_FEED">해시태그#스타트업</a></strong></p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8027-a048-d3fce9169d20" class=""><strong><a href="https://www.linkedin.com/search/results/all/?keywords=%23%EC%BB%A4%EB%A6%AC%EC%96%B4%EA%B3%A0%EB%AF%BC&amp;origin=HASH_TAG_FROM_FEED">해시태그#커리어고민</a></strong></p></div><div style="display:contents" dir="ltr"><figure id="317e882d-c310-80b1-8140-e8ffbdf44f1c" class="image"><a href="%EB%A7%81%ED%81%AC%EB%93%9C%EC%9D%B8%20%EA%B8%80/1772259814470.jpeg"><img style="width:682px" src="%EB%A7%81%ED%81%AC%EB%93%9C%EC%9D%B8%20%EA%B8%80/1772259814470.jpeg"/></a></figure></div></details></li></ul></div><div style="display:contents" dir="auto"><ul id="317e882d-c310-80f8-9bc2-c0bcc05183b2" class="toggle"><li><details open=""><summary>주니어의 링크드인 활용법 3단계</summary><div style="display:contents" dir="auto"><p id="317e882d-c310-8094-a027-c48e3c0407dc" class="">링크드인도 SNS입니다. 불안을 소비하지 말고, 하던 걸 하세요.<br/>요즘 저는 링크드인에 머무는 시간이 늘면서 인스타그램에 거의 들어가지 않게 되었습니다. 화려한 삶과 소비의 장면보다 커리어와 자기계발에 대한 이야기로 가득 찬 공간에 있다 보니 상대적으로 더 건강한 자극을 받고 있다고 느낍니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-800d-894d-e3f7a9e93e72" class="">인스타그램 스토리를 자주 올리던 제가 조용해지니 주변에서는 그냥 일이 바빠졌다고 생각하더라고요. 하지만 저는 지금 몸 담구던 환경이 완전히 바뀐 것과 다름이 없습니다. 그리고 이 변화는 개인적으로 좋은 신호라고 생각합니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8062-96ea-c6fa399913f0" class="">🚨다만 링크드인 역시 SNS라는 사실은 변하지 않습니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8017-942f-c2ec371f91e6" class="">스크롤을 내리다 보면 AI로 사라질 직업군 이야기,</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8034-9a58-f9fa01d40b57" class="">AI 툴을 능숙하게 다루는 사람들의 성과 공유,</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8052-97ee-d4ad522fe849" class="">정리된 인사이트와 빠른 성장 서사가 끊임없이 등장합니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8082-8e82-ea7cc94d8940" class="">실패담과 솔직한 감정이 올라오기도 하지만,</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80e8-8243-c983b429d3aa" class="">결국 더 자주 노출되는 건 ‘이미 정리된 결과’와 ‘잘 작동한 선택’들입니다. 게다가 이는 대부분 나의 또래가 아닌 사람들이다 보니 범접하기 어려운 벽처럼 느껴지기도 하죠.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8014-90d1-cb9ca131add5" class="">그리고 저 역시 결국 사고가 어느 정도 정리된 이후에, 얻게 된 인사이트를 주로 올립니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80ac-ab8a-d42651ff78bf" class="">글을 올리는 행위 자체가, 제 길고 긴 고민에 마침표를 찍는 일종의 의식처럼 기능하고도 있거든요.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8018-8f3f-e54cd4445d1e" class="">누군가에게 인사이트가 되길 바라며, 최대한 알아듣기 쉬운 언어로, 커리어적으로 이어질 수 있도록 글을 쓰고 있다는 것도 사실입니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80ba-a33d-cd259cb29ada" class="">그래서 같은 주니어의 시선에서 본다면 저 역시 모든 게 확고하고, 방향이 명확한 사람처럼 보일 수 있습니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8033-bdd8-dc41a607db74" class="">링크드인이 가진 이 구조가 바로 이런 착시를 만듭니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-800c-a27d-d6f70188f972" class="">——————</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80dc-af2c-f1bd18f140cf" class="">그래서 한 가지는 꼭 기억했으면 합니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8096-8bfa-f5e636cfc51d" class="">링크드인은 커리어의 정답을 찾는 공간이 아닙니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-800a-b530-ca27002cc142" class="">나의 고민을 나누고, 앞으로 가야 할 길을 닦아가며 성장통을 나눌 수 있는 도구로 사용해야 합니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80f9-8195-cdfb9b029051" class="">이 공간을 보며 현재 상황과 스스로를 탓하고 있다면, 그건 조금은 잘못된 방식으로 이 공간에 머무르고 계신 겁니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8048-8304-cefeeb1228c7" class="">그래서 제가 권하는 링크드인 활용법은 세 단계입니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8006-979c-e30054a3ee09" class="">1️⃣ 관심 있는 직무와 산업의 현업자에게 1촌 신청하세요. 무작정 숫자를 늘리기보다, 지금의 나에게 맥락이 닿는 관계를 만들어가세요.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8000-8efe-c23f73dcf475" class="">2️⃣ 정말 내 고민을 잘 이해하고 도움을 줄 것 같은 분께는 DM이나 커피챗으로 도움을 여쭤보세요. 막연한 질문이 아니라, 현재의 고민과 배경을 정리해 건네는 대화를 하셔야 합니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8034-b29f-c140dabf63da" class="">3️⃣ 그 과정에서 생긴 고민과 혼란, 대화를 통해 얻은 인사이트를 회고하듯 기록하세요. 완성된 답보다 지금의 사고 과정이 시간이 지나 더 큰 자산이 됩니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8059-ab4f-cc367329c5b2" class="">——————</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80b9-a19c-feae47fdbc14" class="">여긴 하나의 법이 있는 로마가 아닙니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-809e-a4b7-c6248b67e3a4" class="">내가 대중과 다른 속도로, 다른 이야기를 하고 있다면</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80c7-9740-e28df4b1e0a4" class="">그건 그대로 당신의 스토리이자 날 것의 콘텐츠입니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80a4-82e3-c0aa5dea22d3" class="">이 안에서도 각자는 각자의 로마를 만듭니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8094-a279-f9180b87135b" class="">속도가 아니라 방향이 맞는 사람들이</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80f9-912c-c44c5e6352f7" class="">당신의 글 스레드에 오래 머물게 될 것입니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80b4-a9e4-f7cec8ce862d" class="">링크드인을 비교의 장이 아닌</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80f7-8a0c-c1d6de6d55f3" class="">참고의 장으로 이용하시면 충분합니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80cb-be6c-cab90c902323" class="">그러니 함정에 빠지지 마시길 바랍니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8008-8864-d4d12e382827" class="">불안을 소비하지 말고, 지금 하던 걸 계속하세요.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8079-b24d-cf3d74c42a9f" class="">(여러분의 링크드인 활용담과 방법을 댓글로 공유주시면 많은 주니어에게 도움이 될 것 같습니다.)</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8082-a59b-f2478473eb67" class=""><strong><a href="https://www.linkedin.com/search/results/all/?keywords=%23%EB%A7%81%ED%81%AC%EB%93%9C%EC%9D%B8&amp;origin=HASH_TAG_FROM_FEED">해시태그#링크드인</a></strong></p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80e5-a726-fa37bca454d0" class=""><strong><a href="https://www.linkedin.com/search/results/all/?keywords=%23%EC%A3%BC%EB%8B%88%EC%96%B4&amp;origin=HASH_TAG_FROM_FEED">해시태그#주니어</a></strong></p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80bf-9fe6-dfd64812c946" class=""><strong><a href="https://www.linkedin.com/search/results/all/?keywords=%23%EC%BB%A4%EB%A6%AC%EC%96%B4%EA%B3%A0%EB%AF%BC&amp;origin=HASH_TAG_FROM_FEED">해시태그#커리어고민</a></strong></p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8090-a50a-f377ba8f95fc" class=""><strong><a href="https://www.linkedin.com/search/results/all/?keywords=%23z%EC%84%B8%EB%8C%80&amp;origin=HASH_TAG_FROM_FEED">해시태그#Z세대</a></strong></p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-807a-9cea-c900dcfcb54b" class=""><strong><a href="https://www.linkedin.com/search/results/all/?keywords=%23sns&amp;origin=HASH_TAG_FROM_FEED">해시태그#SNS</a></strong></p></div><div style="display:contents" dir="ltr"><figure id="317e882d-c310-80bf-8461-d2e2cd5c6048" class="image"><a href="%EB%A7%81%ED%81%AC%EB%93%9C%EC%9D%B8%20%EA%B8%80/1772114934999.jpeg"><img style="width:682px" src="%EB%A7%81%ED%81%AC%EB%93%9C%EC%9D%B8%20%EA%B8%80/1772114934999.jpeg"/></a></figure></div></details></li></ul></div><div style="display:contents" dir="auto"><ul id="317e882d-c310-806f-a34b-d2bac2f01a6e" class="toggle"><li><details open=""><summary>무신사 뷰티 앱이 올리브영 앱보다 나은 점,</summary><div style="display:contents" dir="auto"><p id="317e882d-c310-80b4-bc3f-f76e6e0fd58a" class="">이거 저만 그렇게 느끼나요?!</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80ce-bf63-f36b907d5347" class="">MMP(모바일 측정 파트너, Mobile Measurement Partner)</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80d2-98c3-c743e9f267db" class="">솔루션을 공부하면서, 마케팅을 1도 모르는 사람이</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-807e-a9d4-ea9e20bd478f" class="">그냥 “나는 왜 이 앱을 저장 공간 때문에 지웠을까?”를 생각해봤어요.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80b3-8bd2-c2af6ed2e360" class="">———</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8044-9e93-f69247b0b3fd" class="">릴스에서 ‘지금 구매하기’를 누르면 앱 설치부터 유도되고,</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80ba-94da-c619a96404dc" class="">설치 후 열어보면 내가 보려던 상품 페이지는 사라진 채</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80eb-b613-c2fc43ea6b99" class="">그냥 메인 화면으로 가는 경험, 한 번쯤 있으시죠?</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80d9-83cd-dfa94caf29d0" class="">그 순간 저는 그냥 앱을 꺼요.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80f9-9dbd-daae210e196c" class="">굳이 다시 검색할 만큼의 관심은 아니었거든요.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-809f-b6b3-e3dc75611c9d" class="">그리고 며칠 뒤</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-804d-95d7-e857e0662f0d" class="">“저장 공간이 부족합니다”라는 알림이 뜨면</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80db-a521-c0ff7aa96597" class="">손이 잘 안 가던 앱부터 정리합니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80ee-a350-c60bf43f9169" class="">마케터 입장에서는 앱 전환율을 잠깐 늘렸을지는 몰라도,</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8056-944f-f72f733302ea" class="">실제로 사용하는 유저를 남기는 데에는 실패한 셈이죠.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80e0-a884-d785b140c9f7" class="">저는 이게 그냥 앱 버그인 줄 알았는데,</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-801b-8ec3-f69286ff89c1" class="">알고 보니 ‘디퍼드 딥링크’ 기능</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80b0-9962-c342e5024fed" class="">(설치 후에도 특정 랜딩 페이지로 보내주는 기능)이 없어서 생긴 문제였더라고요.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-806f-be65-c88eb6159b68" class="">무의식적으로 그냥 넘겼던 사소한 불편함들이</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80eb-9213-e0592330114f" class="">“아, 그래서 그랬구나” 하고 이해되는 순간에</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80d4-b9d3-f555b85a504e" class="">묘한 도파민이 생기는 것 같습니다😆</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8084-ad74-ff1943b8eede" class="">⸻</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8041-891e-c4ae050fe560" class="">그러면 디퍼드 딥링크 기능 덕분에</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80c7-9e14-db259758f7f7" class="">가고 싶은 페이지로 잘 랜딩되었다고 해볼게요.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80f2-b25f-de42e27457c9" class="">그 다음은 무엇이 유저를 남길까요??</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80c7-90a1-f937b65bc5e0" class="">저는 단연코 UI라고 생각합니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8047-b6f6-eb6273259255" class="">[사람인]은 잘 안 쓰고, [원티드]부터 클릭하게 되는 이유도 여기에 있죠.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8076-8891-f0a6f13e0c39" class="">✅원티드는 공고별로 회사 상징 이미지와 간결한 제목이 정리되어 있습니다. 눈이 어디로 가야 할지 헤맬 일이 없어요.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-805c-94fd-e45851570eb5" class="">다음 날 다시 들어와도</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8061-9bed-d4018103e329" class="">무의식적으로 어제 봤던 공고들이 단번에 기억나고,</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80ea-928b-dd5212c4b9a0" class="">자연스럽게 새로 올라온 공고부터 보게 됩니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8060-b361-e11ed7c4bba6" class="">❎반면 사람인은</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8005-95db-d4b25b99aecd" class="">이미지 없이 텍스트 위주로,</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8028-babb-d3fdd049b811" class="">자잘한 정보까지 함께 노출되다 보니</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8054-be80-fb40cde7987b" class="">한눈에 들어오는 느낌도 적고,</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80f9-9269-c4d03a1a2e44" class="">다음 날 다시 들어왔을 때</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8060-a9dd-e6b97fd06766" class="">이미 봤던 공고인지 걸러내기도 쉽지 않습니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80fc-95e2-c4565e17ee26" class="">▶️무신사 뷰티와 올리브영 앱에서도</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8013-9c03-da5d4a946299" class="">비슷한 차이를 느꼈습니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-800b-8275-fb79091ba993" class="">1️⃣무신사는 뷰티 카테고리에서</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80e4-8ae4-f52c583f3b1b" class="">실물 이미지를 활용해 카테고리를 보여주고,</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-802b-be16-e7f6315d92cb" class="">올리브영은 화면 왼쪽에 텍스트로 세로 나열합니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8055-a060-c9e3b516451f" class="">어느 쪽이 내가 찾고 있는 카테고리를</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80fe-949b-f4c4d7fb7bea" class="">‘눈이 더 편하게’ 찾을 수 있을까요?</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8097-99f8-de49268d5235" class="">물론 올리브영은</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80cd-b3fe-cb987391bbd1" class="">오른쪽 영역에서 스크롤을 내리면</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8036-9ab8-eed2c2ddb2f1" class="">더 작은 단위의 분류까지 바로 확인할 수 있습니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8022-8ae6-e42722245c60" class="">반면 무신사는 다음 새 창에서 다루고요.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80dc-9b81-f752fcb16406" class="">이때 고객은</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8018-ae34-d0311106abc3" class="">어느 쪽을 더 좋은 경험이라고 인식할까요?</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8056-a24e-d16d5df668e6" class="">저는 무신사 뷰티에서의 경험이 더 좋았습니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80a4-be6b-fd83e4c4f73b" class="">실제 이미지가 들어가 직관적인 이유도 있지만,</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-802d-a3b2-eef32a02678f" class="">처음부터 큰 단위와 작은 단위의 선택지를</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-806d-aaa0-e6b7d9e3104c" class="">모두 받게 되면 오히려 복잡하게 느껴지기 때문입니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80dc-ac50-d4d74edb18bd" class="">그다음 ‘스킨케어’를 눌렀을 때,</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80df-97bd-ee5aebf4649d" class="">2️⃣올리브영은</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8093-979c-fee6c0116224" class="">‘클린 뷰티’, ‘슬로우 에이징’처럼</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8082-ace6-ee24038ca330" class="">특정 가치관이 담긴 분류를 대표 카테고리로 두고</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-801f-bbbc-f6716ed30b57" class="">이미지까지 함께 배치했습니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8041-9ee8-f8ba6ccf9d6b" class="">과연 스킨케어를 보러 온 고객이</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8042-b809-d761075da92a" class="">‘클린 뷰티’에 한해서만 상품을 보고 싶을까요?</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8007-8e90-eea3aca83ad5" class="">너무 특정 고객에게 해당되는 분류를</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8008-b8be-e5e7f0a28b90" class="">대표 분류 자리에 이미지까지 넣어 구성한 점이</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-800f-b8c8-d79f43afa4a3" class="">조금 아쉽게 느껴졌습니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-805d-a7b3-e6a6600ca944" class="">카테고리 분류는</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-804e-8ab6-d5976b35acff" class="">누가 봐도 객관적이고 공평해야</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80ff-a4bb-f11802644d05" class="">‘내가 다양한 선택지의 상품을 볼 수 있겠다’는</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8087-b435-d441c5b71809" class="">신뢰를 준다고 생각합니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8080-b9f3-d34bc3269ad9" class="">타이틀을 붙인 분류는</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-807e-8f2f-e99a232652f6" class="">그 이후 경로에 재미 요소로 설계해도 나쁘지 않을거에요.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80bb-9e94-d8769a808319" class="">3️⃣올리브영은 노출되는 텍스트와 썸네일 크기가 많이 큽니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-801d-9656-c50c90eff63a" class="">어르신들은 좋아하시겠지만</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80f5-bfa6-f91c23ba5671" class="">주 고객층인 젊은 사용자 입장에서는</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80f0-9bf9-e7d19dca4d24" class="">한 줄에 상품 3개씩 노출되는 무신사와 비교했을 때,</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80d1-9250-f6947a4dfc9c" class="">오히려 한눈에 안 들어오고</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-804e-9c3f-e24f5484104b" class="">많은 상품을 탐색하기 위해 여정이 길게만 느껴집니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80bd-912c-d693f577735a" class="">정말 여정이 더 긴지가 중요한 건 아닙니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8057-9bc7-ef4425b3e8d2" class="">그저 고객이 심리적으로 느끼는 편안함이</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-801a-bfa3-f17b43b064da" class="">‘손이 더 가느냐, 안 가느냐’의 차이를 만든다는 점이</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-807c-97ee-dc6fa607a580" class="">중요하다고 생각해요.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80fc-a60f-c4f78780c31f" class="">🌀MMP 솔루션을 통해 딥링크를 알게 되었고,</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80cf-bd2b-e17c87c935ae" class="">왜 앱 마케팅이 실제 활성 유저 수로 잘 이어지지 않는지를 오롯이 고객 관점에서 다시 보게 됐습니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80b3-9e26-e1ac8808d659" class="">🌀“우리가 옷은 많은데 입을 옷이 없어”라고 느끼듯</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-801a-9f54-f8637db7e10d" class="">앱에 손이 가고 안가고는 UI가 매우 중요하다는 것을</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80bc-9121-d419d4081726" class="">가장 단순한 방식으로 들여다봤습니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8099-abc8-c5ae66137e2f" class="">매우 편협한 시각일 수도 있지만,</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80f6-a8d4-e7b6d6e328ef" class="">그만큼 가장 솔직하고 적나라한 이유라고 생각합니다.</p></div><div style="display:contents" dir="auto"><ul id="317e882d-c310-800e-8fea-ca96636f3119" class="bulleted-list"><li style="list-style-type:disc">비교는 어플 전반에 대한 평가가 아니라,</li></ul></div><div style="display:contents" dir="auto"><p id="317e882d-c310-808f-a422-e902a956d039" class="">상품을 탐색하는 UI 경험에 대한 개인적인 판단입니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8034-846f-db870882d0ce" class=""><strong><a href="https://www.linkedin.com/search/results/all/?keywords=%23%EC%95%B1%EB%A7%88%EC%BC%80%ED%8C%85&amp;origin=HASH_TAG_FROM_FEED">해시태그#앱마케팅</a></strong></p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-804c-ab77-f90ce3d7b725" class=""><strong><a href="https://www.linkedin.com/search/results/all/?keywords=%23%EB%A7%88%EC%BC%80%ED%8C%85&amp;origin=HASH_TAG_FROM_FEED">해시태그#마케팅</a></strong></p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8088-bb5d-e826b26994e2" class=""><strong><a href="https://www.linkedin.com/search/results/all/?keywords=%23uxui&amp;origin=HASH_TAG_FROM_FEED">해시태그#UXUI</a></strong></p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8023-8c80-e125b8ecf70b" class=""><strong><a href="https://www.linkedin.com/search/results/all/?keywords=%23mmp&amp;origin=HASH_TAG_FROM_FEED">해시태그#MMP</a></strong></p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-803f-8563-dd2edd212533" class=""><strong><a href="https://www.linkedin.com/search/results/all/?keywords=%23%EB%AA%A8%EB%B0%94%EC%9D%BC%EB%A7%88%EC%BC%80%ED%8C%85&amp;origin=HASH_TAG_FROM_FEED">해시태그#모바일마케팅</a></strong></p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8075-b8ec-d9d146a0c97f" class=""><strong><a href="https://www.linkedin.com/search/results/all/?keywords=%23%EC%82%AC%EC%9A%A9%EC%9E%90%EA%B2%BD%ED%97%98&amp;origin=HASH_TAG_FROM_FEED">해시태그#사용자경험</a></strong></p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80fd-95f6-d43de3839a2d" class=""><strong><a href="https://www.linkedin.com/search/results/all/?keywords=%23%EB%94%A5%EB%A7%81%ED%81%AC&amp;origin=HASH_TAG_FROM_FEED">해시태그#딥링크</a></strong></p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-800e-9d52-c3516a8ead15" class=""><strong><a href="https://www.linkedin.com/search/results/all/?keywords=%23ux%EB%A6%AC%EC%84%9C%EC%B9%98&amp;origin=HASH_TAG_FROM_FEED">해시태그#UX리서치</a></strong></p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8032-af66-df5f00ab76f9" class=""><strong><a href="https://www.linkedin.com/search/results/all/?keywords=%23%EC%84%9C%EB%B9%84%EC%8A%A4%EA%B8%B0%ED%9A%8D&amp;origin=HASH_TAG_FROM_FEED">해시태그#서비스기획</a></strong></p></div><div style="display:contents" dir="ltr"><figure id="317e882d-c310-80f6-989b-c46fe8af67f6" class="image"><a href="%EB%A7%81%ED%81%AC%EB%93%9C%EC%9D%B8%20%EA%B8%80/1769850109324.jpeg"><img style="width:682px" src="%EB%A7%81%ED%81%AC%EB%93%9C%EC%9D%B8%20%EA%B8%80/1769850109324.jpeg"/></a></figure></div></details></li></ul></div><div style="display:contents" dir="auto"><ul id="317e882d-c310-80d2-a09c-efecab0cec25" class="toggle"><li><details open=""><summary>AI로 만든 세미나 포스터, 사람을 모을 수 있을까?</summary><div style="display:contents" dir="auto"><p id="317e882d-c310-80ea-9645-cc5a3c294e76" class="">세일즈도 콘텐츠를 직접 다뤄야 하는 시대,</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80f9-a653-fc35ee27428d" class="">AI 툴은 분명 강력하지만 디테일과 맥락을 쌓는 과정은 여전히 사람의 역할이었습니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-801a-9355-ebad1ff5c59d" class="">2주차 챌린지 중</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8020-8ea9-f577f0643308" class=""><strong><a href="https://www.linkedin.com/company/gensparkai/">Genspark</a></strong></p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-805f-8358-c82b496973db" class="">로 다양한 이미지 작업을 해보았습니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80f8-bc0f-fa48fca794e4" class="">☑️졸업 프로필을 넣어 “증명사진”으로 요청하면</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80ac-ad76-f87081281cc1" class="">싱크로율 100%의 정장 복장으로 생성되고,</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8083-9470-ef8d24a5b4df" class="">☑️난해한 배경 위 텍스트만 지워달라 요청하면</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8067-8933-c387f0548c6a" class="">글자는 사라지고 빈 공간은 자연스럽게 채워집니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8077-bbc8-c375eb153963" class="">👉🏻 ‘지우고 정리하는 작업’에는 확실히 강합니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80bf-949e-da189cb982bf" class="">하지만 “인물만 나로 바꿔달라”는 정밀 합성은 만족도가 떨어집니다. 원근법, 질감 등 배경과 얼굴이 자연럽게 어우러지는 ‘사실성&#x27;은 아직 한참 부족합니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8052-be7d-f04ed79c419d" class="">심지어 A를 고치고 B를 수정하면, B는 반영되지만 A는 이전 상태로 돌아가기도 합니다. 정교하게 디테일을 쌓아가는 과정에서 맥락 유지가 흔들리는 거죠.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8046-a72a-e7a7e46a953a" class="">또한 한글이 들어가는 결과물은 글씨체와 디자인이 촌스러워서,</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-804c-b2ae-d8e7039afce1" class="">결국 {텍스트와 요소}를 직접 넣게 됩니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80b5-b366-d3aa42390181" class="">그래서 오늘 포스터도</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8001-b799-f1a617792db4" class=""><strong><a href="https://www.linkedin.com/search/results/all/?keywords=%23%EB%AF%B8%EB%A6%AC%EC%BA%94%EB%B2%84%EC%8A%A4&amp;origin=HASH_TAG_FROM_FEED">해시태그#미리캔버스</a></strong></p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-809c-9663-d231792f3e79" class="">로 수작업했습니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80a6-a2ee-d7ca44f9d51d" class="">결국 제품 이미지, 컨셉 시안, 무드 보드 등 ‘사실성과 정교함‘이 절대적이지 않은 영역에서 실무 활용도가 높을 것 같습니다. 사람이 들어간 순간 이질감이 없을 수 없네요.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8032-b28e-e280ae2db17a" class="">흥미로웠던 건 인물 사실성을 높이는 치트키,</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80a0-b43b-cc0e19aa6108" class="">바로 [JSON 프롬프트📝]였습니다!</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80cc-a61c-f64252aec905" class="">📷쉅게 말해, 어떤 고성능 카메라로 {조명/피부 질감/색감 등}을</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8089-bb61-e8e0fd506eaf" class="">어떻게 세팅할지를 &#x27;AI가 좋아하는 언어‘ 로 알려주는 것입니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8031-b483-d4d5f43e2778" class="">실제로 적용해보니, 과도한 AI 질감이 줄고 명암과 텍스처가 안정되며 실물 느낌이 더 살아나는 걸 보실 수 있습니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-809d-958a-f475108051b7" class="">✅ 결론</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8032-a6af-d8f6b80d184d" class="">:AI는 “나랑 닮게 해줘”, “자연스럽게 해줘”라는</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8084-891e-ee54fabc329a" class="">우리의 말을 완전히 이해하지 못합니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80d0-bc74-eaa6b3a22ac7" class="">F처럼 공감해달라하는 것보다,</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-800b-8d2e-c2c28c45e6b9" class="">T처럼 요구하는 걸(=Json) 더 좋아하는 것 같습니다 ㅎ</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-801f-9094-e2910c501f83" class="">세일즈에게 프롬프트 실전 적용은 여전히 어렵네요😓</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8015-aa81-c9b8c2016d60" class="">혹시 저랑 같은 고민 해보신 분 계시면, 댓글로 팁 공유 부탁드립니다!</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-809f-8f4d-db53c2ec5566" class=""><strong><a href="https://www.linkedin.com/search/results/all/?keywords=%23ai%EC%9D%B4%EB%AF%B8%EC%A7%80&amp;origin=HASH_TAG_FROM_FEED">해시태그#AI이미지</a></strong></p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8043-b12a-ddfcdf3b23b5" class=""><strong><a href="https://www.linkedin.com/search/results/all/?keywords=%23ai%ED%88%B4&amp;origin=HASH_TAG_FROM_FEED">해시태그#AI툴</a></strong></p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80f7-b313-e87908d8a970" class=""><strong><a href="https://www.linkedin.com/search/results/all/?keywords=%23%ED%94%84%EB%A1%AC%ED%94%84%ED%8A%B8&amp;origin=HASH_TAG_FROM_FEED">해시태그#프롬프트</a></strong></p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80d6-8cdc-c4ef70f9726f" class=""><strong><a href="https://www.linkedin.com/search/results/all/?keywords=%23ai%ED%95%A9%EC%84%B1&amp;origin=HASH_TAG_FROM_FEED">해시태그#AI합성</a></strong></p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8006-ac51-fad5a2795a67" class=""><strong><a href="https://www.linkedin.com/search/results/all/?keywords=%23%EB%82%98%EB%85%B8%EB%B0%94%EB%82%98%EB%82%98%ED%94%84%EB%A1%9C&amp;origin=HASH_TAG_FROM_FEED">해시태그#나노바나나프로</a></strong></p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80a3-88e5-eda3f208f93d" class=""><strong><a href="https://www.linkedin.com/search/results/all/?keywords=%23b2b%EB%A7%88%EC%BC%80%ED%8C%85&amp;origin=HASH_TAG_FROM_FEED">해시태그#B2B마케팅</a></strong></p></div><div style="display:contents" dir="auto"><div id="317e882d-c310-8013-b0f1-f132bbb9c2c3" class="column-list"><div style="display:contents" dir="auto"><div id="317e882d-c310-8099-9d16-c28ecde55bc9" style="width:33.333333333333336%" class="column"><div style="display:contents" dir="ltr"><figure id="317e882d-c310-80a0-a7a5-f158db6678ff" class="image"><a href="%EB%A7%81%ED%81%AC%EB%93%9C%EC%9D%B8%20%EA%B8%80/1770943995157.jpeg"><img style="width:240px" src="%EB%A7%81%ED%81%AC%EB%93%9C%EC%9D%B8%20%EA%B8%80/1770943995157.jpeg"/></a></figure></div></div></div><div style="display:contents" dir="auto"><div id="317e882d-c310-80cf-8c39-d52d22173c09" style="width:33.33333333333333%" class="column"><div style="display:contents" dir="ltr"><figure id="317e882d-c310-80cb-8cf4-e56546dd317d" class="image"><a href="%EB%A7%81%ED%81%AC%EB%93%9C%EC%9D%B8%20%EA%B8%80/1770943995175.jpeg"><img style="width:192px" src="%EB%A7%81%ED%81%AC%EB%93%9C%EC%9D%B8%20%EA%B8%80/1770943995175.jpeg"/></a></figure></div></div></div><div style="display:contents" dir="auto"><div id="317e882d-c310-8032-93e1-cb37baa00082" style="width:33.333333333333336%" class="column"><div style="display:contents" dir="ltr"><figure id="317e882d-c310-806c-9715-fc0eaf8ffd67" class="image"><a href="%EB%A7%81%ED%81%AC%EB%93%9C%EC%9D%B8%20%EA%B8%80/1770943995599.jpeg"><img style="width:240px" src="%EB%A7%81%ED%81%AC%EB%93%9C%EC%9D%B8%20%EA%B8%80/1770943995599.jpeg"/></a></figure></div></div></div></div></div></details></li></ul></div><div style="display:contents" dir="auto"><ul id="317e882d-c310-8028-9f78-da1f6664d9f3" class="toggle"><li><details open=""><summary>&lt;콜드콜: 인턴이 5주간 70개 미팅 &amp; 7개 산업을 뚫은 방법&gt;</summary><div style="display:contents" dir="auto"><p id="317e882d-c310-8009-9e8c-ca754cea13d7" class="">&quot;저희는 그런 거 필요 없습니다.&quot;</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-808e-adbe-c6fef3e447da" class="">여러분은 거절에 어떤 생각이 드시려나 모르겠다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8055-b2f9-d042996e9062" class="">다만 나로서는 전화를 끊고 나면, 잘못된 시장에 연락한 건 아닐까 고민이 들곤 했다. 무엇을 바꿔야 하는지도 확신할 수 없는 상태에서, 같은 거절을 계속 마주하는 것은 생각보다 막막했다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8006-aa04-e43cdf54f5db" class="">하지만 몇 주가 지나면서, 작은 변화가 생기기 시작했다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8090-877e-fe12ee2a0afe" class="">처음에는 단 몇 초 만에 끊기던 통화가 조금씩 길어지기 시작했고,</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80a6-bd21-fe648335f184" class="">상대방이 &#x27;사소한 불편함&#x27;이라도 이야기해주는 순간이 늘었다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-806f-b70b-ea2d0c9e118b" class="">그제야 조금씩 알 것 같았다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8056-a0ed-f9e29ef4c86a" class="">콜드콜은 단순히 설득하는 일이 아니라,</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-809b-96d8-dc193ed4ff83" class="">상대가 스스로 문제를 꺼낼 수 있도록 맥락을 만들어가는 과정이라는 것을.</p></div><div style="display:contents" dir="auto"><ul id="317e882d-c310-80b6-8a0b-e5f6cfea111d" class="bulleted-list"><li style="list-style-type:disc">-----------</li></ul></div><div style="display:contents" dir="auto"><p id="317e882d-c310-802c-b7a3-fbacbdd707e4" class="">챗봇 솔루션에서 콜드콜 업무를 수행하며, 나는 5주간 70개의 미팅(Opportunity), 7개 이상의 산업군에서 파이프라인을 만들었다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8034-8e5b-ec9f9b182aca" class="">내가 지킨 원칙은 아래와 같다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80f6-96bf-e0851400b1ef" class="">❶ 기준이 없는 불확실한 시장에 첫 발을 딛는다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-806c-aaf7-d3c8115d3fb7" class="">❷ 같은 솔루션도 고객의 맥락을 이해한 언어로 재구성한다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80e2-ae44-e9e75986b5cd" class="">❸ 거절은 종료가 아닌 “전환 트리거”로 바꾼다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80c0-adef-f43a381fe38e" class="">우리가 찾던 고객은 명확했다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80de-bc29-e76f6a6c5d7b" class="">챗봇을 통해 상담 효율화 효과가 크고, 안정적인 객단가를 가진 기업.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-807c-b1c3-d9de80c42fbd" class="">그 조건에 부합하면서도 리드 생성이 정체된 버티컬이 있었다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8082-a64b-f24e16f496d6" class="">&#x27;골프&amp;리조트 산업&#x27;이었다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8007-b9e7-f4dfc27d74e1" class="">어려운 이유는 분명했다:</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-806f-99ce-caf0dcb3dec6" class="">✔AI에 대한 인사이트 부족과 거부감</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8050-b3cb-f14ae1d16626" class="">✔명확한 동종업계 레퍼런스 부재</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-803f-9c13-c7ffb5d7fe53" class="">✔기존 시스템과의 연동 불확실성</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-803c-b522-deac6511138c" class="">레퍼런스도, 확신도 없는 시장. 대부분의 세일즈가 피하는 조건이다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-801d-ad07-e5e84bb4d2dd" class="">하지만 나는 오히려 이렇게 생각했다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80eb-bd7e-cfe27da79e47" class="">불확실한 시장일수록, 먼저 발을 딛는 사람이 기준이 되지 않을까?</p></div><div style="display:contents" dir="auto"><ul id="317e882d-c310-8044-8097-dbbef0a85863" class="bulleted-list"><li style="list-style-type:disc">-----------</li></ul></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80ae-aad9-e89e06a33154" class="">❶ 기준이 없는 불확실한 시장에 첫 발을 딛는다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8095-a0e1-c833b1ad2510" class="">골프 산업은 제품이 필요 없다기보다, &#x27;확신할 근거가 없는&#x27; 시장에 가까웠다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8064-8290-d95e068882b4" class="">그래서 AI를 꺼내기 전에, 이미 겪고 있는 운영의 불편함부터 짚었다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8048-ac61-df00d04a94cf" class="">➜티업 시간마다 몰리는 전화 문의와 문의 누락</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80af-9bbf-c2b03e6e002c" class="">➜기록이 없어, 고객을 알아보지 못하는 응대</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8070-8d92-dc98af0c9906" class="">➜운영 상황 악화로 커지는 인건비 부담</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8035-90d0-d5c6f1876365" class="">익숙한 문제에서 출발할 때, 비로소 대화가 이어졌다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8026-9be6-d2d199b27e31" class="">AI 인사이트 부족과 올드한 시스템이라는 벽은 논리만으로 넘기 어려웠다. 그래서 완벽한 연동을 강조하기보다, 유사 사례를 통해 작게 시도할 수 있는 그림을 보여주는 데 집중했다. 전체가 아니라 &quot;가장 반복되는 티업 시간 문의부터 자동화해보자&quot;는 식으로요.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80a7-ba10-f5a3f879a013" class="">그 결과, 레퍼런스가 거의 없는 상태에서도 수도권 및 주요 지역의 골프장·리조트 사업장에서 30개 이상의 미팅 기회를 만들 수 있었다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80ac-8b88-ece8fee0cfed" class="">▶일부 대형 리조트 미팅에는 AE와 함께 직접 참석했고, 콜에서만 나누던 대화가 실제 현장에서 그대로 이어지는 순간의 몰입감은 이루 말할 수 없다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-803a-a49c-ef13bee41cf7" class="">불명확한 시장에 몇 발자국 내딛으면서, 막연했던 벽과 산업의 핵심 페인포인트가 선명해졌다. 이는 단순 기능이 아닌, 고객의 비즈니스 문제를 해결하는 솔루션으로 발전해가는 하나의 마일스톤이 되었다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-803c-8ed3-f4ee98b896e9" class="">❷ 같은 솔루션도 고객의 맥락을 이해한 언어로 재구성한다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8053-ac1f-e614083b0b1a" class="">나는 레저 산업뿐 아니라 뷰티, F&amp;B, 주류·유통, 인테리어, 의료, 전문 서비스(법무/세무/특허) 등 7개 이상의 버티컬에서 미팅을 만들었다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8012-b4ca-e71d42ea15a6" class="">여기서 지킨 원칙은 하나였다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80d1-9560-ff2f45996ecc" class="">&quot;같은 제품이라도, 고객의 맥락을 이해한 언어로 번역해야 한다.&quot;</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8074-952c-f44ec54fd21d" class="">리조트·병원에서 CS팀장에게 중요한 것은 매출이 아니라, 고연령층으로 인해 반복되는 단순 전화 문의를 줄이고, 전화 응대가 오프라인 방문까지 끊기지 않게 만드는 것이었다. 이런 구조는 현장에서 가장 큰 부담이던 반복 응대와 피로를 줄이는 변화였다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-804c-a6bf-ce76a07a6d97" class="">반면 치과 원장에게는, 반복 문의를 줄여 중요한 환자 상담에 집중하고 상담 누락을 방지해 매출로 이어지는 구조라는 점이 핵심이었다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8000-8f66-d2ced020a162" class="">같은 업계임에도, 실무자에게는 운영 부담 감소로, 의사결정자에게는 매출 구조 개선으로 번역할 때 설득이 가능했다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80f7-9ce2-f262185bcfb7" class="">F&amp;B·주류·도매에서는 상담량보다, 가맹점·발주·클레임 등 흩어진 커뮤니케이션으로 본사 차원에서 운영 흐름이 보이지 않는 문제가 더 컸다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8042-bfa0-f25f3c7f23a4" class="">그래서 흩어진 소통을 통합해 반복 이슈와 병목을 드러내는 &#x27;운영 구조 개선&#x27;과 ‘B2B 문의 증대’를 핵심 솔루션으로 가져갔다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8029-a56a-e45825cde598" class="">결국 성과를 만든 것은 제품 설명이 아니라, 각 산업에서 실제로 겪는 문제의 언어로 솔루션을 재정의한 과정이었다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80bc-8154-f333d39018ff" class="">❸ 거절은 종료가 아닌 “전환 트리거”로 바꾼다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80cf-bd89-c3b3178bb6cc" class="">가장 기억에 남는 사례는 한 중견 인테리어·리모델링 기업이었다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80e1-ad1d-f9bfca9cec75" class="">이커머스 사업부 키맨에게 컨택했지만, &quot;자신과 관련 없는 영역&quot;이라는 이유로 거절을 받았다. 대신 미팅 아젠다를 메일로 전달드리겠다고 말씀드렸다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8013-b573-ff83d7bce2d2" class="">메일에는 제품 소개가 아니라, 적용 이후 바뀌는 운영 구조를 담았다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-802f-a6b6-f8e8bbd55394" class="">➜객단가 높은 문의 누락 방지</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-809b-8e73-f4ebcf87a7e6" class="">➜반복 문의 자동화로 고관여 상담 집중 → 전환율 상승</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80f0-81a9-dfd39b0e924c" class="">➜온라인 문의 → 오프라인 방문 연결</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80ba-9223-ca59974e3389" class="">며칠 뒤, 예상하지 못한 연락이 왔다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80a4-8e1f-e25fe7a924e0" class="">메일이 타부서로 전달되었고, 실제 문의를 관할하던</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80ea-b806-d0de043aa0fb" class="">[리모델링 사업부]에서 이런 게 너무 필요했다며 도입에 대한 강한 의지로 미팅을 제안하신 것이다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8028-af0a-fe88ab904542" class="">그때 확신했다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8008-8737-d3a5902a6876" class="">콜드콜은 전화 너머 사람을 미팅에 앉히는 것이 아니다. 조직 안에서 우리의 가치가 흘러가도록 만드는 일이다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-801d-a8e7-cafc9302d3a6" class="">거절은 끝이 아니라, 올바른 곳으로 전달되기 시작하는 순간일 수 있다. 그러려면 거절 이후의 팔로업이 &#x27;전달 트리거&#x27;가 되어야 한다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-807e-ab8e-d035a949fe2d" class="">그 팔로업 메일에는 공감이 있어야 한다. 받는 사람이 &#x27;이건 우리 문제다&#x27;라고 느끼지 못하면, 조직 안에서 흐르지 않는다.</p></div><div style="display:contents" dir="auto"><ul id="317e882d-c310-808c-a874-c48c90752ded" class="bulleted-list"><li style="list-style-type:disc">------------</li></ul></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80f9-beda-e32c55020055" class="">결국 콜드콜은 설득의 과정이 아니라, 발견의 과정이다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80ec-a820-d952b9858bfd" class="">불확실한 시장에 먼저 발을 딛고, 고객의 언어로 번역하고, 거절 이후에도 흐름을 이어갈 때 기회는 만들어졌다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-808d-8d34-ff01e14e3fad" class="">나는 그렇게, 아무것도 없는 상태에서 파이프라인을 만드는 방법을 배웠다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8041-ab0a-e1e14f8ec8f7" class="">이 글이 지금 비슷한 고민을 하고 있는 분들께 작은 참고가 될 수 있기를 바란다☺️</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8053-b6fe-d6d3102b7bfe" class=""><strong><a href="https://www.linkedin.com/search/results/all/?keywords=%23%EC%84%B8%EC%9D%BC%EC%A6%88&amp;origin=HASH_TAG_FROM_FEED">해시태그#세일즈</a></strong></p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8067-809d-d8586273a18b" class=""><strong><a href="https://www.linkedin.com/search/results/all/?keywords=%23b2b%EC%84%B8%EC%9D%BC%EC%A6%88&amp;origin=HASH_TAG_FROM_FEED">해시태그#B2B세일즈</a></strong></p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8037-b040-d5541bb1f9d3" class=""><strong><a href="https://www.linkedin.com/search/results/all/?keywords=%23%EC%BD%9C%EB%93%9C%EC%BD%9C&amp;origin=HASH_TAG_FROM_FEED">해시태그#콜드콜</a></strong></p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8071-9064-f78fd9f50577" class=""><strong><a href="https://www.linkedin.com/search/results/all/?keywords=%23%EC%98%81%EC%97%85&amp;origin=HASH_TAG_FROM_FEED">해시태그#영업</a></strong></p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80c3-8e5a-f11259ab1392" class=""><strong><a href="https://www.linkedin.com/search/results/all/?keywords=%23sdr&amp;origin=HASH_TAG_FROM_FEED">해시태그#SDR</a></strong></p></div><div style="display:contents" dir="ltr"><figure id="317e882d-c310-8082-afdc-d2384bcf6629" class="image"><a href="%EB%A7%81%ED%81%AC%EB%93%9C%EC%9D%B8%20%EA%B8%80/1771184395082.jpeg"><img style="width:681.9791870117188px" src="%EB%A7%81%ED%81%AC%EB%93%9C%EC%9D%B8%20%EA%B8%80/1771184395082.jpeg"/></a></figure></div></details></li></ul></div><div style="display:contents" dir="auto"><ul id="317e882d-c310-80ba-843b-f9607fe8f4a9" class="toggle"><li><details open=""><summary>인턴이 불편해서 만든 &#x27;AI Sales 대시보드&#x27;</summary><div style="display:contents" dir="auto"><p id="317e882d-c310-806a-8915-df7eccb91e0b" class="">오늘의 영업, 한 화면에서 끝내보아요!!</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80a7-80c3-ebf57b3c2151" class="">세일즈를 하면서 가장 답답했던 순간:</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8070-8136-f84a9613091b" class="">&quot;오늘 누구한테 팔로업해야 하지?&quot;</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8052-8cc2-ede473165829" class="">&quot;이 리드, 언제 컨택했더라?&quot;</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-800c-abcf-e077df785441" class="">&quot;내 성과가 목표 대비 어디쯤 와 있지?&quot;</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80df-a2fa-ea8adb109418" class="">고객과 대화하는 것보다, 정보를 찾는 데에 더 많은 리소스를 쓰고 있었습니다.그리고 CRM이 좀 더 직관적이고 쉬운 UI면 (한국인 친화적인) 좋겠다는 생각도 들었습니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-803c-83ec-d9936536a334" class="">그래서 만들었습니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8054-a8a1-dbce9472175f" class="">하루 영업을 한 화면에서 끝내는 AI Sales 대시보드.</p></div><div style="display:contents" dir="auto"><ul id="317e882d-c310-8080-aca5-c580fc569e27" class="bulleted-list"><li style="list-style-type:disc">-----</li></ul></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8042-a8b8-c96e69e3163c" class="">💡핵심 기능</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8021-95a9-d5473b5a4734" class="">❶ 오늘 할 일 자동 정리</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-806a-ae8e-ec610455b9d9" class="">→오늘 스케줄 자동 정리(컨택/팔로업/미팅)</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8011-9e8b-fcea2c3eec20" class="">→팔로업 누락 방지 알림</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-806e-a930-cfe3ff23cb7c" class="">❷ 파이프라인 관리</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8056-b3b8-f2c141d0a14f" class="">→리드부터 계약까지 전체 퍼널 실시간 가시화</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80a7-95df-f74630c730df" class="">→단계별 전환율 &amp; 딜 트래킹</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8050-8f6b-de4eafda2685" class="">❸ AI 기반 자동화</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-800d-b9fe-d59c57f81f08" class="">→신규 리드 추천 및 분석</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8031-9c18-dbeff5636721" class="">→콜드콜 전략 맞춤 생성</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80d2-bf48-d2d5d4b7e51f" class="">→견적서 &amp; 콜드메시지 작성 → 발송 API 연동</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8037-91df-e9cb124e38e5" class="">→모든 액션 자동 기록 및 파일 저장</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80f4-8383-f5c7173540ab" class="">❹ 영업 성과 대시보드</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8081-84dc-f7097d4b8d91" class="">→주간/일간 성과 실시간 집계</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8030-b6ea-c99e0f64a2b5" class="">→데이터 기반 AI, 실시간 개선 피드백 제공</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80d5-aa83-eb096af8f04f" class="">이번 프로젝트는</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8078-91c7-ed4d2973a224" class=""><strong><a href="https://www.linkedin.com/company/lovable-dev/">Lovable</a></strong></p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80ab-81c0-e41e9a56029d" class="">로</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80e4-83b2-d0ebe833aee1" class=""><strong><a href="https://www.linkedin.com/search/results/all/?keywords=%23%EB%B0%94%EC%9D%B4%EB%B8%8C%EC%BD%94%EB%94%A9&amp;origin=HASH_TAG_FROM_FEED">해시태그#바이브코딩</a></strong></p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8013-961f-c4c8094181d1" class="">해서 만들었습니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80b8-9ecb-d968d40c0d6c" class="">실제 사용 목적이 아닌 영업 활동을 직관적으로 확인하고 효율화할 수 있는 흐름을 담아봤습니다.완전성보다는 그 흐름에 집중해서 봐주시면 감사하겠습니다. 비개발자라 부족한 점이 많지만, 피드백 주시면 큰 도움이 될 것 같습니다 😊</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8000-9c38-fb3a881d67a8" class="">※ 일반적인 CRM 구조를 참고했으며, 영상 길이상 주요 기능 위주로 구성했습니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80cb-84af-e50eb7cecb4c" class=""><strong><a href="https://www.linkedin.com/search/results/all/?keywords=%23salesengineering&amp;origin=HASH_TAG_FROM_FEED">해시태그#SalesEngineering</a></strong></p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-806a-8042-ff6dde6508a9" class=""><strong><a href="https://www.linkedin.com/search/results/all/?keywords=%23revops&amp;origin=HASH_TAG_FROM_FEED">해시태그#RevOps</a></strong></p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8052-8128-f7cfbcc37981" class=""><strong><a href="https://www.linkedin.com/search/results/all/?keywords=%23salesops&amp;origin=HASH_TAG_FROM_FEED">해시태그#SalesOps</a></strong></p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80f7-b311-c9f8dba79f3a" class=""><strong><a href="https://www.linkedin.com/search/results/all/?keywords=%23crm&amp;origin=HASH_TAG_FROM_FEED">해시태그#CRM</a></strong></p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80ac-8af2-da55eb805a67" class=""><strong><a href="https://www.linkedin.com/search/results/all/?keywords=%23sales&amp;origin=HASH_TAG_FROM_FEED">해시태그#Sales</a></strong></p></div><div style="display:contents" dir="ltr"><figure id="317e882d-c310-80ef-8bf2-e17f6d1d2fc8" class="image"><a href="%EB%A7%81%ED%81%AC%EB%93%9C%EC%9D%B8%20%EA%B8%80/%ED%99%94%EB%A9%B4_%EC%BA%A1%EC%B2%98_2026-03-02_213048.jpg"><img style="width:681.9791870117188px" src="%EB%A7%81%ED%81%AC%EB%93%9C%EC%9D%B8%20%EA%B8%80/%ED%99%94%EB%A9%B4_%EC%BA%A1%EC%B2%98_2026-03-02_213048.jpg"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="317e882d-c310-80ae-a385-d2cdbc8a3b37" class="image"><a href="%EB%A7%81%ED%81%AC%EB%93%9C%EC%9D%B8%20%EA%B8%80/%ED%99%94%EB%A9%B4_%EC%BA%A1%EC%B2%98_2026-03-02_213129.jpg"><img style="width:681.9791870117188px" src="%EB%A7%81%ED%81%AC%EB%93%9C%EC%9D%B8%20%EA%B8%80/%ED%99%94%EB%A9%B4_%EC%BA%A1%EC%B2%98_2026-03-02_213129.jpg"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="317e882d-c310-8021-802a-f92165005665" class="image"><a href="%EB%A7%81%ED%81%AC%EB%93%9C%EC%9D%B8%20%EA%B8%80/%ED%99%94%EB%A9%B4_%EC%BA%A1%EC%B2%98_2026-03-02_213210.jpg"><img style="width:681.9791870117188px" src="%EB%A7%81%ED%81%AC%EB%93%9C%EC%9D%B8%20%EA%B8%80/%ED%99%94%EB%A9%B4_%EC%BA%A1%EC%B2%98_2026-03-02_213210.jpg"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="317e882d-c310-80ca-8aa6-d6cd84a3aaf4" class="image"><a href="%EB%A7%81%ED%81%AC%EB%93%9C%EC%9D%B8%20%EA%B8%80/%ED%99%94%EB%A9%B4_%EC%BA%A1%EC%B2%98_2026-03-02_213232.jpg"><img style="width:681.9896240234375px" src="%EB%A7%81%ED%81%AC%EB%93%9C%EC%9D%B8%20%EA%B8%80/%ED%99%94%EB%A9%B4_%EC%BA%A1%EC%B2%98_2026-03-02_213232.jpg"/></a></figure></div></details></li></ul></div><div style="display:contents" dir="auto"><ul id="317e882d-c310-80a2-8390-d1d8773c055d" class="toggle"><li><details open=""><summary>흑백요리사 우승자가 생각한 두쫀쿠 다음 유행은?</summary><div style="display:contents" dir="auto"><p id="317e882d-c310-8065-bbf2-eb50e4d48ab0" class="">[세일즈 주니어의 뜬금없는 AI툴 끄적대기]</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80c8-92cf-c413127b2258" class="">두쫀쿠가 사랑받은 이유는 크게 3가지입니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8094-9572-dcc3fd04dcb7" class="">✅쫀득하면서도 바삭한 식감</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-800c-8c64-fadb082b0f6b" class="">✅한입에 가득 차는 사이즈</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-801f-86db-f604f99d66c7" class="">✅두바이라는 이색적인 이미지</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8005-82d9-f2d746e26793" class="">그렇다면 다음 유행은 어디서 올까요?</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8066-a8cf-f6264f653e12" class="">열대 지역에서 영감을 얻은 새로운 디저트,</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-808e-aa68-e399252eece6" class="">‘🥥코코넛 찰떡 바이트(bite)’입니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-808d-a932-c702e0d8d262" class="">쫀득한 찹쌀 베이스에</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-803b-bfdf-eb4ef608771d" class="">코코넛 밀크와 연유🥛, 그리고 소금 한 꼬집을 더해 풍미를 살리고,</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8039-aacf-ffeb29f58bf3" class="">겉에는 코코넛 플레이크를 입혀 바삭한 식감까지 더했습니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8052-a420-fe9021d7561b" class="">두쫀쿠가 잘 된 핵심 요소 3가지를 반영한,</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8027-ba00-e06cda0fbfc9" class="">다음 트렌드를 유명한 쉐프가 (사실 제가) 상상한 메뉴입니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8033-933b-f2850b19192d" class="">——————</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80ba-b21c-f67a2db05dd6" class="">이번 콘텐츠는 흑백요리사 시즌2 우승자 최강록 셰프가 다음 유행을 예측한다는 콘셉트로 제작한 AI 영상입니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8014-a268-ce1067cf592b" class="">프롬프트와 이미지는 Genspark, 영상 생성은 Flow를 활용했습니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80dd-a2f4-f9db316f682f" class="">아직 ai가 한국어 발음(쫀득/찹쌀)이나 인물의 생김새를 100% 구현하지는 못하지만, 무료 크레딧으로 꽤 사실적이고 생동감 있는 결과물이 나와 만족스럽습니다. (다음엔 한국어 잘 된다는</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8019-ac02-ced19fcc02a2" class=""><strong><a href="https://www.linkedin.com/company/kling-ai-api/">Kling AI</a></strong></p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80c4-bccf-fce3bbaf3773" class="">로 재도전)</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-801a-bddc-d489b0229fd6" class="">영상 속에 살짝 기괴한(?) 장면도 숨어 있는데, 발견해보시는 재미로 가볍게 봐주세요🤩</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8024-aa49-cdc3ab6927f4" class="">여러분이 생각하는 다음 디저트 유행템은 무엇인가요?</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8064-afbb-edf3f5ea0aea" class=""><strong><a href="https://www.linkedin.com/search/results/all/?keywords=%23ai%EC%98%81%EC%83%81&amp;origin=HASH_TAG_FROM_FEED">해시태그#AI영상</a></strong></p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8056-b784-fc80b7066432" class=""><strong><a href="https://www.linkedin.com/search/results/all/?keywords=%23learninginpublic&amp;origin=HASH_TAG_FROM_FEED">해시태그#LearningInPublic</a></strong></p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80e7-99e3-e467c7cda8e2" class=""><strong><a href="https://www.linkedin.com/search/results/all/?keywords=%23ai%EC%BB%A8%ED%85%90%EC%B8%A0&amp;origin=HASH_TAG_FROM_FEED">해시태그#AI컨텐츠</a></strong></p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8043-91b1-e1c95b40f306" class=""><strong><a href="https://www.linkedin.com/search/results/all/?keywords=%23%ED%81%AC%EB%A6%AC%EC%97%90%EC%9D%B4%ED%84%B0&amp;origin=HASH_TAG_FROM_FEED">해시태그#크리에이터</a></strong></p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80eb-a078-d5af01ad0c57" class=""><strong><a href="https://www.linkedin.com/search/results/all/?keywords=%23%EB%A7%88%EC%BC%80%ED%8C%85&amp;origin=HASH_TAG_FROM_FEED">해시태그#마케팅</a></strong></p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8045-8130-d7a9388a0cae" class=""><strong><a href="https://www.linkedin.com/search/results/all/?keywords=%23fromideatocontent&amp;origin=HASH_TAG_FROM_FEED">해시태그#FromIdeaToContent</a></strong></p></div><div style="display:contents" dir="ltr"><figure id="317e882d-c310-80d6-b5ff-c65d3ca61b07" class="image"><a href="%EB%A7%81%ED%81%AC%EB%93%9C%EC%9D%B8%20%EA%B8%80/%ED%99%94%EB%A9%B4_%EC%BA%A1%EC%B2%98_2026-03-02_213905.jpg"><img style="width:681.9896240234375px" src="%EB%A7%81%ED%81%AC%EB%93%9C%EC%9D%B8%20%EA%B8%80/%ED%99%94%EB%A9%B4_%EC%BA%A1%EC%B2%98_2026-03-02_213905.jpg"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="317e882d-c310-8055-bd6b-d9acfc902f31" class="image"><a href="%EB%A7%81%ED%81%AC%EB%93%9C%EC%9D%B8%20%EA%B8%80/%ED%99%94%EB%A9%B4_%EC%BA%A1%EC%B2%98_2026-03-02_213921.jpg"><img style="width:681.9791870117188px" src="%EB%A7%81%ED%81%AC%EB%93%9C%EC%9D%B8%20%EA%B8%80/%ED%99%94%EB%A9%B4_%EC%BA%A1%EC%B2%98_2026-03-02_213921.jpg"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="317e882d-c310-80bd-8abc-d7b108277b2e" class="image"><a href="%EB%A7%81%ED%81%AC%EB%93%9C%EC%9D%B8%20%EA%B8%80/%ED%99%94%EB%A9%B4_%EC%BA%A1%EC%B2%98_2026-03-02_213941.jpg"><img style="width:681.9896240234375px" src="%EB%A7%81%ED%81%AC%EB%93%9C%EC%9D%B8%20%EA%B8%80/%ED%99%94%EB%A9%B4_%EC%BA%A1%EC%B2%98_2026-03-02_213941.jpg"/></a></figure></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8036-927f-cb4a6c6d58e2" class="">/</p></div></details></li></ul></div><div style="display:contents" dir="auto"><ul id="317e882d-c310-80ea-be78-dfd0c5a5b08d" class="toggle"><li><details open=""><summary>[세일즈와 마케팅이 하나의 흐름이어야 하는 이유]</summary><div style="display:contents" dir="auto"><p id="317e882d-c310-8054-8465-d14c441648ca" class="">“내부에서 조금 더 논의해볼게요”</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-801a-b6ec-d8cca990aa43" class="">이 말을 들은 뒤, 실제로 계약이 성사된 경우는 얼마나 될까요?</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-807a-9e3d-e0e3d663d3e0" class="">우리는 종종 세일즈를 &#x27;시작점&#x27;이라고 생각합니다. 문의가 들어오고, 미팅을 잡는 순간부터가 출발이라고 믿죠. 하지만 실제 고객은 우리가 등장하기 훨씬 전부터 이미 움직이고 있습니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8080-a78d-dfae4beca98e" class="">검색하고, 비교하고, 콘텐츠를 살피며 망설이다가 다시 돌아오기도 합니다. 문의는 시작이 아니라, 이미 수많은 고민의 터널을 지나온 뒤 나타나는 최종 신호에 가깝습니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-802e-bf21-c383c083d952" class="">📍 세일즈는 설득이 아니라 &#x27;맥락&#x27;에 합류하는 일</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80b2-aba1-c7483732d42b" class="">아웃바운드도 마찬가지입니다. 제가 연락하려는 담당자는 이미 업계 콘텐츠를 보고 경쟁사를 탐색하며 문제를 정의하고 있었을 가능성이 큽니다. 그 흐름을 모른 채 접근하면, 우리는 매번 &quot;우리 제품이 왜 필요한지&quot; 원점부터 설명해야 합니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8071-b2ae-c4261f5f6d83" class="">그래서 요즘 저는 세일즈를 이미 형성된 맥락 위에 합류하는 일이라고 정의합니다.</p></div><div style="display:contents" dir="auto"><ul id="317e882d-c310-80a9-948c-e794e1133f3b" class="bulleted-list"><li style="list-style-type:disc">고객이 막 문제를 인지했는가?</li></ul></div><div style="display:contents" dir="auto"><ul id="317e882d-c310-806c-b176-d88c5da84379" class="bulleted-list"><li style="list-style-type:disc">비교의 한가운데 있는가?</li></ul></div><div style="display:contents" dir="auto"><ul id="317e882d-c310-80a6-ad6b-c6865bb934b6" class="bulleted-list"><li style="list-style-type:disc">마지막 확신만 남은 상황인가?</li></ul></div><div style="display:contents" dir="auto"><p id="317e882d-c310-804f-a755-da616c995729" class="">이 지점을 모른 채 똑같은 설명을 반복하는 건, 스쳐 지나가는 사람에게 무작정 전단지를 건네는 것과 다르지 않습니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80a7-a7d4-f8ed11b10aa8" class="">——————</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80b0-9c68-f5b44b9215b3" class="">🤝 고객은 팀을 나누지 않습니다</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8074-95c3-e90622e9d716" class="">마케팅은 유입을 만들고, 세일즈는 계약을 만든다고 역할을 나누지만 고객에게 광고, 콘텐츠, 콜, 데모는 모두 하나의 경험입니다. 팀을 나눈 건 우리일 뿐, 고객은 결정을 이어가는 하나의 과정 속에 있을 뿐입니다.</p></div><div style="display:contents" dir="auto"><ul id="317e882d-c310-8003-8eed-f050d216f54c" class="bulleted-list"><li style="list-style-type:disc">마케팅: 탐색 단계에서 혼란을 낮추는 역할</li></ul></div><div style="display:contents" dir="auto"><ul id="317e882d-c310-8080-ad55-edda6162e76b" class="bulleted-list"><li style="list-style-type:disc">세일즈: 선택 직전의 불안을 해소하는 역할</li></ul></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80f1-a59c-f5882dc13630" class="">결국 두 역할 모두 고객의 의사결정 부담을 줄여준다는 본질에서 만납니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-806c-a6e4-c1882bd98a4c" class="">세일즈가 정말 중요한 이유는 지금 내가 고객 여정의 &#x27;어느 지점&#x27;에 합류하고 있는지를 이해하는 감각에 있습니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-807b-b926-dddc295b4f60" class="">🌟 &#x27;나&#x27;라는 문제 해결자로 일하는 시대</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80d0-bcf4-d9469aeb1a6b" class="">앞으로 제품이 아니라 ‘나’라는 전문가가 중심이 되는 시대가 온다면, 이 맥락을 읽는 능력은 더욱 중요해질 것입니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-808d-9184-d5883a77bf58" class="">내 이름으로 페이지가 만들어지고, 내 링크로 유입이 생기는 구조 속에서 고객 여정을 읽지 못한다면 우리는 매번 자기소개부터 다시 시작해야 합니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8096-a629-dcaf61296af7" class="">하지만 흐름을 이해하고 있다면 첫 문장부터 달라질 것이고, 그 차이가 대화의 전개를 완전히 바꿔놓을 것입니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-807f-98d6-d90c40528b10" class="">☑️ 중요한 것은 역할의 경계를 세우는 것이 아니라, 고객의 결정이 이어지는 흐름을 함께 바라보는 것입니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-801f-961b-cd9d9a90ada3" class="">고객이 내리는 확신은 여러 팀의 기여가 합쳐진 결과가 아니라, 우리 제품에 대한 단 하나의 판단입니다. 우리는 그 판단이 흔들리지 않도록 경험의 흐름을 설계해야 합니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8085-b10b-f38811f2e062" class="">여러분은 어떤 방식으로 고객의 여정을 확인하고, 그 맥락에 합류하고 계시나요?</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80bb-be90-e41a74b275f8" class=""><strong><a href="https://www.linkedin.com/search/results/all/?keywords=%23%EC%84%B8%EC%9D%BC%EC%A6%88&amp;origin=HASH_TAG_FROM_FEED">해시태그#세일즈</a></strong></p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8024-99de-c4c1e7ea2763" class=""><strong><a href="https://www.linkedin.com/search/results/all/?keywords=%23%EB%A7%88%EC%BC%80%ED%8C%85&amp;origin=HASH_TAG_FROM_FEED">해시태그#마케팅</a></strong></p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8013-9b94-dbc05478358e" class=""><strong><a href="https://www.linkedin.com/search/results/all/?keywords=%23%EA%B3%A0%EA%B0%9D%EC%97%AC%EC%A0%95&amp;origin=HASH_TAG_FROM_FEED">해시태그#고객여정</a></strong></p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-804e-95e7-db7e364c6245" class=""><strong><a href="https://www.linkedin.com/search/results/all/?keywords=%23b2b%EC%84%B8%EC%9D%BC%EC%A6%88&amp;origin=HASH_TAG_FROM_FEED">해시태그#B2B세일즈</a></strong></p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-802c-aae0-dbdd8071e03a" class=""><strong><a href="https://www.linkedin.com/search/results/all/?keywords=%23%EC%9D%98%EC%82%AC%EA%B2%B0%EC%A0%95&amp;origin=HASH_TAG_FROM_FEED">해시태그#의사결정</a></strong></p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8074-9ddc-ec299b938870" class=""><strong><a href="https://www.linkedin.com/search/results/all/?keywords=%23crm&amp;origin=HASH_TAG_FROM_FEED">해시태그#CRM</a></strong></p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8052-a4f1-f7b865d6c428" class=""><strong><a href="https://www.linkedin.com/search/results/all/?keywords=%23%EC%BB%A4%EB%A6%AC%EC%96%B4%EC%9D%B8%EC%82%AC%EC%9D%B4%ED%8A%B8&amp;origin=HASH_TAG_FROM_FEED">해시태그#커리어인사이트</a></strong></p></div><div style="display:contents" dir="ltr"><figure id="317e882d-c310-8083-aee4-e01175b25424" class="image"><a href="%EB%A7%81%ED%81%AC%EB%93%9C%EC%9D%B8%20%EA%B8%80/1771935802171.jpeg"><img style="width:682px" src="%EB%A7%81%ED%81%AC%EB%93%9C%EC%9D%B8%20%EA%B8%80/1771935802171.jpeg"/></a></figure></div></details></li></ul></div><div style="display:contents" dir="auto"><ul id="317e882d-c310-8046-9186-f65b02d45a94" class="toggle"><li><details open=""><summary>“나는 마케팅이 안 통하는 사람이구나.</summary><div style="display:contents" dir="auto"><p id="317e882d-c310-8003-9140-f2f210894ced" class="">마케팅은 결국 귀 얇은 사람들을 위한 거겠지.”</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80e8-8bef-d87ef27d1d32" class="">한동안은 정말 이렇게 믿었습니다. 저는 마케팅에 반응하지 않는 소비자거든요.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80d7-a24a-dc14cb97c6d9" class="">올리브영에서 테스트를 하지도, 인플루언서 추천을 믿지도 않습니다. 푸시 알림은 오자마자 끄고, 쿠팡에서도 늘 사던 것만 주문합니다. 새로운 브랜드를 탐색하는 시간은 거의 없죠.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80d4-a3a7-e61989139cc7" class="">매체에 의해 설득되지 않는, 아주 &#x27;방어적인&#x27; 소비자였다고 생각했습니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8029-9c58-ea2dd1fa429d" class="">——————</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-808b-807d-f511ccab99ac" class="">💡 무의식이 남긴 데이터는 거짓말을 하지 않는다</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8058-9933-c12b3799fd85" class="">그런데 어느 날, 친구와 DM으로 짧은 대화를 나눴습니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-805f-b858-eae851405b2f" class="">“입사 전에 어디 가까운 데라도 여행 다녀올까?”</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8022-b5d1-fd12aa42314e" class="">그 직후 제 인스타그램과 네이버는 &#x27;여행&#x27;으로 도배되었습니다. 릴스, 항공권, 숙소 브이로그까지. 제가 가고 싶던 장면을 정확히 건드리는 콘텐츠들이 쏟아졌습니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80df-8e20-cb20090b447d" class="">갑자기 여행이 가고 싶어진 게 아니었습니다. 이미 존재하던 제 무의식과 행동 데이터가 비로소 반응하기 시작한 것이었죠.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80b9-8564-c3f4e5b03dc3" class="">그때 깨달았습니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80b9-8b81-cbdb58adcd38" class="">마케팅은 새로운 욕구를 만드는 일이 아니라, 이미 일상 속에 숨겨진 &#x27;생각의 맥락&#x27;을 포착하는 일이라는 것을요.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80df-bf66-c3608a462ab5" class="">——————</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8039-b52d-d28020d5cecc" class="">💬 B2B 세일즈가 &#x27;마케팅&#x27;을 공부해야 하는 이유</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8003-b451-de0d6ed6f362" class="">이 지점에서 B2B 세일즈를 다시 정의하게 되었습니다. 우리는 흔히 B2B와 B2C는 다르다고 말합니다. 하지만 우리 고객(기업)이 돈을 버는 구조의 본질은 결국 하나입니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8070-9406-d510cc6196e2" class="">👉 소비자를 데려오고, 그 소비자가 우리를 선택하게 만드는 것.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80db-abcb-feeca68e2a2b" class="">우리는 고객사 미팅에서 흔히 이렇게 말합니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8070-b103-d566c52755d4" class="">“ROAS가 개선됩니다.” “전환율이 올라갑니다.”</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8000-9c4c-d44c7a091f3e" class="">틀린 말은 아니지만, 이 숫자들에는 소비자의 행동이 빠져 있습니다. 진짜 마케터라면 이런 질문이 먼저 떠오를 수밖에 없습니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80bb-9a0c-e4faa99767ce" class="">✔지금 소비자는 어떤 맥락에서 반응하고 있지?</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8027-8d4d-cb93f2033968" class="">✔어떤 행동들이 쌓여서 이 숫자가 만들어진 거지?</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8043-ac62-f72a24a253d7" class="">✔이 데이터를 쓰면, 소비자의 선택이 어떻게 달라지는 거야?</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80dd-94ed-e78fecd4a0b5" class="">——————</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-803f-a9f9-fde933747f6e" class="">✅세일즈: 숫자가 아닌 &#x27;흐름&#x27;을 읽는 역할</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80bf-8df4-c94030d68008" class="">세일즈가 마케팅을 이해해야 하는 이유는 단순히 카피를 잘 쓰기 위해서가 아닙니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80bf-9a6e-ef2fae9ace52" class="">우리 고객이 설득해야 할 최종 소비자가 어떤 일상 속에서, 어떤 생각의 흐름 위에서 선택하는지 이해하지 못하면, 세일즈는 결국 숫자만 나열하는 역할에 머물게 됩니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80a7-bf72-e257c3cfc1dd" class="">마케팅을 이해한 세일즈는 다릅니다. 우리 고객이 왜 이 소비자를 설득하기 어려워졌는지, 그 맥락의 부재부터 짚어줄 수 있습니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80f9-b4bd-c402a6ac7fd4" class="">요즘 저는 세일즈를 이렇게 정의합니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80c9-9fa6-eacd92f64701" class="">“고객의 비즈니스가 어디서 시작되고,</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80b5-b642-c321dda3b913" class="">어디서 결정되는지를 가장 먼저 포착하는 역할.”</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8035-b093-fe66d4f4a9a6" class="">그래서 저는 단순한 감이 아니라 행동의 기록을 보는 법을 배우려 합니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-803a-a006-fb3ee108b51e" class="">작은 화면 속에 쌓이는 전 세계 소비자의 선택을 이해하는 일, 이것이 우리 모두의 본질적인 업무 아닐까요?</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-802b-9d28-d1789a0b12e2" class="">여러분은 고객의 행동 흐름을 얼마나 이해하고 계시나요?</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-809d-95a8-f0bcf1bc625d" class=""><strong><a href="https://www.linkedin.com/search/results/all/?keywords=%23%EB%A7%88%EC%BC%80%ED%8C%85&amp;origin=HASH_TAG_FROM_FEED">해시태그#마케팅</a></strong></p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80fd-8130-e8c5b1e9dec2" class=""><strong><a href="https://www.linkedin.com/search/results/all/?keywords=%23%EA%B4%91%EA%B3%A0%EC%84%B1%EA%B3%BC&amp;origin=HASH_TAG_FROM_FEED">해시태그#광고성과</a></strong></p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8020-b49d-f2d3806df795" class=""><strong><a href="https://www.linkedin.com/search/results/all/?keywords=%23b2b&amp;origin=HASH_TAG_FROM_FEED">해시태그#B2B</a></strong></p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-802c-b751-d2a6abb05573" class=""><strong><a href="https://www.linkedin.com/search/results/all/?keywords=%23b2c&amp;origin=HASH_TAG_FROM_FEED">해시태그#B2C</a></strong></p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80fe-8ecb-d18c5c5f5983" class=""><strong><a href="https://www.linkedin.com/search/results/all/?keywords=%23%EC%84%B8%EC%9D%BC%EC%A6%88&amp;origin=HASH_TAG_FROM_FEED">해시태그#세일즈</a></strong></p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80ff-ae63-cda0064c8f8d" class=""><strong><a href="https://www.linkedin.com/search/results/all/?keywords=%23%EC%BB%A4%EB%A6%AC%EC%96%B4%EC%9D%B8%EC%82%AC%EC%9D%B4%ED%8A%B8&amp;origin=HASH_TAG_FROM_FEED">해시태그#커리어인사이트</a></strong></p></div><div style="display:contents" dir="ltr"><figure id="317e882d-c310-8067-b9bf-de0a13491ee9" class="image"><a href="%EB%A7%81%ED%81%AC%EB%93%9C%EC%9D%B8%20%EA%B8%80/1772038001765.jpeg"><img style="width:682px" src="%EB%A7%81%ED%81%AC%EB%93%9C%EC%9D%B8%20%EA%B8%80/1772038001765.jpeg"/></a></figure></div></details></li></ul></div><div style="display:contents" dir="auto"><ul id="317e882d-c310-80d2-9b2b-ff4c9ded21b6" class="toggle"><li><details open=""><summary>당신은 매일 부동산 경매시장에 오르고 있다는걸 알고 계셨나요?</summary><div style="display:contents" dir="auto"><p id="317e882d-c310-80f3-9a60-c6a1160f9f32" class="">우리가 앱을 켜는 순간, 광고가 그냥 “뜨는” 게 아닙니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80a7-b77e-c6d292bf423c" class="">우리의 화면은 0.1초짜리 ‘초단타 경매 시장’에 매물로 올라갑니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80ce-8ead-cfc30c44819d" class="">그 짧은 찰나, 수십 명의 AI 투자자가 여러분의 프로필을 훑으며 소리칩니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80d3-8f91-c855819a300b" class="">“이 유저, 나중에 우리한테 얼마를 벌어다 줄까?”</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-805c-b6b5-fbcaac58a413" class="">이게 오늘날 모바일 광고의 진짜 민낯입니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-802e-a2e6-faeb453a55a6" class="">1️⃣ 매물 등장</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80cd-81e8-f37074511714" class="">화면 속 ‘그 자리’ 앱을 여는 순간, 당신의 화면 속 그 광고자리가 시장에 매물로 나옵니다. 방금 막 지어진 강남 금싸라기 땅 한 칸이 매물로 나온 셈이죠.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8086-b2de-d14800cf6194" class="">2️⃣ AI 투자자들의 계산</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8088-8055-d3aebb65848e" class="">광고주의 돈을 쥔 AI 투자자(DSP)들은 당신이 남긴 데이터를 바탕으로 그 광고자리의 가치를 예측합니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8094-8a1c-d7e17d7d0c09" class="">“이 사람은 운동화 광고를 보여주면 꼭 사더라고. 높게 불러!”</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8056-9f4a-c506da0f1de5" class="">“이 사람은 그냥 구경만 하네. 낮게 가자.”</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8003-9a47-c7e74648298d" class="">사람을 보지 않습니다. 당신이 흘린 데이터의 가치를 봅니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80b1-ac08-db01c05c3261" class="">3️⃣ 실시간 낙찰</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8016-919d-c78377592055" class="">가장 높은 금액을 부른 쪽이 그 0.1초의 공간을 차지합니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-806a-b029-feba16524af5" class="">우리는 그냥 피드를 넘기지만, 그 뒤에선 월스트리트보다 치열한 입찰 전쟁이 끝난 상태입니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80e2-a5f9-d60d7bf00497" class="">4️⃣ 승부의 판정: 광고주가 고용한 ‘데이터 판독관’(MMP)</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-806d-ad97-d214b0f21922" class="">광고를 보고 실제 설치나 구매로 이어졌을까요?</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8011-808e-dd1904f167c4" class="">이때 광고주가 보낸 판독관인 MMP가 등판합니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80eb-ad48-df5aac1782e9" class="">여러 광고 매체가 서로 &quot;내 덕분에 팔렸다&quot;고 주장할 때, MMP는 데이터를 대조해 진짜 성과를 가려냅니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8035-8e7e-d622504d0de7" class="">이 냉정한 판정 결과가 다음 경매에서 내 화면의 &#x27;땅값’을 결정합니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80d8-8e39-c706a97755cf" class="">——————</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8006-9a73-f0f95ba762d3" class="">결국 모바일 광고는 단순히 배너를 보여주는 기술이 아닙니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8058-aa22-e7e00d090173" class="">사람의 ‘가능성’을 실시간 가격으로 환산하는 미래 예측 산업입니다.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80c9-9c2f-dd8ce95d17ce" class="">💡이 경매장에서 진짜 중요한 건 무엇일까요?</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8083-b795-c68f5e304019" class="">➜ AI 투자자(DSP)의 예측력</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80f8-954f-d259ec180245" class="">➜ 결과를 증명해 다음 번 입찰가를 바꾸는 판독관(MMP)의 측정력</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80bc-9f8d-dc7d86119043" class="">사실 조금 더 들어가 보면,</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80e3-a617-e7b0abd86ee3" class="">투자자의 예측은 결국 판독관이 증명해준 성과 데이터를 바탕으로 정교해집니다. 점수판이 흐리면, 투자자는 잘못된 가격을 부를 수 밖에 없으니까요.</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8070-84b6-d7f7b7445328" class="">💭여러분이 광고주라면,</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80b9-b169-ed74b23a4cea" class="">투자자의 예측을 그대로 신뢰하시겠습니까?</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8083-9ba2-c308ef7ca609" class="">아니면 판독관을 통해 그 예측의 정확도를 높이시겠습니까?</p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8009-a517-f08bdd938e06" class=""><strong><a href="https://www.linkedin.com/search/results/all/?keywords=%23%EB%AA%A8%EB%B0%94%EC%9D%BC%EA%B4%91%EA%B3%A0&amp;origin=HASH_TAG_FROM_FEED">해시태그#모바일광고</a></strong></p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8093-bccf-e82efa05add9" class=""><strong><a href="https://www.linkedin.com/search/results/all/?keywords=%23adtech&amp;origin=HASH_TAG_FROM_FEED">해시태그#AdTech</a></strong></p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80e0-b969-f17b8601824f" class=""><strong><a href="https://www.linkedin.com/search/results/all/?keywords=%23ai&amp;origin=HASH_TAG_FROM_FEED">해시태그#AI</a></strong></p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8072-adf4-c34b2a75a6de" class=""><strong><a href="https://www.linkedin.com/search/results/all/?keywords=%23%EB%A7%88%EC%BC%80%ED%8C%85%EC%A0%84%EB%9E%B5&amp;origin=HASH_TAG_FROM_FEED">해시태그#마케팅전략</a></strong></p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8070-aa15-d1360b81aa35" class=""><strong><a href="https://www.linkedin.com/search/results/all/?keywords=%23%EC%BB%A4%EB%A6%AC%EC%96%B4%EC%9D%B8%EC%82%AC%EC%9D%B4%ED%8A%B8&amp;origin=HASH_TAG_FROM_FEED">해시태그#커리어인사이트</a></strong></p></div><div style="display:contents" dir="auto"><p id="317e882d-c310-8095-982d-e1c945eda987" class=""><strong><a href="https://www.linkedin.com/search/results/all/?keywords=%23mmp&amp;origin=HASH_TAG_FROM_FEED">해시태그#MMP</a></strong></p></div><div style="display:contents" dir="ltr"><figure id="317e882d-c310-80c2-8505-f0ca558d082b" class="image"><a href="%EB%A7%81%ED%81%AC%EB%93%9C%EC%9D%B8%20%EA%B8%80/1772333039562.jpeg"><img style="width:681.9896240234375px" src="%EB%A7%81%ED%81%AC%EB%93%9C%EC%9D%B8%20%EA%B8%80/1772333039562.jpeg"/></a></figure></div></details></li></ul></div><div style="display:contents" dir="auto"><p id="317e882d-c310-80e4-8d7e-c691c81679e7" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
