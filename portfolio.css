@@ -2454,7 +2454,7 @@ button {
     min-height: 44px;
   }
 
-  /* Hero — LinkedIn 모바일 프로필 스크린샷 기준 */
+  /* Hero — LinkedIn 모바일 프로필 (스크린샷 기준) */
   .hero-banner {
     height: 180px;
   }
@@ -2468,6 +2468,9 @@ button {
     flex-direction: column;
     padding: 0 16px 16px;
     gap: 0;
+    background: none;
+    border: none;
+    box-shadow: none;
   }
 
   .hero-avatar-wrap,
@@ -2486,7 +2489,7 @@ button {
 
   .hero-info {
     text-align: left;
-    margin-top: 12px;
+    margin-top: 8px;
   }
 
   .lang-toggle-wrap {
@@ -2494,42 +2497,73 @@ button {
   }
 
   .hero-archive-tagline {
-    font-size: 0.8rem;
-    margin-bottom: 4px;
+    font-size: 0.78rem;
+    margin-bottom: 2px;
   }
 
   .hero-name {
-    font-size: 1.35rem;
+    font-size: 1.4rem;
+    margin-bottom: 2px;
   }
 
   .hero-name-en {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
   }
 
   .hero-headline {
-    font-size: 0.9rem;
-    margin-top: 4px;
-    line-height: 1.4;
+    font-size: 0.88rem;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    line-height: 1.35;
+    max-width: 100%;
   }
 
   .hero-sub {
-    font-size: 0.82rem;
+    font-size: 0.8rem;
     color: var(--text3);
-    margin-top: 2px;
+    margin-bottom: 4px;
   }
 
   .hero-tags {
     justify-content: flex-start;
-    margin-top: 10px;
+    margin-top: 6px;
+    gap: 4px;
+  }
+
+  .htag {
+    font-size: 0.72rem;
+    padding: 3px 8px;
   }
 
   .hero-ctas {
     justify-content: flex-start;
-    margin-top: 12px;
+    margin-top: 10px;
+    gap: 8px;
+  }
+
+  .hero-ctas .btn-primary,
+  .hero-ctas .btn-ghost {
+    flex: 1;
+    text-align: center;
+    justify-content: center;
+    padding: 10px 0;
+    font-size: 0.88rem;
   }
 
   .hero-stats-box {
-    margin-top: 12px;
+    margin-top: 10px;
+    padding: 12px 16px;
+    gap: 1rem;
+    background: var(--bg);
+    border-radius: var(--radius);
+  }
+
+  .hstat-n {
+    font-size: 1rem;
+  }
+
+  .hstat-l {
+    font-size: 0.7rem;
   }
 
   .hero-ctas {
