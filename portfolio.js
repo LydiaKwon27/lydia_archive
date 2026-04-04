@@ -51,10 +51,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     applySiteSettings();
 
     renderGrid(POSTS);
-    // Show admin login only when ?admin is in the URL
-    if (window.location.search.includes('admin')) {
-        applyLoginUI();
-    }
+    applyLoginUI();
     document.getElementById('searchInput').addEventListener('input', handleSearch);
     // Login modal enter key
     const pwInput = document.getElementById('loginPwInput');
@@ -473,7 +470,7 @@ async function applyLoginUI() {
     const loginBtn = document.getElementById('adminLoginBtn');
     const logoutBtn = document.getElementById('adminLogoutBtn');
     const writeWrap = document.querySelector('.write-post-wrap');
-    if (loginBtn) loginBtn.style.display = 'none';
+    if (loginBtn) loginBtn.style.display = isLoggedIn ? 'none' : 'inline-flex';
     if (logoutBtn) logoutBtn.style.display = isLoggedIn ? 'inline-flex' : 'none';
     if (writeWrap) writeWrap.style.display = isLoggedIn ? 'flex' : 'none';
     if (isLoggedIn) {
