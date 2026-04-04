@@ -816,7 +816,7 @@ button {
   max-width: 1000px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 280px 1fr;
+  grid-template-columns: 320px 1fr;
   gap: 4rem;
   align-items: center;
 }
@@ -1192,7 +1192,7 @@ button {
   }
 
   .about-photo {
-    max-width: 260px;
+    max-width: 100%;
     margin: 0 auto;
   }
 
@@ -2850,7 +2850,7 @@ button {
   }
 
   .about-photo-wrap {
-    max-width: 200px;
+    max-width: 280px;
     margin: 0 auto;
   }
 

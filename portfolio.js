@@ -50,18 +50,19 @@ async function submitContact(e) {
     if (!name || !email || !message) return;
 
     const btn = document.querySelector('.contact-submit');
-    btn.textContent = '보내는 중...';
+    const lt = TRANSLATIONS[_currentLang] || TRANSLATIONS.ko;
+    btn.textContent = lt.contactSending;
     btn.disabled = true;
 
     const { error } = await _supabase.from('contacts').insert({ name, email, message });
 
     if (!error) {
         document.getElementById('contactForm').reset();
-        btn.textContent = '✅ 전송 완료!';
-        setTimeout(() => { btn.textContent = '메시지 보내기 →'; btn.disabled = false; }, 3000);
+        btn.textContent = lt.contactSent;
+        setTimeout(() => { btn.textContent = lt.contactSubmit; btn.disabled = false; }, 3000);
         showToast('✅ 메시지가 전송되었습니다!');
     } else {
-        btn.textContent = '메시지 보내기 →';
+        btn.textContent = lt.contactSubmit;
         btn.disabled = false;
         showToast('⚠️ 전송 실패. 다시 시도해주세요.');
     }
@@ -183,12 +184,13 @@ function renderGrid(posts) {
         return;
     }
     empty.style.display = 'none';
-    count.textContent = `${posts.length}개의 글`;
+    const t = TRANSLATIONS[_currentLang] || TRANSLATIONS.ko;
+    count.textContent = _currentLang === 'en' ? `${posts.length} ${t.resultsCount}` : `${posts.length}${t.resultsCount}`;
 
     const cats = loadCategories();
     grid.innerHTML = posts.map((p, i) => {
         const catObj = cats.find(c => c.id === p.cat);
-        const displayLabel = catObj ? catObj.labelEn : p.catLabel;
+        const displayLabel = catObj ? (_currentLang === 'en' ? catObj.labelEn : catObj.labelKo) : p.catLabel;
         return `
     <article class="post-card" data-cat="${p.cat}" style="animation-delay:${i * 0.07}s" onclick="isAdminMode ? void(0) : openPost(${p.id})">
       <div class="card-admin-btns">
@@ -214,7 +216,7 @@ function renderGrid(posts) {
         <p class="card-excerpt">${getPostExcerpt(p)}</p>
         <div class="card-footer">
           <span class="card-date">${formatDate(p.date)}</span>
-          <span class="card-cta">읽기 →</span>
+          <span class="card-cta">${t.cardCta}</span>
         </div>
       </div>
     </article>`;
@@ -265,7 +267,7 @@ function openPost(id) {
     const modal = document.getElementById('postModal');
     const cats = loadCategories();
     const catObj = cats.find(c => c.id === p.cat);
-    const displayLabel = catObj ? catObj.labelEn : p.catLabel;
+    const displayLabel = catObj ? (_currentLang === 'en' ? catObj.labelEn : catObj.labelKo) : p.catLabel;
 
     document.getElementById('modalTitle').textContent = getPostTitle(p);
     document.getElementById('modalBadge').textContent = displayLabel;
@@ -1909,6 +1911,7 @@ const TRANSLATIONS = {
         heroSub: 'Sales in SaaS X Marketing Tech X AI \u00b7 \ub300\ud55c\ubbfc\uad6d \uc11c\uc6b8',
         heroScrollBtn: '\uae00 \ubcf4\ub7ec\uac00\uae30 \u2193',
         heroLinkedInLink: 'LinkedIn \uc5f0\uacb0\ud558\uae30',
+        heroContactBtn: '\uc5f0\ub77d\ud558\uae30 \u2709',
         aboutLabel: 'About Me',
         aboutName: '\uad8c\uc9c0\uc724 (Lydia Kwon)',
         aboutP1: 'K-\ub4f7\ud2f0 \uae00\ub85c\ubc8c \uc138\uc77c\uc988 \uc778\ud134\uc744 \uc2dc\uc791\uc73c\ub85c, SaaS/IT \uc601\uc5c5 \uc778\ud134\uc744 \uac70\uce58\uba70 <strong>B2B \uc138\uc77c\uc988</strong>\uc5d0 \ud478 \ube60\uc9c4 \uc8fc\ub2c8\uc5b4\uc785\ub2c8\ub2e4.',
@@ -1919,6 +1922,22 @@ const TRANSLATIONS = {
         archiveSub: 'Sales \u00b7 MarTech \u00b7 AI \u00b7 Career\uc5d0 \uad00\ud55c \uc0dd\uac01\ub4e4',
         searchPlaceholder: '\uae00 \uc81c\ubaa9\uc774\ub098 \ud0a4\uc6cc\ub4dc\ub85c \uac80\uc0c9...',
         tabAll: '\uc804\uccb4',
+        cardCta: '\uc77d\uae30 \u2192',
+        resultsCount: '\uac1c\uc758 \uae00',
+        emptyTitle: '\uac80\uc0c9 \uacb0\uacfc\uac00 \uc5c6\uc2b5\ub2c8\ub2e4',
+        emptyDesc: '\ub2e4\ub978 \ud0a4\uc6cc\ub4dc\ub85c \uac80\uc0c9\ud574\ubcf4\uc138\uc694',
+        emptyBtn: '\uc804\uccb4 \ubcf4\uae30',
+        contactTitle: 'Get in Touch',
+        contactSub: '\uad81\uae08\ud55c \uc810\uc774\ub098 \uc81c\uc548\uc774 \uc788\ub2e4\uba74 \ud3b8\ud558\uac8c \uc5f0\ub77d\uc8fc\uc138\uc694',
+        contactNameLabel: '\uc774\ub984',
+        contactEmailLabel: '\uc774\uba54\uc77c',
+        contactMessageLabel: '\uba54\uc2dc\uc9c0',
+        contactNamePh: '\uc774\ub984\uc744 \uc785\ub825\ud558\uc138\uc694',
+        contactEmailPh: '\uc774\uba54\uc77c\uc744 \uc785\ub825\ud558\uc138\uc694',
+        contactMessagePh: '\ub0b4\uc6a9\uc744 \uc785\ub825\ud558\uc138\uc694',
+        contactSubmit: '\uba54\uc2dc\uc9c0 \ubcf4\ub0b4\uae30 \u2192',
+        contactSending: '\ubcf4\ub0b4\ub294 \uc911...',
+        contactSent: '\u2705 \uc804\uc1a1 \uc644\ub8cc!',
     },
     en: {
         langToggleBtn: '\ud83c\udf10 \ud55c\uad6d\uc5b4 \ubc84\uc804',
@@ -1928,6 +1947,7 @@ const TRANSLATIONS = {
         heroSub: 'Sales in SaaS X Marketing Tech X AI \u00b7 Seoul, South Korea',
         heroScrollBtn: 'Read Writing \u2193',
         heroLinkedInLink: 'Connect on LinkedIn',
+        heroContactBtn: 'Contact \u2709',
         aboutLabel: 'About Me',
         aboutName: 'Lydia Kwon',
         aboutP1: 'Starting from a K-Beauty global sales internship then SaaS/IT sales, I became deeply passionate about <strong>B2B sales</strong>.',
@@ -1938,6 +1958,22 @@ const TRANSLATIONS = {
         archiveSub: 'Thoughts on Sales \u00b7 MarTech \u00b7 AI \u00b7 Career',
         searchPlaceholder: 'Search by title or keyword...',
         tabAll: 'All',
+        cardCta: 'Read \u2192',
+        resultsCount: 'posts',
+        emptyTitle: 'No results found',
+        emptyDesc: 'Try a different keyword',
+        emptyBtn: 'View All',
+        contactTitle: 'Get in Touch',
+        contactSub: 'Have a question or suggestion? Feel free to reach out.',
+        contactNameLabel: 'Name',
+        contactEmailLabel: 'Email',
+        contactMessageLabel: 'Message',
+        contactNamePh: 'Enter your name',
+        contactEmailPh: 'Enter your email',
+        contactMessagePh: 'Enter your message',
+        contactSubmit: 'Send Message \u2192',
+        contactSending: 'Sending...',
+        contactSent: '\u2705 Sent!',
     }
 };
 
@@ -1978,6 +2014,43 @@ function applyLanguage(lang) {
     // "All" tab
     const allTab = document.querySelector('[data-cat="all"]');
     if (allTab) allTab.textContent = t.tabAll;
+
+    // Contact button in hero
+    setText('heroContactBtn', t.heroContactBtn);
+
+    // Contact section
+    const contactTitle = document.querySelector('#contact-section .sec-title');
+    const contactSub = document.querySelector('#contact-section .sec-sub');
+    if (contactTitle) contactTitle.textContent = t.contactTitle;
+    if (contactSub) contactSub.textContent = t.contactSub;
+
+    const nameLabel = document.querySelector('label[for="contactName"]');
+    const emailLabel = document.querySelector('label[for="contactEmail"]');
+    const msgLabel = document.querySelector('label[for="contactMessage"]');
+    if (nameLabel) nameLabel.textContent = t.contactNameLabel;
+    if (emailLabel) emailLabel.textContent = t.contactEmailLabel;
+    if (msgLabel) msgLabel.textContent = t.contactMessageLabel;
+
+    const nameInput = document.getElementById('contactName');
+    const emailInput2 = document.getElementById('contactEmail');
+    const msgInput = document.getElementById('contactMessage');
+    if (nameInput) nameInput.placeholder = t.contactNamePh;
+    if (emailInput2) emailInput2.placeholder = t.contactEmailPh;
+    if (msgInput) msgInput.placeholder = t.contactMessagePh;
+
+    const submitBtn = document.querySelector('.contact-submit');
+    if (submitBtn && !submitBtn.disabled) submitBtn.textContent = t.contactSubmit;
+
+    // Empty state
+    const emptyH3 = document.querySelector('#emptyState h3');
+    const emptyP = document.querySelector('#emptyState p');
+    const emptyBtn = document.querySelector('#emptyState .btn-ghost');
+    if (emptyH3) emptyH3.textContent = t.emptyTitle;
+    if (emptyP) emptyP.textContent = t.emptyDesc;
+    if (emptyBtn) emptyBtn.textContent = t.emptyBtn;
+
+    // Re-render category tabs with correct language
+    renderCategoryTabs();
 
     document.body.classList.toggle('lang-en', lang === 'en');
 }
