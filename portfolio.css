@@ -816,14 +816,14 @@ button {
   max-width: 1000px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 320px 1fr;
-  gap: 4rem;
+  grid-template-columns: 380px 1fr;
+  gap: 3rem;
   align-items: center;
 }
 
 .about-photo {
   width: 100%;
-  max-width: 320px;
+  max-width: 380px;
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
   object-fit: contain;
@@ -2877,7 +2877,7 @@ button {
   }
 
   .about-photo-wrap {
-    max-width: 280px;
+    max-width: 100%;
     margin: 0 auto;
   }
 
