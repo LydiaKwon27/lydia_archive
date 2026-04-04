@@ -172,7 +172,7 @@ button {
 .banner-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, transparent 60%, rgba(245, 247, 250, 0.5));
+  background: none;
 }
 
 .hero-profile-card {
@@ -2583,7 +2583,7 @@ button {
 
   /* Archive */
   .archive-inner {
-    padding: 2rem 1rem;
+    padding: 1.5rem 6px;
   }
 
   .tabs-wrap {
