@@ -40,6 +40,8 @@
                     style="display:none">🔐 로그인</button>
                 <button id="pwChangeBtn" class="nav-admin-btn" onclick="openPwChangeModal()" title="비밀번호 변경"
                     style="display:none">🔑 비밀번호 변경</button>
+                <button id="adminInboxBtn" class="nav-admin-btn" onclick="openInbox()" title="연락함"
+                    style="display:none">📬 <span class="inbox-badge" id="inboxBadge" style="display:none"></span></button>
                 <button id="adminLogoutBtn" class="nav-admin-btn nav-logout-btn" onclick="adminLogout()" title="로그아웃"
                     style="display:none">🔓 로그아웃</button>
             </div>
@@ -203,6 +205,19 @@
             </form>
         </div>
     </section>
+
+    <!-- ===== INBOX MODAL ===== -->
+    <div id="inboxModal" class="modal-overlay" onclick="if(event.target===this)closeInbox()">
+        <div class="inbox-modal-card">
+            <div class="login-modal-header">
+                <h3>📬 연락함</h3>
+                <button class="admin-close" onclick="closeInbox()">✕</button>
+            </div>
+            <div class="inbox-modal-body" id="inboxBody">
+                <div class="inbox-empty">불러오는 중...</div>
+            </div>
+        </div>
+    </div>
 
     <div id="postModal" class="modal-overlay" onclick="handleOverlayClick(event)">
         <div class="modal-card">

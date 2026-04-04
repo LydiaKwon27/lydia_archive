@@ -59,6 +59,77 @@ async function submitContact(e) {
     }
 }
 
+// ===================== ADMIN INBOX =====================
+async function openInbox() {
+    const modal = document.getElementById('inboxModal');
+    modal.classList.add('open');
+    await renderInbox();
+}
+
+function closeInbox() {
+    document.getElementById('inboxModal').classList.remove('open');
+}
+
+async function renderInbox() {
+    const body = document.getElementById('inboxBody');
+    body.innerHTML = '<div class="inbox-empty">불러오는 중...</div>';
+
+    const { data, error } = await _supabase.from('contacts').select('*').order('created_at', { ascending: false });
+
+    if (error) {
+        body.innerHTML = '<div class="inbox-empty">불러오기 실패. 다시 시도해주세요.</div>';
+        return;
+    }
+
+    if (!data || data.length === 0) {
+        body.innerHTML = '<div class="inbox-empty">받은 메시지가 없습니다.</div>';
+        return;
+    }
+
+    body.innerHTML = data.map(c => {
+        const d = new Date(c.created_at);
+        const dateStr = d.toLocaleDateString('ko-KR', { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+        const escapedName = (c.name || '').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        const escapedEmail = (c.email || '').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        const escapedMsg = (c.message || '').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br>');
+        return `<div class="inbox-item">
+            <div class="inbox-item-header">
+                <div class="inbox-item-info">
+                    <strong>${escapedName}</strong>
+                    <span class="inbox-item-email">${escapedEmail}</span>
+                </div>
+                <span class="inbox-item-date">${dateStr}</span>
+            </div>
+            <div class="inbox-item-message">${escapedMsg}</div>
+            <button class="inbox-delete-btn" onclick="deleteContact('${c.id}')">삭제</button>
+        </div>`;
+    }).join('');
+}
+
+async function deleteContact(id) {
+    if (!confirm('이 메시지를 삭제하시겠습니까?')) return;
+    const { error } = await _supabase.from('contacts').delete().eq('id', id);
+    if (!error) {
+        showToast('삭제되었습니다');
+        await renderInbox();
+        await updateInboxBadge();
+    } else {
+        showToast('삭제 실패. 다시 시도해주세요.');
+    }
+}
+
+async function updateInboxBadge() {
+    const badge = document.getElementById('inboxBadge');
+    if (!badge) return;
+    const { count, error } = await _supabase.from('contacts').select('*', { count: 'exact', head: true });
+    if (!error && count > 0) {
+        badge.textContent = count > 99 ? '99+' : count;
+        badge.style.display = 'inline-flex';
+    } else {
+        badge.style.display = 'none';
+    }
+}
+
 // ===================== STATE =====================
 let currentCat = 'all';
 let currentSearch = '';
@@ -2164,3 +2235,19 @@ savePost = async function () {
         _stopDraftAutoSave();
     }
 };
+
+// Show/hide inbox button and badge based on login state
+const _origApplyLoginUI4 = applyLoginUI;
+applyLoginUI = async function () {
+    await _origApplyLoginUI4();
+    const inboxBtn = document.getElementById('adminInboxBtn');
+    if (inboxBtn) {
+        inboxBtn.style.display = isLoggedIn ? 'inline-flex' : 'none';
+        if (isLoggedIn) updateInboxBadge();
+    }
+};
+
+// Escape key to close inbox modal
+document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && document.getElementById('inboxModal').classList.contains('open')) closeInbox();
+});
