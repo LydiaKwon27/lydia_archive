@@ -2583,7 +2583,7 @@ button {
 
   /* Archive */
   .archive-inner {
-    padding: 1.5rem 6px;
+    padding: 1rem 0;
   }
 
   .tabs-wrap {
@@ -2600,7 +2600,15 @@ button {
   /* 에이블리 스타일: 3열 컴팩트 카드 */
   .post-grid {
     grid-template-columns: repeat(3, 1fr);
-    gap: 6px;
+    gap: 2px;
+  }
+
+  .search-wrap {
+    margin: 0 8px 1rem;
+  }
+
+  .tabs-wrap {
+    padding: 0 4px;
   }
 
   .card-img-wrap {
