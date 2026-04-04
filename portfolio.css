@@ -2454,9 +2454,9 @@ button {
     min-height: 44px;
   }
 
-  /* Hero — LinkedIn 모바일 프로필 규격 */
+  /* Hero — LinkedIn 모바일 프로필 스크린샷 기준 */
   .hero-banner {
-    height: 120px;
+    height: 180px;
   }
 
   #hero {
@@ -2467,62 +2467,69 @@ button {
     display: flex;
     flex-direction: column;
     padding: 0 16px 16px;
-    gap: 4px;
+    gap: 0;
   }
 
   .hero-avatar-wrap,
   #hero-avatar-wrap {
-    width: 72px;
-    height: 72px;
-    margin-top: -36px;
+    width: 120px;
+    height: 120px;
+    margin-top: -60px;
     align-self: flex-start;
   }
 
   .hero-avatar {
-    width: 72px;
-    height: 72px;
-    border-width: 3px;
+    width: 120px;
+    height: 120px;
+    border: 4px solid white;
   }
 
   .hero-info {
     text-align: left;
-    margin-top: 8px;
+    margin-top: 12px;
+  }
+
+  .lang-toggle-wrap {
+    display: none;
   }
 
   .hero-archive-tagline {
-    font-size: 0.72rem;
+    font-size: 0.8rem;
+    margin-bottom: 4px;
   }
 
   .hero-name {
-    font-size: 1.12rem;
+    font-size: 1.35rem;
   }
 
   .hero-name-en {
-    font-size: 0.85rem;
+    font-size: 0.95rem;
   }
 
   .hero-headline {
-    font-size: 0.82rem;
-    margin-top: 2px;
+    font-size: 0.9rem;
+    margin-top: 4px;
+    line-height: 1.4;
   }
 
   .hero-sub {
-    font-size: 0.72rem;
+    font-size: 0.82rem;
     color: var(--text3);
+    margin-top: 2px;
   }
 
   .hero-tags {
     justify-content: flex-start;
-    margin-top: 8px;
+    margin-top: 10px;
   }
 
   .hero-ctas {
     justify-content: flex-start;
-    margin-top: 8px;
+    margin-top: 12px;
   }
 
   .hero-stats-box {
-    margin-top: 8px;
+    margin-top: 12px;
   }
 
   .hero-ctas {
@@ -2724,18 +2731,18 @@ button {
 
   .hero-avatar-wrap,
   #hero-avatar-wrap {
-    width: 64px;
-    height: 64px;
-    margin-top: -32px;
+    width: 100px;
+    height: 100px;
+    margin-top: -50px;
   }
 
   .hero-avatar {
-    width: 64px;
-    height: 64px;
+    width: 100px;
+    height: 100px;
   }
 
   .hero-name {
-    font-size: 1.05rem;
+    font-size: 1.2rem;
   }
 
   .sec-title {
