@@ -29,12 +29,41 @@ async function fetchPostsFromDB() {
             contentEn: row.content_en || '',
             linkedInUrl: row.linkedin_url || '',
             attachments: row.attachments || [],
-            sortOrder: row.sort_order || 0
+            sortOrder: row.sort_order || 0,
+            featured: row.featured || false
         });
     });
 }
 
 
+
+// ===================== FEATURED / HIGHLIGHTS =====================
+function renderFeatured() {
+    const section = document.getElementById('featuredSection');
+    const scroll = document.getElementById('featuredScroll');
+    if (!section || !scroll) return;
+
+    const featured = POSTS.filter(p => p.featured === true);
+    if (!featured.length) { section.style.display = 'none'; return; }
+
+    section.style.display = 'block';
+    const cats = loadCategories();
+    scroll.innerHTML = featured.map(p => {
+        const catObj = cats.find(c => c.id === p.cat);
+        const displayLabel = catObj ? (_currentLang === 'en' ? catObj.labelEn : catObj.labelKo) : p.catLabel;
+        const imgHtml = p.image
+            ? `<img class="featured-card-img" src="${p.image}" alt="${getPostTitle(p)}" loading="lazy" onerror="this.style.display='none'" />`
+            : `<div class="featured-card-img featured-card-img-emoji">${getCatEmoji(p.cat)}</div>`;
+        return `
+        <div class="featured-card" onclick="openPost(${p.id})">
+            ${imgHtml}
+            <div class="featured-card-body">
+                <span class="card-badge badge-${p.cat}">${displayLabel}</span>
+                <h4 class="featured-card-title">${getPostTitle(p)}</h4>
+            </div>
+        </div>`;
+    }).join('');
+}
 
 // ===================== LANGUAGE-AWARE GETTERS =====================
 function getPostTitle(p) { return (_currentLang === 'en' && p.titleEn) ? p.titleEn : p.title; }
@@ -157,6 +186,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     applySiteSettings();
 
     renderGrid(POSTS);
+    renderFeatured();
     await applyLoginUI();
     document.getElementById('searchInput').addEventListener('input', handleSearch);
     // Login modal enter key
@@ -2079,6 +2109,7 @@ function toggleLanguage() {
     applyLanguage(next);
     applySiteSettings();
     applyFilters(); // 글 카드도 해당 언어로 다시 렌더링
+    renderFeatured();
 }
 
 // ===================== POST PREVIEW =====================
