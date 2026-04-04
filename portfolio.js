@@ -1024,8 +1024,8 @@ const SITE_TEXT_IDS = [
     'heroNameKo', 'heroNameEn',
     'heroHeadline', 'heroSub',
     'statN1', 'statL1', 'statN2', 'statL2', 'statN3', 'statL3',
-    'aboutLabel', 'aboutName',
-    'aboutP1', 'aboutP2', 'aboutP3'
+    'aboutLabel', 'aboutName', 'aboutRole',
+    'aboutP1', 'aboutP2', 'aboutP3', 'aboutP4', 'aboutP5'
 ];
 const SITE_TAG_CONTAINERS = ['heroTagsWrap', 'aboutTagsWrap'];
 
@@ -1914,11 +1914,15 @@ const TRANSLATIONS = {
         heroLinkedInLink: 'LinkedIn \uc5f0\uacb0\ud558\uae30',
         heroContactBtn: '\uc5f0\ub77d\ud558\uae30 📩',
         aboutLabel: 'About Me',
-        aboutName: '\uad8c\uc9c0\uc724 (Lydia Kwon)',
-        aboutP1: 'K-\ub4f7\ud2f0 \uae00\ub85c\ubc8c \uc138\uc77c\uc988 \uc778\ud134\uc744 \uc2dc\uc791\uc73c\ub85c, SaaS/IT \uc601\uc5c5 \uc778\ud134\uc744 \uac70\uce58\uba70 <strong>B2B \uc138\uc77c\uc988</strong>\uc5d0 \ud478 \ube60\uc9c4 \uc8fc\ub2c8\uc5b4\uc785\ub2c8\ub2e4.',
-        aboutP2: '\ucf5c\ub4dc\ucf5c 5\uc8fc \ub9cc\uc5d0 <strong>70\uac1c \ubbf8\ud305</strong>\uc744 \ub9cc\ub4e4\uace0, 7\uac1c \uc774\uc0c1\uc758 \uc0b0\uc5c5\uc5d0\uc11c \ud30c\uc774\ud504\ub77c\uc778\uc744 \uad6c\ucd95\ud55c \uacbd\ud5d8\uc744 \uac00\uc9c0\uace0 \uc788\uc2b5\ub2c8\ub2e4. \uace0\uac1d\uc758 \uc5b8\uc5b4\ub85c \uc194\ub8e8\uc158\uc744 \ubc88\uc5ed\ud558\ub294 \uac83\uc774 \uc138\uc77c\uc988\uc758 \ubcf8\uc9c8\uc774\ub77c\uace0 \ubbff\uc2b5\ub2c8\ub2e4.',
-        aboutP3: '\ub9c1\ud06c\ub4dc\uc778\uc5d0 \uae00\uc744 \uc4f0\ub294 \uc774\uc720\ub294 \ud558\ub098\uc785\ub2c8\ub2e4 \u2014 \uae34 \uace0\ubbfc\uc5d0 \ub9c8\uce68\ud45c\ub97c \uc2f9\uace0, \uac19\uc740 \uace0\ubbfc\uc744 \ud558\ub294 \uc8fc\ub2c8\uc5b4\ub4e4\uacfc \ub098\ub204\uae30 \uc704\ud574\uc11c\uc785\ub2c8\ub2e4.',
-        aboutLinkedInLink: 'LinkedIn \uc5f0\uacb0\ud558\uae30 \u2192',
+        aboutName: '권지윤 (Lydia Kwon)',
+        aboutP1: 'K-뷰티 브랜드의 글로벌 영업 환경에서 커리어를 시작했습니다. 해외 바이어와의 단가 협상, 거래 체결, 물류 및 선적 관리까지 경험하며 <strong>B2B 영업이 실제 비즈니스로 연결되는 과정</strong>을 가까이에서 배웠습니다.',
+        aboutP2: '이후 AI 기반 SaaS 제품의 B2B 인사이드 세일즈를 경험하며 콜드콜을 통해 잠재 고객을 발굴하고, 초기 접점에서 고객과 대화를 만드는 경험을 했습니다. 이 경험을 통해 단순히 제품을 설명하는 일이 아니라 <strong>고객의 비즈니스 구조와 문제를 이해하는 세일즈 역량</strong>을 기를 수 있었습니다.',
+        aboutP3: '현재는 빠르게 변화하는 MarTech 시장에서 Inside Sales 경험을 기반으로 <strong>Field Sales 역량을 확장</strong>하고 있습니다. 기능 중심의 설명을 넘어, 고객의 비즈니스 구조와 시장 흐름을 함께 이해하고 성장 전략을 고민하는 세일즈를 지향합니다.',
+        aboutP4: '또한 AI를 활용한 콘텐츠 제작, 바이브 코딩을 통한 데이터 대시보드 실험, 커리어와 산업에 대한 인사이트 기록 등을 통해 세일즈 직무에 국한되지 않고 <strong>시장·데이터·기술에 대한 시야</strong>를 함께 넓히고 있습니다.',
+        aboutP5: 'AI가 빠르게 시장을 바꾸고 있습니다. 고객의 비즈니스 구조가 달라지고, 소비자의 행동도 계속 변화하고 있습니다. 저는 이러한 변화를 읽고, 고객의 성장을 함께 고민하며 <strong>실질적인 해결책을 제시하는 세일즈 컨설턴트</strong>로 성장하고자 합니다.',
+        aboutRole: 'Sales Associate | B2B SaaS MarTech | Airbridge',
+        aboutBullets: ['💬 5주 동안 7개 산업군에서 70개의 옵티를 만든 세일즈', '🤖 AI 콘텐츠와 바이브코딩을 좋아하는 AI 친화적 주니어', '🤹🏻 사람을 연결하는 에너지 넘치는 링크드인 Connector'],
+        aboutLinkedInLink: 'LinkedIn 연결하기 →',
         archiveTitle: 'Writing Archive',
         archiveSub: 'Sales \u00b7 MarTech \u00b7 AI \u00b7 Career\uc5d0 \uad00\ud55c \uc0dd\uac01\ub4e4',
         searchPlaceholder: '\uae00 \uc81c\ubaa9\uc774\ub098 \ud0a4\uc6cc\ub4dc\ub85c \uac80\uc0c9...',
@@ -1952,9 +1956,13 @@ const TRANSLATIONS = {
         heroContactBtn: 'Contact 📩',
         aboutLabel: 'About Me',
         aboutName: 'Lydia Kwon',
-        aboutP1: 'Starting from a K-Beauty global sales internship then SaaS/IT sales, I became deeply passionate about <strong>B2B sales</strong>.',
-        aboutP2: 'I generated <strong>70+ meetings</strong> in 5 weeks of cold calling and built pipelines across 7+ industries. I believe translating solutions in the customer\'s language is the essence of sales.',
-        aboutP3: 'My reason for writing on LinkedIn is simple \u2014 to put a period on long thoughts and share them with juniors facing the same questions.',
+        aboutP1: 'I started my career in the global sales environment of a K-beauty brand, where I gained hands-on experience in B2B sales. I worked closely with overseas buyers on price negotiations, deal closures, and logistics coordination, which gave me a practical understanding of <strong>how B2B sales translate into real business operations</strong>.',
+        aboutP2: 'I later moved into B2B inside sales for an AI-based SaaS product, where I conducted cold calls and sourced potential customers. Through these early conversations with prospects, I learned that sales is not just about explaining a product, but about <strong>understanding a customer\'s business structure and challenges</strong>.',
+        aboutP3: 'Today, I am <strong>expanding toward Field Sales</strong> within the fast-changing MarTech landscape, building on my inside sales background. Rather than focusing only on product features, I aim to understand how a customer\'s business works and how technology can support their growth.',
+        aboutP4: 'I also experiment with AI-powered content creation, data dashboards through vibe coding, and regularly write about career and industry insights \u2014 broadening my perspective beyond sales into <strong>market, data, and technology</strong>.',
+        aboutP5: 'AI is rapidly reshaping the market. Business models are evolving, and consumer behavior continues to change. I aim to grow into a <strong>sales consultant who helps customers navigate change</strong> and find practical ways to grow their business.',
+        aboutRole: 'Sales Associate | B2B SaaS MarTech | Airbridge',
+        aboutBullets: ['\uD83D\uDCAC Generated 70 opportunities across 7 industries in 5 weeks', '\uD83E\uDD16 AI-friendly junior who loves AI content & vibe coding', '\uD83E\uDD39\uD83C\uDFFB An energetic LinkedIn Connector who bridges people'],
         aboutLinkedInLink: 'Connect on LinkedIn \u2192',
         archiveTitle: 'Writing Archive',
         archiveSub: 'Thoughts on Sales \u00b7 MarTech \u00b7 AI \u00b7 Career',
@@ -2004,6 +2012,14 @@ function applyLanguage(lang) {
     setText('aboutP1', t.aboutP1);
     setText('aboutP2', t.aboutP2);
     setText('aboutP3', t.aboutP3);
+    if (t.aboutP4) setText('aboutP4', t.aboutP4);
+    if (t.aboutP5) setText('aboutP5', t.aboutP5);
+    if (t.aboutRole) setText('aboutRole', t.aboutRole);
+    // aboutBullets 언어 전환
+    const bulletsEl = document.getElementById('aboutBullets');
+    if (bulletsEl && t.aboutBullets) {
+        bulletsEl.innerHTML = t.aboutBullets.map(b => `<p>${b}</p>`).join('');
+    }
     setText('aboutLinkedInLink', t.aboutLinkedInLink);
 
     const si = document.getElementById('searchInput');
