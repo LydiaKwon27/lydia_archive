@@ -1908,6 +1908,7 @@ const TRANSLATIONS = {
         heroArchiveTagline: 'Lydia\uc758 \ub9c1\ud06c\ub4dc\uc778 \ucee8\ud150\uce20 \uc544\uce74\uc774\ube0c\uc785\ub2c8\ub2e4.',
         heroNameKo: '\uad8c\uc9c0\uc724',
         heroNameEn: '(Lydia Kwon)',
+        heroHeadline: '웹에서 앱으로, 끊기지 않는 유저 여정을 만듭니다 | B2B SaaS Sales',
         heroSub: 'Sales in SaaS X Marketing Tech X AI \u00b7 \ub300\ud55c\ubbfc\uad6d \uc11c\uc6b8',
         heroScrollBtn: '\uae00 \ubcf4\ub7ec\uac00\uae30 \u2193',
         heroLinkedInLink: 'LinkedIn \uc5f0\uacb0\ud558\uae30',
@@ -1944,6 +1945,7 @@ const TRANSLATIONS = {
         heroArchiveTagline: "Lydia's LinkedIn Content Archive.",
         heroNameKo: 'Lydia',
         heroNameEn: '',
+        heroHeadline: 'Growth Starts with User Insight, Scaled with AI | B2B SaaS Sales | AdTech X MarTech',
         heroSub: 'Sales in SaaS X Marketing Tech X AI \u00b7 Seoul, South Korea',
         heroScrollBtn: 'Read Writing \u2193',
         heroLinkedInLink: 'Connect on LinkedIn',
@@ -1991,6 +1993,7 @@ function applyLanguage(lang) {
 
     setText('langToggleBtn', t.langToggleBtn);
     setText('heroArchiveTagline', t.heroArchiveTagline);
+    if (t.heroHeadline) setText('heroHeadline', t.heroHeadline);
     setText('heroNameKo', t.heroNameKo);
     setText('heroNameEn', t.heroNameEn);
     setText('heroSub', t.heroSub);
