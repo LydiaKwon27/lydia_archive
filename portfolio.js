@@ -1462,6 +1462,12 @@ applyLoginUI = async function () {
 // Call on DOMContentLoaded (append to existing handler by using a second listener)
 document.addEventListener('DOMContentLoaded', () => {
     initDynamicCategories();
+
+    // Scroll-to-top button
+    window.addEventListener('scroll', () => {
+        const btn = document.getElementById('scrollTopBtn');
+        if (btn) btn.style.display = window.scrollY > 400 ? 'flex' : 'none';
+    });
 });
 
 // Update HTML: tabs wrap needs id="tabsWrap"

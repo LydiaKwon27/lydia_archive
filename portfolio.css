@@ -2440,33 +2440,45 @@ button {
 
   .nav-links a {
     font-size: 0.78rem;
-    padding: 4px 8px;
+    padding: 8px 12px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
   }
 
   .nav-admin-btn {
-    font-size: 0.72rem;
-    padding: 5px 10px;
+    font-size: 0.78rem;
+    padding: 8px 14px;
+    min-height: 44px;
   }
 
   /* Hero */
+  .hero-banner {
+    height: 140px;
+  }
+
+  #hero {
+    padding-top: 50px;
+  }
+
   .hero-profile-card {
     flex-direction: column;
-    padding: 1.25rem 1rem 1rem;
-    gap: 0.75rem;
+    padding: 1rem 0.75rem 0.75rem;
+    gap: 0.5rem;
   }
 
   .hero-avatar-wrap,
   #hero-avatar-wrap {
-    width: 80px;
-    height: 80px;
+    width: 70px;
+    height: 70px;
   }
 
   .hero-name {
-    font-size: 1.4rem;
+    font-size: 1.3rem;
   }
 
   .hero-headline {
-    font-size: 0.82rem;
+    font-size: 0.8rem;
   }
 
   .hero-ctas {
@@ -2487,6 +2499,20 @@ button {
     justify-content: center;
   }
 
+  /* Search */
+  #searchInput {
+    min-height: 48px;
+    font-size: 1rem;
+  }
+
+  /* General touch targets */
+  .hero-ctas .btn-primary,
+  .hero-ctas .btn-ghost,
+  .btn-primary,
+  .btn-ghost {
+    min-height: 44px;
+  }
+
   /* Archive */
   .archive-inner {
     padding: 2rem 1rem;
@@ -2498,8 +2524,9 @@ button {
   }
 
   .tab {
-    font-size: 0.75rem;
-    padding: 6px 12px;
+    font-size: 0.78rem;
+    padding: 8px 14px;
+    min-height: 44px;
   }
 
   .post-grid {
@@ -2523,6 +2550,17 @@ button {
     margin: 0 auto;
   }
 
+  /* Login modal */
+  .login-modal-card {
+    width: 90vw;
+    max-width: 400px;
+  }
+
+  .login-modal-body input[type="password"] {
+    min-height: 44px;
+    font-size: 1rem;
+  }
+
   /* Modal */
   .modal-card {
     width: 100%;
@@ -2533,6 +2571,17 @@ button {
 
   .modal-header {
     padding: 0.75rem 1rem;
+  }
+
+  .modal-back {
+    font-size: 0.95rem;
+    padding: 8px 4px;
+    min-height: 44px;
+  }
+
+  .modal-back svg {
+    width: 20px;
+    height: 20px;
   }
 
   .modal-body {
@@ -2580,8 +2629,22 @@ button {
 }
 
 @media (max-width: 480px) {
+  .hero-banner {
+    height: 100px;
+  }
+
+  .hero-profile-card {
+    padding: 0.75rem 0.5rem 0.5rem;
+  }
+
+  .hero-avatar-wrap,
+  #hero-avatar-wrap {
+    width: 60px;
+    height: 60px;
+  }
+
   .hero-name {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
   }
 
   .sec-title {
@@ -2933,4 +2996,40 @@ button {
   background: #ef4444;
   color: #fff;
   border-color: #ef4444;
+}
+
+/* ===== SCROLL TO TOP BUTTON ===== */
+.scroll-top-btn {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  font-size: 1.25rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(59, 110, 255, 0.3);
+  z-index: 999;
+  transition: opacity 0.25s, transform 0.25s;
+  opacity: 0.9;
+}
+
+.scroll-top-btn:hover {
+  opacity: 1;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+  .scroll-top-btn {
+    bottom: 1.25rem;
+    right: 1.25rem;
+    width: 44px;
+    height: 44px;
+  }
 }
