@@ -1544,10 +1544,10 @@ const DEFAULT_CATEGORIES = [
     { id: 'career', labelKo: '🚀 커리어 여정', labelEn: 'Career Journey' },
     { id: 'sales', labelKo: '📊 세일즈 플레이북', labelEn: 'Sales Playbook' },
     { id: 'martech', labelKo: '🔮 마테크 & 소비자', labelEn: 'MarTech & Consumer' },
-    { id: 'ai', labelKo: '🤖 AI 실험실', labelEn: 'AI Experiments' },
+    { id: 'ai', labelKo: '🤖 AI 컨텐츠', labelEn: 'AI Content' },
     { id: 'networking', labelKo: '🤝 네트워킹', labelEn: 'Networking' },
     { id: 'claudecode', labelKo: '🧑‍💻 Claude Code', labelEn: 'Claude Code' },
-    { id: 'linkedin', labelKo: '💬 링크드인 일기', labelEn: 'LinkedIn Diary' }
+    { id: 'linkedin', labelKo: '💡 링크드인 노하우', labelEn: 'LinkedIn Tips' }
 ];
 
 function loadCategories() {
