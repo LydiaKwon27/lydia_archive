@@ -2608,11 +2608,11 @@ button {
 
   /* Hero — LinkedIn 모바일 프로필 (스크린샷 기준) */
   .hero-banner {
-    height: 180px;
+    height: 200px;
   }
 
   #hero {
-    padding-top: 50px;
+    padding-top: 0;
   }
 
   .hero-profile-card {
