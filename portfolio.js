@@ -1946,8 +1946,8 @@ const TRANSLATIONS = {
     en: {
         langToggleBtn: '\ud83c\udf10 \ud55c\uad6d\uc5b4 \ubc84\uc804',
         heroArchiveTagline: "Lydia's LinkedIn Content Archive.",
-        heroNameKo: 'Lydia',
-        heroNameEn: '',
+        heroNameKo: 'Jiyoon Kwon',
+        heroNameEn: '(Lydia)',
         heroHeadline: 'Growth Starts with User Insight, Scaled with AI | B2B SaaS Sales | AdTech X MarTech',
         heroSub: 'Sales in SaaS X Marketing Tech X AI \u00b7 Seoul, South Korea',
         heroScrollBtn: 'Read Writing \u2193',
