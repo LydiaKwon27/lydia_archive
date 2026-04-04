@@ -566,11 +566,29 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+  background: linear-gradient(135deg, #f0f4ff, #e8ecf8);
 }
 
-.card-img-wrap.card-img-emoji span {
-  font-size: 3rem;
+/* 카테고리별 파스텔 배경 */
+.card-img-wrap.card-img-emoji[data-cat="career"] { background: linear-gradient(135deg, #fef9c3, #fef3c7); }
+.card-img-wrap.card-img-emoji[data-cat="sales"] { background: linear-gradient(135deg, #d1fae5, #a7f3d0); }
+.card-img-wrap.card-img-emoji[data-cat="martech"] { background: linear-gradient(135deg, #cffafe, #a5f3fc); }
+.card-img-wrap.card-img-emoji[data-cat="ai"] { background: linear-gradient(135deg, #ede9fe, #ddd6fe); }
+.card-img-wrap.card-img-emoji[data-cat="networking"] { background: linear-gradient(135deg, #fce7f3, #fbcfe8); }
+.card-img-wrap.card-img-emoji[data-cat="claudecode"] { background: linear-gradient(135deg, #e0e7ff, #c7d2fe); }
+.card-img-wrap.card-img-emoji[data-cat="linkedin"] { background: linear-gradient(135deg, #dbeafe, #bfdbfe); }
+
+.card-img-wrap.card-img-emoji span.card-emoji-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #1e293b;
+  line-height: 1.4;
+  padding: 1.2rem;
+  text-align: center;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .card-img-wrap img {
