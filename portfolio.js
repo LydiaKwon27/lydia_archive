@@ -1993,9 +1993,9 @@ function applyLanguage(lang) {
 
     setText('langToggleBtn', t.langToggleBtn);
     setText('heroArchiveTagline', t.heroArchiveTagline);
-    if (t.heroHeadline) setText('heroHeadline', t.heroHeadline);
     setText('heroNameKo', t.heroNameKo);
     setText('heroNameEn', t.heroNameEn);
+    if (t.heroHeadline) setText('heroHeadline', t.heroHeadline);
     setText('heroSub', t.heroSub);
     setText('heroScrollBtn', t.heroScrollBtn);
     setText('heroLinkedInLink', t.heroLinkedInLink);
