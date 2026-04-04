@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     applySiteSettings();
 
     renderGrid(POSTS);
-    applyLoginUI();
+    await applyLoginUI();
     document.getElementById('searchInput').addEventListener('input', handleSearch);
     // Login modal enter key
     const pwInput = document.getElementById('loginPwInput');
