@@ -199,14 +199,13 @@ function renderGrid(posts) {
         <button class="card-edit-btn" onclick="event.stopPropagation();openPostEditor(${p.id})">✏ 수정</button>
         <button class="card-del-btn" onclick="event.stopPropagation();quickDeletePost(${p.id})">✕</button>
       </div>
-      <div class="card-img-wrap">
-        ${p.imageType === 'img'
-                ? `<img src="${p.image}" alt="${p.title}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" /><div class="card-img-placeholder" style="display:none">${getCatEmoji(p.cat)}</div>`
-                : p.imageType === 'pdf'
-                    ? `<div class="card-pdf-thumb-wrap"><iframe src="${p.image}#toolbar=0&navpanes=0&scrollbar=0&zoom=FitH&page=1" class="pdf-thumb-frame" tabindex="-1" scrolling="no"></iframe></div>`
-                    : `<div class="card-img-placeholder">${p.imageEmoji}</div>`}
+      ${p.imageType === 'img' && p.image ? `<div class="card-img-wrap">
+        <img src="${p.image}" alt="${getPostTitle(p)}" loading="lazy" onerror="this.parentElement.style.display='none'" />
         <div class="card-img-overlay"></div>
-      </div>
+      </div>` : p.imageType === 'pdf' ? `<div class="card-img-wrap">
+        <div class="card-pdf-thumb-wrap"><iframe src="${p.image}#toolbar=0&navpanes=0&scrollbar=0&zoom=FitH&page=1" class="pdf-thumb-frame" tabindex="-1" scrolling="no"></iframe></div>
+        <div class="card-img-overlay"></div>
+      </div>` : ''}
       <div class="card-body">
         <div class="card-badge-row">
           <span class="card-badge badge-${p.cat}">${displayLabel}</span>
