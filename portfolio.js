@@ -205,7 +205,7 @@ function renderGrid(posts) {
       </div>` : p.imageType === 'pdf' ? `<div class="card-img-wrap">
         <div class="card-pdf-thumb-wrap"><iframe src="${p.image}#toolbar=0&navpanes=0&scrollbar=0&zoom=FitH&page=1" class="pdf-thumb-frame" tabindex="-1" scrolling="no"></iframe></div>
         <div class="card-img-overlay"></div>
-      </div>` : ''}
+      </div>` : `<div class="card-img-wrap card-img-emoji"><span>${getCatEmoji(p.cat)}</span></div>`}
       <div class="card-body">
         <div class="card-badge-row">
           <span class="card-badge badge-${p.cat}">${displayLabel}</span>
