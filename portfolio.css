@@ -826,7 +826,7 @@ button {
   max-width: 420px;
   border-radius: 16px;
   box-shadow: var(--shadow-lg);
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .about-role {
