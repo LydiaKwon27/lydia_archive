@@ -14,6 +14,7 @@
         rel="stylesheet" />
     <link rel="stylesheet" href="portfolio.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 </head>
 
 <body>
@@ -27,11 +28,10 @@
                     onclick="document.getElementById('archive').scrollIntoView({behavior:'smooth'});return false;">Writing</a>
                 <a href="#"
                     onclick="document.getElementById('about-section').scrollIntoView({behavior:'smooth'});return false;">About</a>
-                <a class="nav-cta" href="https://www.linkedin.com/in/" target="_blank" rel="noopener">LinkedIn →</a>
+                <a class="nav-cta" href="https://www.linkedin.com/in/%EC%A7%80%EC%9C%A4-%EA%B6%8C-528452276/" target="_blank" rel="noopener">LinkedIn →</a>
                 <button id="adminLoginBtn" class="nav-admin-btn" onclick="openLoginModal()" title="관리자 로그인"
                     style="display:none">🔐 로그인</button>
-                <button id="adminChangePwBtn" class="nav-admin-btn" onclick="openSetPasswordModal(true)" title="비밀번호 변경"
-                    style="display:none">🔑 비밀번호 변경</button>
+                <!-- password change removed: use Supabase dashboard -->
                 <button id="adminLogoutBtn" class="nav-admin-btn nav-logout-btn" onclick="adminLogout()" title="로그아웃"
                     style="display:none">🔓 로그아웃</button>
             </div>
@@ -78,7 +78,7 @@
                     <button class="btn-primary" id="heroScrollBtn"
                         onclick="document.getElementById('archive').scrollIntoView({behavior:'smooth'})">글 보러가기
                         ↓</button>
-                    <a class="btn-ghost" id="heroLinkedInLink" href="https://www.linkedin.com/in/" target="_blank"
+                    <a class="btn-ghost" id="heroLinkedInLink" href="https://www.linkedin.com/in/%EC%A7%80%EC%9C%A4-%EA%B6%8C-528452276/" target="_blank"
                         rel="noopener">LinkedIn 연결하기</a>
                 </div>
             </div>
@@ -163,7 +163,7 @@
                     <span class="about-tag">#콜드콜</span><span class="about-tag">#커리어전환</span>
                     <span class="about-tag">#SalesOps</span><span class="about-tag">#MarTech</span>
                 </div>
-                <a id="aboutLinkedInLink" class="btn-primary" href="https://www.linkedin.com/in/" target="_blank"
+                <a id="aboutLinkedInLink" class="btn-primary" href="https://www.linkedin.com/in/%EC%A7%80%EC%9C%A4-%EA%B6%8C-528452276/" target="_blank"
                     rel="noopener">LinkedIn 연결하기 →</a>
             </div>
         </div>
@@ -326,9 +326,11 @@
                 <button class="admin-close" onclick="closeLoginModal()">✕</button>
             </div>
             <div class="login-modal-body">
+                <label for="loginEmailInput">이메일</label>
+                <input type="email" id="loginEmailInput" placeholder="이메일을 입력하세요" autocomplete="email" />
                 <label for="loginPwInput">비밀번호</label>
                 <input type="password" id="loginPwInput" placeholder="비밀번호를 입력하세요" autocomplete="current-password" />
-                <p id="loginError" class="login-error" style="display:none">❌ 비밀번호가 올바르지 않습니다</p>
+                <p id="loginError" class="login-error" style="display:none">❌ 이메일 또는 비밀번호가 올바르지 않습니다</p>
             </div>
             <div class="login-modal-footer">
                 <button class="btn-ghost" onclick="closeLoginModal()">취소</button>
@@ -337,31 +339,7 @@
         </div>
     </div>
 
-    <!-- ===== SET / CHANGE PASSWORD MODAL ===== -->
-    <div id="setPwModal" class="modal-overlay" onclick="if(event.target===this)closeSetPasswordModal()">
-        <div class="login-modal-card">
-            <div class="login-modal-header">
-                <h3 id="setPwTitle">비밀번호 변경</h3>
-                <button class="admin-close" onclick="closeSetPasswordModal()">✕</button>
-            </div>
-            <div class="login-modal-body">
-                <p id="setPwDesc" style="font-size:0.85rem;color:var(--text2);margin-bottom:0.5rem">현재 비밀번호를 먼저 확인하세요.
-                </p>
-                <label for="setPwCurrentInput">현재 비밀번호</label>
-                <input type="password" id="setPwCurrentInput" placeholder="현재 비밀번호 입력"
-                    autocomplete="current-password" />
-                <label for="setPwInput">새 비밀번호 <span style="font-weight:400;color:var(--text3)">(4자 이상)</span></label>
-                <input type="password" id="setPwInput" placeholder="새 비밀번호 입력" autocomplete="new-password" />
-                <label for="setPwConfirm">새 비밀번호 확인</label>
-                <input type="password" id="setPwConfirm" placeholder="새 비밀번호 다시 입력" autocomplete="new-password" />
-                <p id="setPwError" class="login-error" style="display:none"></p>
-            </div>
-            <div class="login-modal-footer">
-                <button class="btn-ghost" onclick="closeSetPasswordModal()">취소</button>
-                <button class="btn-primary" onclick="submitSetPassword()">변경</button>
-            </div>
-        </div>
-    </div>
+    <!-- Password change modal removed: use Supabase dashboard -->
 
     <!-- ===== RICH TEXT FORMAT TOOLBAR ===== -->
     <div id="formatToolbar" class="format-toolbar" style="display:none">
@@ -447,12 +425,6 @@
         </div>
     </div>
 
-    <!-- Error catcher -->
-    <script>
-        window.onerror = function (msg, url, line, col, error) {
-            alert("Error in JS!\n" + msg + "\nLine: " + line);
-        };
-    </script>
     <script src="portfolio.js"></script>
 
 </body>

@@ -1,479 +1,36 @@
-window.onerror = function (msg, url, line, col, error) { alert("JS Error: " + msg + "\\nLine: " + line); };
+// ===================== SUPABASE CLIENT =====================
+const SUPABASE_URL = 'https://saubsoroohbdnihlfhkp.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNhdWJzb3Jvb2hiZG5paGxmaGtwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUzMTI2NzAsImV4cCI6MjA5MDg4ODY3MH0.DWtBT4Fes3U12t4Xw4kv-QR3FxSEGTx53CEFi19WlKw';
+const _supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
 // ===================== POST DATA =====================
-const POSTS = [
-    {
-        id: 1,
-        cat: 'career',
-        catLabel: 'Career Journey',
-        date: '2025-01',
-        title: 'K-뷰티를 팔던 내가, SaaS를 선택한 이유',
-        excerpt: '화장품 세일즈 인턴에서 SaaS 세일즈로 전환한 이유. 시장 모멘텀이 아닌 고객의 문제를 기준으로 성과를 만드는 구조를 원했다.',
-        image: 'pdf1_thumb.png',
-        imageType: 'img',
-        imageEmoji: '🌏',
-        hashtags: ['커리어전환', 'SaaS', 'B2BSales', 'GlobalSales'],
-        content: `"지금 K-뷰티 안 하면 안 돼."
-"Global Sales는 2~3년만 지나면 부르는 곳 진짜 많아."
+let POSTS = [];
+
+// Fetch posts from Supabase and populate POSTS array
+async function fetchPostsFromDB() {
+    const { data, error } = await _supabase.from('posts').select('*').order('sort_order');
+    if (error) { console.error('Failed to load posts:', error); return; }
+    POSTS.length = 0;
+    (data || []).forEach(row => {
+        POSTS.push({
+            id: row.id,
+            cat: row.cat,
+            catLabel: row.cat_label,
+            date: row.date,
+            title: row.title,
+            excerpt: row.excerpt || '',
+            image: row.image || '',
+            imageType: row.image_type || 'img',
+            imageEmoji: row.image_emoji || '',
+            hashtags: row.hashtags || [],
+            content: row.content,
+            linkedInUrl: row.linkedin_url || '',
+            attachments: row.attachments || [],
+            sortOrder: row.sort_order || 0
+        });
+    });
+}
 
-첫 인턴 때 자주 들었던 말입니다.
-
-처음 실리콘투 방문 미팅을 가던 날의 설렘을 아직도 기억합니다. 사내 외국인 직원들이 숏폼 콘텐츠를 촬영하고, 라운지는 유명한 국내 인디 브랜드들이 빼곡히 채워져 있었습니다. K-뷰티의 성장을 실감할 수 있는 공간이었습니다.
-
-해외 바이어 미팅도 마찬가지였습니다. 덴마크, 폴란드, 인도네시아, 카자흐스탄… 런칭한 지 3개월 된 신생 브랜드를 확보하기 위해, 바이어들은 자신의 유통 역량과 시장 인사이트를 열렬하게 어필합니다.
-
-——————
-
-하지만 7개월 동안 제가 했던 세일즈는 명확히 2가지로 나뉩니다.
-
-☑️ 이미 유명 브랜드를 많이 보유한 유통사에 "우리도 라인업에 넣어달라"고 설득하는 세일즈
-☑️ 수요가 높은 글로벌 시장에서는 MOQ/공급가 조건을 최대한 지키기 위해 '조건'으로 싸우는 세일즈
-
-그 뜨거운 열기 속에서 제가 세일즈 하려는 이유가 선명해졌습니다.
-
-❶ 문제 이해가 먼저다.
-고객이 가진 문제를 깊이 이해해야 우리 제품의 존재 이유가 생깁니다.
-
-❷ 계약은 끝이 아니라 시작이다.
-연동부터 온보딩, 업데이트, 사용 정착까지 — 말했던 가치가 실제로 실현되도록 고객의 비즈니스 안에서 계속 증명해야 합니다.
-
-❸ 설득의 언어가 다르다.
-시장 모멘텀이 아니라 고객의 운영 환경을 기준으로, 제품이 만들어낼 수 있는 구체적인 변화와 개선을 설명하고 확인받아야 합니다.
-
-——————
-
-화장품도 SaaS도 결국 제품력이 중요합니다. 다만 제가 경험한 화장품 세일즈가 "시장에서 팔릴 구조"를 중심으로 확장되는 게임이었다면, SaaS 세일즈는 "고객의 문제를 기준으로 성과를 만드는 구조"에 더 가까웠습니다.
-
-결국 제가 팔고 싶은 건 '기대감'이 아니라, 고객의 비즈니스 안에서 실제로 확인되는 변화니까요.
-
-여러분은 커리어에서 "내가 팔던 것"과 "내가 진짜 좋아하는 것"이 갈라졌던 순간이 있었나요?`
-    },
-    {
-        id: 2,
-        cat: 'career',
-        catLabel: 'Career Journey',
-        date: '2025-01',
-        title: '"지금 당장 뭐부터 해야 할지 모르겠어요" — 이제 막 취준 시작한 주니어들이 모르는 사실',
-        excerpt: '취업 준비가 막막한 이유는 하나 — 아직 "내 데이터"가 없어서입니다. 직무→산업→기업 형태 순서로 경험하며 Yes/No 데이터를 쌓으세요.',
-        image: 'pdf2_thumb.png',
-        imageType: 'img',
-        imageEmoji: '🎯',
-        hashtags: ['신입', '커리어고민', '취업준비', '인턴', '주니어'],
-        content: `주말에 학교 후배를 만났는데, 1년 반 전 막막하던 제가 떠올랐습니다.
-
-⛔️취업 준비가 막막한 이유는 하나입니다.
-➔ 아직 "내 데이터"가 없어서입니다.
-
-——————
-
-저도 똑같았어요. 사람이랑 소통하는 게 좋다는 이유 하나로 화장품 영업 인턴으로 시작했습니다. 해보니 나쁘지는 않았어요. 그리고 이런 생각이 들었습니다.
-
-"눈에 보이는 걸 팔았으면, 안 보이는 것도 팔아볼까?"
-
-그래서 SaaS/IT 영업 인턴을 하게 되었고, 거기서 극도의 재미와 몰입감을 경험했습니다.
-
-돌이켜보면 제가 한 건 단순했습니다.
-➀직무 → ➁산업 → ➂기업 형태
-
-이 순서로 경험하며 Yes / No 데이터를 쌓았습니다.
-
-——————
-
-그 결정을 위해 3가지부터 해보세요.
-
-➊ 채용공고를 충분히 많이 보기
-다양한 공고를 보다 보면 공통적으로 눈이 가는 산업과 직무가 생깁니다.
-
-➋ 직무 중심으로 인턴 지원하기
-회사 네임밸류보다 직무 경험 가능성을 기준으로 지원해 보세요.
-
-➌ 경험 후 질문 하나 던지기
-"이 일을 계속 하고싶은가?" Yes면 더 깊게, No면 다른 선택지로 이동하면 됩니다.
-
-——————
-
-취준은 확신을 갖고 시작하는 과정이 아니라 확신을 만들어가는 과정입니다.
-완벽한 선택을 찾으려 하지 마세요. 틀려도 괜찮습니다. 확실한 데이터가 생기니까요.
-
-지금 필요한 건 완벽한 계획이 아니라 [다음 행동 하나]입니다.`
-    },
-    {
-        id: 3,
-        cat: 'career',
-        catLabel: 'Career Journey',
-        date: '2025-02',
-        title: '스타트업에서 인턴을 해야 하는 이유',
-        excerpt: '세 번의 인턴십을 모두 스타트업으로 선택한 이유. 수평 문화, 효율적 SaaS 툴 활용, 주도적 포트폴리오. 그리고 "괜찮은" 스타트업을 고르는 3가지 기준.',
-        image: '1772259814470.jpeg',
-        imageType: 'img',
-        hashtags: ['인턴', '취업준비', '스타트업', '커리어고민'],
-        content: `왜 저는 세 번의 인턴십을 모두 '스타트업'을 선택했을까요?
-
-현재 세 번째 스타트업에서 인턴으로 실무를 경험하고 있으며, 그중 두 번은 SaaS 산업이었습니다.
-
-⭐️ 스타트업 인턴의 장점 3가지
-
-❶ 수평적 협업과 존중의 문화
-수평 문화의 핵심은 '위축되지 않는 환경'입니다. 인턴이라도 팀 리드에게 "이런 제안을 해보고 싶다"고 자유롭게 의견을 낼 수 있습니다.
-
-❷ 효율적인 업무 방식과 SaaS 툴 활용
-Slack으로 소통하고, Notion으로 자료를 공유하며, Google 캘린더와 Meet로 기민하게 연결되는 하루. 빠르게 발전하는 SaaS 툴을 익히는 경험은 그 자체로 커리어 자산이 됩니다.
-
-❸ 인턴이지만, 주도적으로 운영하는 포트폴리오
-고객사와 직접 미팅하고 KPI를 점검하며, 보조가 아니라 '내 프로젝트'로 움직이는 자신을 발견하게 됩니다.
-
-대기업 면접에서 "이걸 정말 인턴이 한거에요?"라는 질문을 받았을 때 확신이 들었습니다. 환경이 다르면 성장 속도도 다르다는 걸요.
-
-——————
-
-💭 이런 회사는 어떻게 고를까? (나만의 기준 3가지)
-
-❶ 문화에 얼마나 진심인가
-HR의 언어가 얼마나 솔직하고 사람 냄새가 나는지 살펴보세요.
-
-❷ 인턴 공고의 '하게 될 업무'가 구체적인가
-업무가 구체적일수록 회사가 해당 포지션을 하나의 독립된 실행 단위로 존중한다는 신호입니다.
-
-❸ 면접이 끝나고 어떤 여운이 남는가
-긴장했지만 존중받았는지, 괜히 위축되었는지를 생각해보세요.
-
-⭐️ 첫 커리어에서 배우는 일하는 방식과 태도는 생각보다 오래 남습니다.`
-    },
-    {
-        id: 4,
-        cat: 'career',
-        catLabel: 'Career Journey',
-        date: '2025-02',
-        title: '주니어의 링크드인 활용법 3단계',
-        excerpt: '링크드인도 SNS입니다. 비교의 장이 아닌 참고의 장으로, 불안을 소비하지 말고 지금 하던 걸 계속하세요. 주니어를 위한 실전 3단계 활용법.',
-        image: '1772114934999.jpeg',
-        imageType: 'img',
-        hashtags: ['링크드인', '주니어', '커리어고민', 'Z세대', 'SNS'],
-        content: `링크드인도 SNS입니다. 불안을 소비하지 말고, 하던 걸 하세요.
-
-🚨다만 링크드인 역시 SNS라는 사실은 변하지 않습니다. 스크롤을 내리다 보면 AI로 사라질 직업군 이야기, AI 툴을 능숙하게 다루는 사람들의 성과 공유, 정리된 인사이트와 빠른 성장 서사가 끊임없이 등장합니다.
-
-결국 더 자주 노출되는 건 '이미 정리된 결과'와 '잘 작동한 선택'들입니다. 이 구조가 바로 착시를 만듭니다.
-
-——————
-
-그래서 한 가지는 꼭 기억했으면 합니다.
-
-링크드인은 커리어의 정답을 찾는 공간이 아닙니다. 나의 고민을 나누고, 앞으로 가야 할 길을 닦아가며 성장통을 나눌 수 있는 도구로 사용해야 합니다.
-
-제가 권하는 링크드인 활용법 3단계:
-
-1️⃣ 관심 있는 직무와 산업의 현업자에게 1촌 신청하세요. 무작정 숫자를 늘리기보다, 지금의 나에게 맥락이 닿는 관계를 만들어가세요.
-
-2️⃣ 정말 내 고민을 잘 이해하고 도움을 줄 것 같은 분께는 DM이나 커피챗으로 도움을 여쭤보세요. 현재의 고민과 배경을 정리해 건네는 대화를 하셔야 합니다.
-
-3️⃣ 그 과정에서 생긴 고민과 혼란, 대화를 통해 얻은 인사이트를 회고하듯 기록하세요. 완성된 답보다 지금의 사고 과정이 시간이 지나 더 큰 자산이 됩니다.
-
-——————
-
-여긴 하나의 법이 있는 로마가 아닙니다. 내가 대중과 다른 속도로, 다른 이야기를 하고 있다면 그건 그대로 당신의 스토리이자 날 것의 콘텐츠입니다.
-
-불안을 소비하지 말고, 지금 하던 걸 계속하세요.`
-    },
-    {
-        id: 5,
-        cat: 'sales',
-        catLabel: 'Sales Playbook',
-        date: '2025-01',
-        title: '콜드콜: 인턴이 5주간 70개 미팅 & 7개 산업을 뚫은 방법',
-        excerpt: '"저희는 그런 거 필요 없습니다." — 거절을 전환 트리거로 바꾸는 3가지 원칙. 레퍼런스도 확신도 없는 시장에서 파이프라인을 만드는 법.',
-        image: '1771184395082.jpeg',
-        imageType: 'img',
-        hashtags: ['세일즈', 'B2B세일즈', '콜드콜', '영업', 'SDR'],
-        content: `"저희는 그런 거 필요 없습니다."
-
-다만 나로서는 전화를 끊고 나면, 잘못된 시장에 연락한 건 아닐까 고민이 들곤 했다.
-
-챗봇 솔루션에서 콜드콜 업무를 수행하며, 나는 5주간 70개의 미팅(Opportunity), 7개 이상의 산업군에서 파이프라인을 만들었다.
-
-내가 지킨 원칙은 3가지다.
-
-❶ 기준이 없는 불확실한 시장에 첫 발을 딛는다.
-
-'골프&리조트 산업'은 어려운 시장이었다: AI에 대한 인사이트 부족과 거부감, 명확한 동종업계 레퍼런스 부재, 기존 시스템과의 연동 불확실성.
-
-레퍼런스도, 확신도 없는 시장. 대부분의 세일즈가 피하는 조건이다. 하지만 나는 이렇게 생각했다. "불확실한 시장일수록, 먼저 발을 딛는 사람이 기준이 되지 않을까?"
-
-AI를 꺼내기 전에, 이미 겪고 있는 운영의 불편함부터 짚었다: 티업 시간마다 몰리는 전화 문의, 기록이 없어 고객을 알아보지 못하는 응대, 커지는 인건비 부담.
-
-그 결과, 수도권 및 주요 지역의 골프장·리조트 사업장에서 30개 이상의 미팅 기회를 만들 수 있었다.
-
-❷ 같은 솔루션도 고객의 맥락을 이해한 언어로 재구성한다.
-
-"같은 제품이라도, 고객의 맥락을 이해한 언어로 번역해야 한다."
-
-리조트·병원에서 CS팀장에게 중요한 것은 매출이 아니라, 반복 응대와 피로를 줄이는 변화였다. 반면 치과 원장에게는, 반복 문의를 줄여 중요한 환자 상담에 집중하고 매출로 이어지는 구조가 핵심이었다.
-
-❸ 거절은 종료가 아닌 "전환 트리거"로 바꾼다.
-
-한 중견 인테리어·리모델링 기업에서 이커머스 사업부 키맨에게 컨택했지만 "자신과 관련 없는 영역"이라며 거절을 받았다. 대신 미팅 아젠다를 메일로 전달드렸다.
-
-며칠 뒤, 메일이 타부서로 전달되었고, 실제 문의를 관할하던 리모델링 사업부에서 도입 강한 의지로 미팅을 제안하신 것이다.
-
-콜드콜은 전화 너머 사람을 미팅에 앉히는 것이 아니다. 조직 안에서 우리의 가치가 흘러가도록 만드는 일이다.`
-    },
-    {
-        id: 6,
-        cat: 'sales',
-        catLabel: 'Sales Playbook',
-        date: '2025-02',
-        title: '세일즈와 마케팅이 하나의 흐름이어야 하는 이유',
-        excerpt: '"내부에서 조금 더 논의해볼게요" — 이 말을 들은 뒤 계약이 성사된 경우는 얼마나 될까요? 고객 여정을 읽는 감각이 세일즈의 본질입니다.',
-        image: '1771935802171.jpeg',
-        imageType: 'img',
-        hashtags: ['세일즈', '마케팅', '고객여정', 'B2B세일즈', '의사결정', 'CRM'],
-        content: `"내부에서 조금 더 논의해볼게요"
-
-이 말을 들은 뒤, 실제로 계약이 성사된 경우는 얼마나 될까요?
-
-우리는 종종 세일즈를 '시작점'이라고 생각합니다. 하지만 실제 고객은 우리가 등장하기 훨씬 전부터 이미 움직이고 있습니다. 검색하고, 비교하고, 콘텐츠를 살피며 망설이다가 다시 돌아오기도 합니다. 문의는 시작이 아니라, 이미 수많은 고민의 터널을 지나온 뒤 나타나는 최종 신호에 가깝습니다.
-
-📍 세일즈는 설득이 아니라 '맥락'에 합류하는 일
-
-그래서 요즘 저는 세일즈를 이미 형성된 맥락 위에 합류하는 일이라고 정의합니다.
-
-· 고객이 막 문제를 인지했는가?
-· 비교의 한가운데 있는가?
-· 마지막 확신만 남은 상황인가?
-
-이 지점을 모른 채 똑같은 설명을 반복하는 건, 스쳐 지나가는 사람에게 무작정 전단지를 건네는 것과 다르지 않습니다.
-
-——————
-
-🤝 고객은 팀을 나누지 않습니다
-
-마케팅은 유입을 만들고, 세일즈는 계약을 만든다고 역할을 나누지만 고객에게 광고, 콘텐츠, 콜, 데모는 모두 하나의 경험입니다.
-
-· 마케팅: 탐색 단계에서 혼란을 낮추는 역할
-· 세일즈: 선택 직전의 불안을 해소하는 역할
-
-결국 두 역할 모두 고객의 의사결정 부담을 줄여준다는 본질에서 만납니다.
-
-세일즈가 정말 중요한 이유는 지금 내가 고객 여정의 '어느 지점'에 합류하고 있는지를 이해하는 감각에 있습니다.`
-    },
-    {
-        id: 7,
-        cat: 'martech',
-        catLabel: 'MarTech & Consumer',
-        date: '2025-01',
-        title: '무신사 뷰티 앱이 올리브영 앱보다 나은 점',
-        excerpt: 'MMP 솔루션을 공부하면서 발견한 것. 디퍼드 딥링크, UI/UX의 차이가 실제 활성 유저 수를 결정합니다. 마케팅을 안 통하는 줄 알았던 소비자의 시선으로.',
-        image: '1769850109324.jpeg',
-        imageType: 'img',
-        hashtags: ['앱마케팅', '마케팅', 'UXUI', 'MMP', '모바일마케팅', '사용자경험', '딥링크'],
-        content: `MMP(모바일 측정 파트너) 솔루션을 공부하면서, 마케팅을 1도 모르는 사람이 그냥 "나는 왜 이 앱을 저장 공간 때문에 지웠을까?"를 생각해봤어요.
-
-릴스에서 '지금 구매하기'를 누르면 앱 설치부터 유도되고, 설치 후 열어보면 내가 보려던 상품 페이지는 사라진 채 그냥 메인 화면으로 가는 경험, 한 번쯤 있으시죠?
-
-그 순간 저는 그냥 앱을 꺼요. 굳이 다시 검색할 만큼의 관심은 아니었거든요.
-
-저는 이게 그냥 앱 버그인 줄 알았는데, 알고 보니 '디퍼드 딥링크' 기능 (설치 후에도 특정 랜딩 페이지로 보내주는 기능)이 없어서 생긴 문제였더라고요.
-
-마케터 입장에서는 앱 전환율을 잠깐 늘렸을지는 몰라도, 실제로 사용하는 유저를 남기는 데에는 실패한 셈이죠.
-
-——————
-
-그러면 디퍼드 딥링크 기능 덕분에 가고 싶은 페이지로 잘 랜딩되었다고 해볼게요. 그 다음은 무엇이 유저를 남길까요?
-
-저는 단연코 UI라고 생각합니다.
-
-✅ 무신사는 뷰티 카테고리에서 실물 이미지를 활용해 카테고리를 보여주고, 올리브영은 화면 왼쪽에 텍스트로 세로 나열합니다. 어느 쪽이 눈이 더 편하게 찾을 수 있을까요?
-
-올리브영은 노출되는 텍스트와 썸네일 크기가 많이 큽니다. 주 고객층인 젊은 사용자 입장에서는 한 줄에 상품 3개씩 노출되는 무신사와 비교했을 때, 오히려 한눈에 안 들어오고 탐색 여정이 길게만 느껴집니다.
-
-🌀 MMP 솔루션을 통해 왜 앱 마케팅이 실제 활성 유저 수로 잘 이어지지 않는지를 오롯이 고객 관점에서 다시 보게 됐습니다.`
-    },
-    {
-        id: 8,
-        cat: 'martech',
-        catLabel: 'MarTech & Consumer',
-        date: '2025-02',
-        title: '"나는 마케팅이 안 통하는 사람이구나" — 그 착각에 대하여',
-        excerpt: '올리브영 테스트도 안 하고, 인플루언서 추천도 믿지 않던 내가 어느 날 여행 광고에 반응했을 때. 마케팅은 새로운 욕구를 만드는 게 아니라 이미 있는 맥락을 포착하는 것.',
-        image: '1772038001765.jpeg',
-        imageType: 'img',
-        hashtags: ['마케팅', '광고성과', 'B2B', 'B2C', '세일즈', '커리어인사이트'],
-        content: `"나는 마케팅이 안 통하는 사람이구나. 마케팅은 결국 귀 얇은 사람들을 위한 거겠지."
-
-한동안은 정말 이렇게 믿었습니다. 저는 마케팅에 반응하지 않는 소비자거든요. 올리브영에서 테스트를 하지도, 인플루언서 추천을 믿지도 않습니다.
-
-——————
-
-💡 무의식이 남긴 데이터는 거짓말을 하지 않는다
-
-그런데 어느 날, 친구와 DM으로 짧은 대화를 나눴습니다. "입사 전에 어디 가까운 데라도 여행 다녀올까?"
-
-그 직후 제 인스타그램과 네이버는 '여행'으로 도배되었습니다.
-
-갑자기 여행이 가고 싶어진 게 아니었습니다. 이미 존재하던 제 무의식과 행동 데이터가 비로소 반응하기 시작한 것이었죠.
-
-그때 깨달았습니다. 마케팅은 새로운 욕구를 만드는 일이 아니라, 이미 일상 속에 숨겨진 '생각의 맥락'을 포착하는 일이라는 것을요.
-
-——————
-
-💬 B2B 세일즈가 '마케팅'을 공부해야 하는 이유
-
-우리 고객사 미팅에서 흔히 이렇게 말합니다: "ROAS가 개선됩니다." "전환율이 올라갑니다."
-
-틀린 말은 아니지만, 이 숫자들에는 소비자의 행동이 빠져 있습니다.
-
-세일즈가 마케팅을 이해해야 하는 이유는 단순히 카피를 잘 쓰기 위해서가 아닙니다. 우리 고객이 설득해야 할 최종 소비자가 어떤 일상 속에서, 어떤 생각의 흐름 위에서 선택하는지 이해하지 못하면, 세일즈는 결국 숫자만 나열하는 역할에 머물게 됩니다.`
-    },
-    {
-        id: 9,
-        cat: 'martech',
-        catLabel: 'MarTech & Consumer',
-        date: '2025-02',
-        title: '당신은 매일 부동산 경매시장에 오르고 있다는걸 알고 계셨나요?',
-        excerpt: '앱을 켜는 순간 우리의 화면은 0.1초짜리 초단타 경매 시장에 매물로 올라갑니다. 모바일 광고의 진짜 민낯 — DSP, MMP, 실시간 입찰까지.',
-        image: '1772333039562.jpeg',
-        imageType: 'img',
-        hashtags: ['모바일광고', 'AdTech', 'AI', '마케팅전략', '커리어인사이트', 'MMP'],
-        content: `우리가 앱을 켜는 순간, 광고가 그냥 "뜨는" 게 아닙니다.
-
-우리의 화면은 0.1초짜리 '초단타 경매 시장'에 매물로 올라갑니다.
-
-1️⃣ 매물 등장
-화면 속 '그 자리' 앱을 여는 순간, 당신의 화면 속 그 광고자리가 시장에 매물로 나옵니다. 방금 막 지어진 강남 금싸라기 땅 한 칸이 매물로 나온 셈이죠.
-
-2️⃣ AI 투자자들의 계산
-광고주의 돈을 쥔 AI 투자자(DSP)들은 당신이 남긴 데이터를 바탕으로 그 광고자리의 가치를 예측합니다.
-
-"이 사람은 운동화 광고를 보여주면 꼭 사더라고. 높게 불러!"
-"이 사람은 그냥 구경만 하네. 낮게 가자."
-
-사람을 보지 않습니다. 당신이 흘린 데이터의 가치를 봅니다.
-
-3️⃣ 실시간 낙찰
-가장 높은 금액을 부른 쪽이 그 0.1초의 공간을 차지합니다. 우리는 그냥 피드를 넘기지만, 그 뒤에선 월스트리트보다 치열한 입찰 전쟁이 끝난 상태입니다.
-
-4️⃣ 승부의 판정: 광고주가 고용한 '데이터 판독관'(MMP)
-광고를 보고 실제 설치나 구매로 이어졌을까요? 이때 광고주가 보낸 판독관인 MMP가 등판합니다. 여러 광고 매체가 서로 "내 덕분에 팔렸다"고 주장할 때, MMP는 데이터를 대조해 진짜 성과를 가려냅니다.
-
-——————
-
-결국 모바일 광고는 단순히 배너를 보여주는 기술이 아닙니다. 사람의 '가능성'을 실시간 가격으로 환산하는 미래 예측 산업입니다.`
-    },
-    {
-        id: 10,
-        cat: 'ai',
-        catLabel: 'AI Experiments',
-        date: '2025-02',
-        title: 'AI로 만든 세미나 포스터, 사람을 모을 수 있을까?',
-        excerpt: 'Genspark으로 다양한 이미지 작업 실험. 지우고 정리하는 작업에는 강하지만, 인물 사실성은 아직 부족. JSON 프롬프트가 치트키였습니다.',
-        image: '1770943995157.jpeg',
-        imageType: 'img',
-        hashtags: ['AI이미지', 'AI툴', '프롬프트', 'AI합성', 'B2B마케팅'],
-        content: `세일즈도 콘텐츠를 직접 다뤄야 하는 시대, AI 툴은 분명 강력하지만 디테일과 맥락을 쌓는 과정은 여전히 사람의 역할이었습니다.
-
-Genspark으로 다양한 이미지 작업을 해보았습니다.
-
-☑️ 졸업 프로필을 넣어 "증명사진"으로 요청하면 싱크로율 100%의 정장 복장으로 생성되고,
-☑️ 난해한 배경 위 텍스트만 지워달라 요청하면 글자는 사라지고 빈 공간은 자연스럽게 채워집니다.
-
-👉🏻 '지우고 정리하는 작업'에는 확실히 강합니다.
-
-하지만 "인물만 나로 바꿔달라"는 정밀 합성은 만족도가 떨어집니다. 원근법, 질감 등 배경과 얼굴이 자연스럽게 어우러지는 '사실성'은 아직 한참 부족합니다.
-
-또한 한글이 들어가는 결과물은 글씨체와 디자인이 촌스러워서, 결국 텍스트와 요소를 직접 넣게 됩니다.
-
-——————
-
-흥미로웠던 건 인물 사실성을 높이는 치트키, 바로 [JSON 프롬프트📝]였습니다!
-
-쉽게 말해, 어떤 고성능 카메라로 {조명/피부 질감/색감 등}을 어떻게 세팅할지를 'AI가 좋아하는 언어'로 알려주는 것입니다.
-
-실제로 적용해보니, 과도한 AI 질감이 줄고 명암과 텍스처가 안정되며 실물 느낌이 더 살아났습니다.
-
-✅ 결론: AI는 "나랑 닮게 해줘", "자연스럽게 해줘"라는 우리의 말을 완전히 이해하지 못합니다. F처럼 공감해달라하는 것보다, T처럼 요구하는 걸(=JSON) 더 좋아하는 것 같습니다 ㅎ`
-    },
-    {
-        id: 11,
-        cat: 'ai',
-        catLabel: 'AI Experiments',
-        date: '2025-02',
-        title: '인턴이 불편해서 만든 \'AI Sales 대시보드\'',
-        excerpt: '"오늘 누구한테 팔로업해야 하지?" — 고객과 대화하는 것보다 정보 찾는 데 더 많은 리소스를 쓰고 있었습니다. Lovable로 바이브코딩해서 만든 하루 영업을 한 화면에서 끝내는 대시보드.',
-        image: '화면_캡처_2026-03-02_213048.jpg',
-        imageType: 'img',
-        hashtags: ['SalesEngineering', 'RevOps', 'SalesOps', 'CRM', 'Sales', '바이브코딩'],
-        content: `세일즈를 하면서 가장 답답했던 순간:
-
-"오늘 누구한테 팔로업해야 하지?"
-"이 리드, 언제 컨택했더라?"
-"내 성과가 목표 대비 어디쯤 와 있지?"
-
-고객과 대화하는 것보다, 정보를 찾는 데에 더 많은 리소스를 쓰고 있었습니다. 그리고 CRM이 좀 더 직관적이고 쉬운 UI면 좋겠다는 생각도 들었습니다.
-
-그래서 만들었습니다. 하루 영업을 한 화면에서 끝내는 AI Sales 대시보드.
-
-💡핵심 기능
-
-❶ 오늘 할 일 자동 정리
-→ 오늘 스케줄 자동 정리(컨택/팔로업/미팅)
-→ 팔로업 누락 방지 알림
-
-❷ 파이프라인 관리
-→ 리드부터 계약까지 전체 퍼널 실시간 가시화
-→ 단계별 전환율 & 딜 트래킹
-
-❸ AI 기반 자동화
-→ 신규 리드 추천 및 분석
-→ 콜드콜 전략 맞춤 생성
-→ 견적서 & 콜드메시지 작성 → 발송 API 연동
-→ 모든 액션 자동 기록 및 파일 저장
-
-❹ 영업 성과 대시보드
-→ 주간/일간 성과 실시간 집계
-→ 데이터 기반 AI, 실시간 개선 피드백 제공
-
-이번 프로젝트는 Lovable로 #바이브코딩 해서 만들었습니다.
-
-실제 사용 목적이 아닌 영업 활동을 직관적으로 확인하고 효율화할 수 있는 흐름을 담아봤습니다. 비개발자라 부족한 점이 많지만, 피드백 주시면 큰 도움이 될 것 같습니다 😊`
-    },
-    {
-        id: 12,
-        cat: 'ai',
-        catLabel: 'AI Experiments',
-        date: '2025-02',
-        title: '흑백요리사 우승자가 생각한 두쫀쿠 다음 유행은?',
-        excerpt: '[세일즈 주니어의 뜬금없는 AI툴 끄적대기] 두쫀쿠가 사랑받은 3가지 이유를 분석하고, 다음 트렌드 디저트를 Genspark + Flow로 예측해봤습니다.',
-        image: '화면_캡처_2026-03-02_213905.jpg',
-        imageType: 'img',
-        hashtags: ['AI영상', 'LearningInPublic', 'AI컨텐츠', '크리에이터', '마케팅', 'FromIdeaToContent'],
-        content: `[세일즈 주니어의 뜬금없는 AI툴 끄적대기]
-
-두쫀쿠가 사랑받은 이유는 크게 3가지입니다.
-
-✅ 쫀득하면서도 바삭한 식감
-✅ 한입에 가득 차는 사이즈
-✅ 두바이라는 이색적인 이미지
-
-그렇다면 다음 유행은 어디서 올까요?
-
-열대 지역에서 영감을 얻은 새로운 디저트, '🥥코코넛 찰떡 바이트(bite)'입니다.
-
-쫀득한 찹쌀 베이스에 코코넛 밀크와 연유🥛, 그리고 소금 한 꼬집을 더해 풍미를 살리고, 겉에는 코코넛 플레이크를 입혀 바삭한 식감까지 더했습니다.
-
-두쫀쿠가 잘 된 핵심 요소 3가지를 반영한, 다음 트렌드를 유명한 쉐프가 (사실 제가) 상상한 메뉴입니다.
-
-——————
-
-이번 콘텐츠는 흑백요리사 시즌2 우승자 최강록 셰프가 다음 유행을 예측한다는 콘셉트로 제작한 AI 영상입니다.
-
-프롬프트와 이미지는 Genspark, 영상 생성은 Flow를 활용했습니다.
-
-아직 AI가 한국어 발음이나 인물의 생김새를 100% 구현하지는 못하지만, 무료 크레딧으로 꽤 사실적이고 생동감 있는 결과물이 나와 만족스럽습니다.
-
-영상 속에 살짝 기괴한(?) 장면도 숨어 있는데, 발견해보시는 재미로 가볍게 봐주세요🤩
-
-여러분이 생각하는 다음 디저트 유행템은 무엇인가요?`
-    }
-];
 
 
 // ===================== STATE =====================
@@ -483,8 +40,10 @@ let currentPostId = null;
 let currentVisiblePosts = [...POSTS];
 
 // ===================== INIT =====================
-document.addEventListener('DOMContentLoaded', () => {
-    initPostsFromStorage();
+document.addEventListener('DOMContentLoaded', async () => {
+    // Fetch posts from Supabase DB
+    await fetchPostsFromDB();
+    currentVisiblePosts = [...POSTS];
 
     // Apply lang first, then apply settings on top of it so user edits aren't clobbered
     const savedLang = localStorage.getItem(LANG_KEY) || 'ko';
@@ -492,21 +51,21 @@ document.addEventListener('DOMContentLoaded', () => {
     applySiteSettings();
 
     renderGrid(POSTS);
-    applyLoginUI(); // apply admin UI state on load (patched version enables inline editing if logged in)
+    // Show admin login only when ?admin is in the URL
+    if (window.location.search.includes('admin')) {
+        applyLoginUI();
+    }
     document.getElementById('searchInput').addEventListener('input', handleSearch);
     // Login modal enter key
     const pwInput = document.getElementById('loginPwInput');
     if (pwInput) pwInput.addEventListener('keydown', e => { if (e.key === 'Enter') submitLogin(); });
+    const emailInput = document.getElementById('loginEmailInput');
+    if (emailInput) emailInput.addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('loginPwInput').focus(); });
     document.addEventListener('keydown', e => {
         if (e.key === 'Escape') { closeModalDirect(); closeAdminModal(); closeLoginModal(); }
         if (e.key === 'ArrowLeft') navigatePost(-1);
         if (e.key === 'ArrowRight') navigatePost(1);
     });
-    // Set-password modal: Enter on confirm field submits
-    const setPwConfirm = document.getElementById('setPwConfirm');
-    if (setPwConfirm) setPwConfirm.addEventListener('keydown', e => { if (e.key === 'Enter') submitSetPassword(); });
-    const setPwInput = document.getElementById('setPwInput');
-    if (setPwInput) setPwInput.addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('setPwConfirm').focus(); });
 });
 
 // ===================== RENDER =====================
@@ -892,10 +451,6 @@ function renderAllPDFs() {
 }
 
 // ===================== ADMIN PANEL =====================
-const STORAGE_KEY = 'lydia_portfolio_posts';
-const STORAGE_KEY_IMAGES = 'lydia_portfolio_images';
-const ADMIN_PW_KEY = 'lydia_admin_logged_in';      // sessionStorage: logged-in flag
-const ADMIN_PW_STORED_KEY = 'lydia_admin_pw_hash';  // localStorage: stored password hash
 let isAdminMode = false;
 let isLoggedIn = false;
 
@@ -906,49 +461,20 @@ const CAT_LABELS = {
     ai: '\uD83E\uDD16 AI \uc2e4\ud5d8\uc2e4'
 };
 
-// ---- Simple hash (non-cryptographic, sufficient for local auth) ----
-function simpleHash(str) {
-    let hash = 0;
-    for (let i = 0; i < str.length; i++) {
-        const chr = str.charCodeAt(i);
-        hash = ((hash << 5) - hash) + chr;
-        hash |= 0;
-    }
-    return 'h_' + Math.abs(hash).toString(36) + '_' + str.length;
+// ---- Login helpers (Supabase Auth) ----
+async function checkLoginState() {
+    const { data: { session } } = await _supabase.auth.getSession();
+    return !!session;
 }
 
-// DEFAULT password hash is baked into the script.
-// Change this value by running: simpleHash('your-new-password') in the console and pasting below.
-// When a custom hash is saved in localStorage it takes precedence.
-const ADMIN_DEFAULT_HASH = simpleHash('lydia2026'); // 이 라인의 기본 비밀번호: lydia2026
-
-function getEffectivePwHash() {
-    // Use localStorage override if present, otherwise fall back to built-in default
-    return localStorage.getItem(ADMIN_PW_STORED_KEY) || ADMIN_DEFAULT_HASH;
-}
-
-function verifyPassword(pw) {
-    const hash = simpleHash(pw);
-    // Accept if it matches the stored custom hash OR the built-in default.
-    // This ensures lydia2026 always works regardless of what's in localStorage.
-    return hash === getEffectivePwHash() || hash === ADMIN_DEFAULT_HASH;
-}
-
-// ---- Login helpers ----
-function checkLoginState() {
-    return sessionStorage.getItem(ADMIN_PW_KEY) === '1';
-}
-
-function applyLoginUI() {
-    isLoggedIn = checkLoginState();
+async function applyLoginUI() {
+    isLoggedIn = await checkLoginState();
     isAdminMode = isLoggedIn; // Sync old flag
     const loginBtn = document.getElementById('adminLoginBtn');
     const logoutBtn = document.getElementById('adminLogoutBtn');
-    const changePwBtn = document.getElementById('adminChangePwBtn');
     const writeWrap = document.querySelector('.write-post-wrap');
-    if (loginBtn) loginBtn.style.display = isLoggedIn ? 'none' : 'inline-flex';
+    if (loginBtn) loginBtn.style.display = 'none';
     if (logoutBtn) logoutBtn.style.display = isLoggedIn ? 'inline-flex' : 'none';
-    if (changePwBtn) changePwBtn.style.display = isLoggedIn ? 'inline-flex' : 'none';
     if (writeWrap) writeWrap.style.display = isLoggedIn ? 'flex' : 'none';
     if (isLoggedIn) {
         document.body.classList.add('admin-mode');
@@ -963,23 +489,25 @@ function applyLoginUI() {
 function openLoginModal() {
     const modal = document.getElementById('loginModal');
     modal.classList.add('open');
+    document.getElementById('loginEmailInput').value = '';
     document.getElementById('loginPwInput').value = '';
     document.getElementById('loginError').style.display = 'none';
-    setTimeout(() => document.getElementById('loginPwInput').focus(), 100);
+    setTimeout(() => document.getElementById('loginEmailInput').focus(), 100);
 }
 
 function closeLoginModal() {
     document.getElementById('loginModal').classList.remove('open');
 }
 
-function submitLogin() {
+async function submitLogin() {
+    const email = document.getElementById('loginEmailInput').value.trim();
     const pw = document.getElementById('loginPwInput').value;
-    if (!pw) return;
-    if (verifyPassword(pw)) {
-        sessionStorage.setItem(ADMIN_PW_KEY, '1');
+    if (!email || !pw) return;
+    const { error } = await _supabase.auth.signInWithPassword({ email, password: pw });
+    if (!error) {
         closeLoginModal();
         isAdminMode = true; // Set BEFORE applyLoginUI draws the tabs
-        applyLoginUI();
+        await applyLoginUI();
         renderGrid(currentVisiblePosts.length ? currentVisiblePosts : POSTS);
         showToast('\u2705 \uad00\ub9ac\uc790\ub85c \ub85c\uadf8\uc778\ub418\uc5c8\uc2b5\ub2c8\ub2e4');
     } else {
@@ -989,136 +517,28 @@ function submitLogin() {
     }
 }
 
-// ---- Change password modal (requires login + current password verification) ----
-// openSetPasswordModal(true) may only be called from admin bar button (user is already logged in)
-function openSetPasswordModal(isChange) {
-    // Guard: only allow if actually logged in
-    if (!checkLoginState()) return;
-    const modal = document.getElementById('setPwModal');
-    document.getElementById('setPwTitle').textContent = '\ube44\ubc00\ubc88\ud638 \ubcc0\uacbd';
-    document.getElementById('setPwDesc').textContent = '\ud604\uc7ac \ube44\ubc00\ubc88\ud638\ub97c \uba3c\uc800 \ud655\uc778\ud558\uc138\uc694.';
-    document.getElementById('setPwCurrentInput').value = '';
-    document.getElementById('setPwInput').value = '';
-    document.getElementById('setPwConfirm').value = '';
-    document.getElementById('setPwError').style.display = 'none';
-    modal.classList.add('open');
-    setTimeout(() => document.getElementById('setPwCurrentInput').focus(), 100);
-}
+// Password change: use Supabase dashboard
+function openSetPasswordModal() { }
+function closeSetPasswordModal() { }
+function submitSetPassword() { }
 
-function closeSetPasswordModal() {
-    document.getElementById('setPwModal').classList.remove('open');
-}
-
-function submitSetPassword() {
-    const currentPw = document.getElementById('setPwCurrentInput').value;
-    const pw = document.getElementById('setPwInput').value;
-    const pw2 = document.getElementById('setPwConfirm').value;
-    const errEl = document.getElementById('setPwError');
-    // Verify current password first
-    if (!verifyPassword(currentPw)) {
-        errEl.textContent = '\ud604\uc7ac \ube44\ubc00\ubc88\ud638\uac00 \uc77c\uce58\ud558\uc9c0 \uc54a\uc2b5\ub2c8\ub2e4.';
-        errEl.style.display = 'block'; return;
-    }
-    if (!pw || pw.length < 4) {
-        errEl.textContent = '\uc0c8 \ube44\ubc00\ubc88\ud638\ub294 4\uc790 \uc774\uc0c1\uc774\uc5b4\uc57c \ud569\ub2c8\ub2e4.';
-        errEl.style.display = 'block'; return;
-    }
-    if (pw !== pw2) {
-        errEl.textContent = '\ube44\ubc00\ubc88\ud638\uac00 \uc77c\uce58\ud558\uc9c0 \uc54a\uc2b5\ub2c8\ub2e4.';
-        errEl.style.display = 'block'; return;
-    }
-    localStorage.setItem(ADMIN_PW_STORED_KEY, simpleHash(pw));
-    closeSetPasswordModal();
-    showToast('\u2705 \ube44\ubc00\ubc88\ud638\uac00 \ubcc0\uacbd\ub418\uc5c8\uc2b5\ub2c8\ub2e4!');
-}
-
-function adminLogout() {
-    sessionStorage.removeItem(ADMIN_PW_KEY);
+async function adminLogout() {
+    await _supabase.auth.signOut();
     isAdminMode = false;
     isLoggedIn = false;
-    applyLoginUI();
+    await applyLoginUI();
     renderGrid(currentVisiblePosts.length ? currentVisiblePosts : POSTS);
     showToast('\ub85c\uadf8\uc544\uc6c3 \ub418\uc5c8\uc2b5\ub2c8\ub2e4');
 }
 
-// --- Image storage (separate key to avoid truncating text content) ---
-function saveImageStore(imageStore) {
-    try {
-        localStorage.setItem(STORAGE_KEY_IMAGES, JSON.stringify(imageStore));
-    } catch (e) {
-        console.warn('Image storage full, skipping image save:', e);
-    }
-}
-
-function loadImageStore() {
-    try {
-        const s = localStorage.getItem(STORAGE_KEY_IMAGES);
-        return s ? JSON.parse(s) : {};
-    } catch (e) { return {}; }
-}
-
-// Load posts: merge localStorage edits on top of default POSTS
-function loadAllPosts() {
-    try {
-        const saved = localStorage.getItem(STORAGE_KEY);
-        if (saved) return JSON.parse(saved);
-    } catch (e) { }
-    return null;
-}
-
-// Save posts without image data (images saved in separate key)
+// --- Storage functions replaced by Supabase ---
+// savePosts is now a no-op; actual saving happens in savePost/deleteCurrentPost/quickDeletePost
 function savePosts(posts) {
-    // Split image data out into separate store
-    const imageStore = loadImageStore();
-    const postsToSave = posts.map(p => {
-        const copy = { ...p };
-        // If image is a base64 data URL, store it separately keyed by post id
-        if (copy.image && copy.image.startsWith('data:')) {
-            imageStore[String(copy.id)] = copy.image;
-            copy.image = '__img__' + copy.id; // placeholder
-        }
-        // Attachments with base64 data stay, but we catch quota errors
-        return copy;
-    });
-    saveImageStore(imageStore);
-    try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(postsToSave));
-    } catch (e) {
-        // If still over quota, save without attachments
-        console.warn('localStorage quota reached, saving without attachments:', e);
-        const minimal = postsToSave.map(p => ({ ...p, attachments: [] }));
-        try {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(minimal));
-        } catch (e2) {
-            console.error('Cannot save posts:', e2);
-        }
-    }
+    // No-op: Supabase is the source of truth. Kept for compatibility with monkey-patched code.
 }
 
-// Original POSTS data (built-in), keyed by id for quick lookup
-const POSTS_DEFAULT_MAP = {};
-
-// Merge saved state back into the live POSTS array on startup.
-// Saved data is ALWAYS authoritative — never overwrite with originals.
-function initPostsFromStorage() {
-    const saved = loadAllPosts();
-    if (!saved) return;           // No saved data → use hardcoded defaults
-    const imageStore = loadImageStore();
-
-    const restored = saved.map(p => {
-        // Restore image placeholders back to base64
-        if (p.image && p.image.startsWith('__img__')) {
-            const key = p.image.replace('__img__', '');
-            p.image = imageStore[key] || '';
-            if (!p.image) p.imageType = 'emoji';
-        }
-        return p;               // Return saved version, no recovery overwrite
-    });
-
-    // Replace live POSTS in-place with saved versions
-    POSTS.length = 0;
-    restored.forEach(p => POSTS.push(p));
-}
+/* removed: saveImageStore, loadImageStore, loadAllPosts, initPostsFromStorage — replaced by fetchPostsFromDB */
+function initPostsFromStorage() { /* no-op, kept for compatibility */ }
 
 
 // Toggle admin mode (only when logged in)
@@ -1209,21 +629,26 @@ function handleAdminOverlay(e) {
     if (e.target === document.getElementById('adminModal')) closeAdminModal();
 }
 
-function handleImageUpload(input) {
+async function handleImageUpload(input) {
     const file = input.files[0];
     if (!file) return;
-    const reader = new FileReader();
-    reader.onload = (e) => {
-        const data = e.target.result;
-        document.getElementById('editImageData').value = data;
-        const prev = document.getElementById('editImagePreview');
-        prev.src = data; prev.style.display = 'block';
-        document.getElementById('editImageLabel').textContent = '클릭하여 이미지 변경';
-    };
-    reader.readAsDataURL(file);
+    // Upload to Supabase Storage
+    const ext = file.name.split('.').pop();
+    const fileName = `post_img_${Date.now()}.${ext}`;
+    const { data: uploadData, error } = await _supabase.storage.from('media').upload(fileName, file, { upsert: true });
+    if (error) {
+        console.error('Image upload failed:', error);
+        showToast('⚠️ 이미지 업로드 실패');
+        return;
+    }
+    const { data: { publicUrl } } = _supabase.storage.from('media').getPublicUrl(fileName);
+    document.getElementById('editImageData').value = publicUrl;
+    const prev = document.getElementById('editImagePreview');
+    prev.src = publicUrl; prev.style.display = 'block';
+    document.getElementById('editImageLabel').textContent = '클릭하여 이미지 변경';
 }
 
-function savePost() {
+async function savePost() {
     const idRaw = document.getElementById('editPostId').value;
     const cat = document.getElementById('editCat').value;
     const dateVal = document.getElementById('editDate').value;
@@ -1243,47 +668,70 @@ function savePost() {
     const catObj = cats.find(c => c.id === cat);
     const catLabel = catObj ? catObj.labelEn : (CAT_LABELS[cat] || cat);
 
-    const postData = {
-        id: idRaw ? parseInt(idRaw) : Date.now(),
-        cat, date, catLabel,
-        title, excerpt, content, hashtags,
-        image: imageData || '',
-        imageType: imageData ? 'img' : 'emoji',
-        imageEmoji: getCatEmoji(cat),
+    // If imageData is a base64 data URL, upload to Supabase Storage first
+    let imageUrl = imageData || '';
+    if (imageUrl.startsWith('data:')) {
+        const blob = await fetch(imageUrl).then(r => r.blob());
+        const ext = blob.type.split('/')[1] || 'png';
+        const fileName = `post_img_${Date.now()}.${ext}`;
+        const { error: upErr } = await _supabase.storage.from('media').upload(fileName, blob, { upsert: true });
+        if (!upErr) {
+            const { data: { publicUrl } } = _supabase.storage.from('media').getPublicUrl(fileName);
+            imageUrl = publicUrl;
+        }
+    }
+
+    const dbRow = {
+        cat,
+        cat_label: catLabel,
+        date,
+        title,
+        excerpt,
+        content,
+        hashtags,
+        image: imageUrl,
+        image_type: imageUrl ? 'img' : 'emoji',
+        image_emoji: getCatEmoji(cat),
         attachments: [..._pendingAttachments],
-        linkedInUrl
+        linkedin_url: linkedInUrl,
+        updated_at: new Date().toISOString()
     };
 
     if (idRaw) {
-        const idx = POSTS.findIndex(p => p.id === parseInt(idRaw));
-        if (idx !== -1) POSTS[idx] = postData;
+        const { error } = await _supabase.from('posts').update(dbRow).eq('id', parseInt(idRaw));
+        if (error) { console.error('Update failed:', error); showToast('⚠️ 저장 실패'); return; }
     } else {
-        POSTS.unshift(postData);
+        dbRow.sort_order = 0;
+        const { error } = await _supabase.from('posts').insert(dbRow);
+        if (error) { console.error('Insert failed:', error); showToast('⚠️ 저장 실패'); return; }
     }
 
-    savePosts(POSTS);
+    await fetchPostsFromDB();
+    currentVisiblePosts = [...POSTS];
     closeAdminModal();
     applyFilters();
     showToast(idRaw ? '✅ 글이 수정되었습니다' : '✅ 새 글이 등록되었습니다');
 }
 
-function deleteCurrentPost() {
+async function deleteCurrentPost() {
     const id = parseInt(document.getElementById('editPostId').value);
     if (!id) return;
     if (!confirm('이 글을 삭제하시겠습니까?')) return;
-    const idx = POSTS.findIndex(p => p.id === id);
-    if (idx !== -1) POSTS.splice(idx, 1);
-    savePosts(POSTS);
+    const { error } = await _supabase.from('posts').delete().eq('id', id);
+    if (error) { console.error('Delete failed:', error); showToast('⚠️ 삭제 실패'); return; }
+    await fetchPostsFromDB();
+    currentVisiblePosts = [...POSTS];
     closeAdminModal();
     applyFilters();
     showToast('🗑 글이 삭제되었습니다');
 }
 
-function quickDeletePost(id) {
+async function quickDeletePost(id) {
     if (!confirm('이 글을 삭제하시겠습니까?')) return;
-    const idx = POSTS.findIndex(p => p.id === id);
-    if (idx !== -1) POSTS.splice(idx, 1);
-    savePosts(POSTS);
+    const { error } = await _supabase.from('posts').delete().eq('id', id);
+    if (error) { console.error('Delete failed:', error); showToast('⚠️ 삭제 실패'); return; }
+    await fetchPostsFromDB();
+    currentVisiblePosts = [...POSTS];
     applyFilters();
     showToast('🗑 글이 삭제되었습니다');
 }
@@ -1538,8 +986,8 @@ exitAdminMode = function () {
 
 // Also apply when applyLoginUI enables admin on login
 const _origApplyLoginUI = applyLoginUI;
-applyLoginUI = function () {
-    _origApplyLoginUI();
+applyLoginUI = async function () {
+    await _origApplyLoginUI();
     if (isLoggedIn) {
         isAdminMode = true;
         enableInlineEditing();
@@ -1997,8 +1445,8 @@ openPostEditor = function (id) {
 
 // Patch applyLoginUI to re-render tabs (show/hide add/edit buttons)
 const _origApplyLoginUI2 = applyLoginUI;
-applyLoginUI = function () {
-    _origApplyLoginUI2();
+applyLoginUI = async function () {
+    await _origApplyLoginUI2();
     renderCategoryTabs();
 };
 
