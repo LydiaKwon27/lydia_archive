@@ -225,11 +225,16 @@ function copyPostLink() {
 
 function shareLinkedIn() {
     const p = POSTS.find(x => x.id === currentPostId);
-    if (p && p.linkedInUrl) {
-        window.open(p.linkedInUrl, '_blank');
+    const linkedInProfile = 'https://www.linkedin.com/in/%EC%A7%80%EC%9C%A4-%EA%B6%8C-528452276/';
+    const targetUrl = (p && p.linkedInUrl) ? p.linkedInUrl : linkedInProfile;
+    // 모바일이면 앱으로 열기 시도
+    const isMobile = /iPhone|iPad|Android/i.test(navigator.userAgent);
+    if (isMobile) {
+        const appUrl = targetUrl.replace(/https?:\/\/(www\.)?linkedin\.com/, 'linkedin:/');
+        window.location.href = appUrl;
+        setTimeout(() => { window.open(targetUrl, '_blank'); }, 1500);
     } else {
-        const url = encodeURIComponent(window.location.href);
-        window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}`, '_blank');
+        window.open(targetUrl, '_blank');
     }
 }
 
