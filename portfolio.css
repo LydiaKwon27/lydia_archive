@@ -843,14 +843,15 @@ button {
 
 .about-bullets p {
   margin: 0;
-  font-size: 0.88rem;
+  font-size: 0.82rem;
   color: var(--text2);
 }
 
 .about-p {
   color: var(--text2);
-  margin-bottom: 0.9rem;
-  line-height: 1.85;
+  margin-bottom: 0.7rem;
+  line-height: 1.75;
+  font-size: 0.85rem;
 }
 
 .about-p strong {
