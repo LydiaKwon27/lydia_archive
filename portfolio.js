@@ -33,6 +33,32 @@ async function fetchPostsFromDB() {
 
 
 
+// ===================== CONTACT FORM =====================
+async function submitContact(e) {
+    e.preventDefault();
+    const name = document.getElementById('contactName').value.trim();
+    const email = document.getElementById('contactEmail').value.trim();
+    const message = document.getElementById('contactMessage').value.trim();
+    if (!name || !email || !message) return;
+
+    const btn = document.querySelector('.contact-submit');
+    btn.textContent = '보내는 중...';
+    btn.disabled = true;
+
+    const { error } = await _supabase.from('contacts').insert({ name, email, message });
+
+    if (!error) {
+        document.getElementById('contactForm').reset();
+        btn.textContent = '✅ 전송 완료!';
+        setTimeout(() => { btn.textContent = '메시지 보내기 →'; btn.disabled = false; }, 3000);
+        showToast('✅ 메시지가 전송되었습니다!');
+    } else {
+        btn.textContent = '메시지 보내기 →';
+        btn.disabled = false;
+        showToast('⚠️ 전송 실패. 다시 시도해주세요.');
+    }
+}
+
 // ===================== STATE =====================
 let currentCat = 'all';
 let currentSearch = '';

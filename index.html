@@ -177,6 +177,33 @@
         </div>
     </section>
 
+    <!-- ===================== CONTACT ===================== -->
+    <section id="contact-section">
+        <div class="contact-inner">
+            <div class="sec-header">
+                <h2 class="sec-title">Get in Touch</h2>
+                <p class="sec-sub">궁금한 점이나 제안이 있다면 편하게 연락주세요</p>
+            </div>
+            <form id="contactForm" class="contact-form" onsubmit="submitContact(event)">
+                <div class="contact-row">
+                    <div class="contact-field">
+                        <label for="contactName">이름</label>
+                        <input type="text" id="contactName" placeholder="이름을 입력하세요" required />
+                    </div>
+                    <div class="contact-field">
+                        <label for="contactEmail">이메일</label>
+                        <input type="email" id="contactEmail" placeholder="이메일을 입력하세요" required />
+                    </div>
+                </div>
+                <div class="contact-field">
+                    <label for="contactMessage">메시지</label>
+                    <textarea id="contactMessage" rows="5" placeholder="내용을 입력하세요" required></textarea>
+                </div>
+                <button type="submit" class="btn-primary contact-submit">메시지 보내기 →</button>
+            </form>
+        </div>
+    </section>
+
     <div id="postModal" class="modal-overlay" onclick="handleOverlayClick(event)">
         <div class="modal-card">
             <div class="modal-header">
