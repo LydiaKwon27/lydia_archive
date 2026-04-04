@@ -1000,6 +1000,8 @@ button {
 
 .modal-body {
   padding: 1.75rem 2rem;
+  overflow-y: auto;
+  max-height: calc(100dvh - 60px);
 }
 
 .modal-img-wrap {
@@ -2469,16 +2471,30 @@ button {
 
   .hero-avatar-wrap,
   #hero-avatar-wrap {
-    width: 70px;
-    height: 70px;
+    width: 64px;
+    height: 64px;
+    margin-top: -32px;
+  }
+
+  .hero-avatar {
+    width: 64px;
+    height: 64px;
+  }
+
+  .hero-info {
+    text-align: center;
   }
 
   .hero-name {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
   }
 
   .hero-headline {
-    font-size: 0.8rem;
+    font-size: 0.78rem;
+  }
+
+  .hero-sub {
+    font-size: 0.72rem;
   }
 
   .hero-ctas {
@@ -2530,8 +2546,49 @@ button {
   }
 
   .post-grid {
-    grid-template-columns: 1fr;
-    gap: 1rem;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+
+  .card-img-wrap {
+    height: 120px;
+  }
+
+  .card-body {
+    padding: 0.75rem;
+  }
+
+  .card-title {
+    font-size: 0.82rem;
+    -webkit-line-clamp: 2;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .card-excerpt {
+    font-size: 0.72rem;
+    -webkit-line-clamp: 2;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .card-badge-row {
+    gap: 4px;
+  }
+
+  .card-badge {
+    font-size: 0.65rem;
+    padding: 2px 6px;
+  }
+
+  .card-read-time {
+    font-size: 0.65rem;
+  }
+
+  .card-footer {
+    font-size: 0.72rem;
   }
 
   /* About */
@@ -2639,8 +2696,14 @@ button {
 
   .hero-avatar-wrap,
   #hero-avatar-wrap {
-    width: 60px;
-    height: 60px;
+    width: 52px;
+    height: 52px;
+    margin-top: -26px;
+  }
+
+  .hero-avatar {
+    width: 52px;
+    height: 52px;
   }
 
   .hero-name {
@@ -2664,6 +2727,22 @@ button {
   .about-tag {
     font-size: 0.7rem;
     padding: 3px 8px;
+  }
+
+  .card-img-wrap {
+    height: 100px;
+  }
+
+  .card-body {
+    padding: 0.5rem;
+  }
+
+  .card-title {
+    font-size: 0.75rem;
+  }
+
+  .card-excerpt {
+    display: none;
   }
 }
 
