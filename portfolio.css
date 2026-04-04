@@ -1396,6 +1396,23 @@ button {
   display: flex !important;
 }
 
+.card-reorder-btn {
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  background: rgba(100, 116, 139, 0.85);
+  color: #fff;
+  transition: all var(--transition);
+  line-height: 1;
+}
+
+.card-reorder-btn:hover {
+  background: rgba(71, 85, 105, 0.95);
+}
+
 .card-edit-btn,
 .card-del-btn {
   padding: 4px 10px;
@@ -2580,50 +2597,49 @@ button {
     min-height: 44px;
   }
 
+  /* 에이블리 스타일: 3열 컴팩트 카드 */
   .post-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.75rem;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
   }
 
   .card-img-wrap {
-    height: 120px;
+    height: 100px;
   }
 
   .card-body {
-    padding: 0.75rem;
+    padding: 6px;
   }
 
   .card-title {
-    font-size: 0.82rem;
+    font-size: 0.72rem;
+    line-height: 1.3;
     -webkit-line-clamp: 2;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    margin-bottom: 2px;
   }
 
   .card-excerpt {
-    font-size: 0.72rem;
-    -webkit-line-clamp: 2;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+    display: none;
   }
 
   .card-badge-row {
-    gap: 4px;
-  }
-
-  .card-badge {
-    font-size: 0.65rem;
-    padding: 2px 6px;
-  }
-
-  .card-read-time {
-    font-size: 0.65rem;
+    display: none;
   }
 
   .card-footer {
-    font-size: 0.72rem;
+    font-size: 0.65rem;
+    padding-top: 2px;
+  }
+
+  .card-footer .card-cta {
+    display: none;
+  }
+
+  .post-card {
+    border-radius: 8px;
   }
 
   /* About */
@@ -2764,20 +2780,20 @@ button {
     padding: 3px 8px;
   }
 
+  .post-grid {
+    gap: 4px;
+  }
+
   .card-img-wrap {
-    height: 100px;
+    height: 85px;
   }
 
   .card-body {
-    padding: 0.5rem;
+    padding: 4px;
   }
 
   .card-title {
-    font-size: 0.75rem;
-  }
-
-  .card-excerpt {
-    display: none;
+    font-size: 0.68rem;
   }
 }
 

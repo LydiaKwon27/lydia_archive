@@ -87,6 +87,8 @@ function renderGrid(posts) {
         return `
     <article class="post-card" data-cat="${p.cat}" style="animation-delay:${i * 0.07}s" onclick="isAdminMode ? void(0) : openPost(${p.id})">
       <div class="card-admin-btns">
+        <button class="card-reorder-btn" onclick="event.stopPropagation();reorderPost(${p.id},-1)" title="위로 이동">▲</button>
+        <button class="card-reorder-btn" onclick="event.stopPropagation();reorderPost(${p.id},1)" title="아래로 이동">▼</button>
         <button class="card-edit-btn" onclick="event.stopPropagation();openPostEditor(${p.id})">✏ 수정</button>
         <button class="card-del-btn" onclick="event.stopPropagation();quickDeletePost(${p.id})">✕</button>
       </div>
@@ -736,6 +738,37 @@ async function quickDeletePost(id) {
     currentVisiblePosts = [...POSTS];
     applyFilters();
     showToast('🗑 글이 삭제되었습니다');
+}
+
+// ===================== POST REORDERING =====================
+async function reorderPost(id, dir) {
+    // dir: -1 = move up, 1 = move down
+    const idx = POSTS.findIndex(p => p.id === id);
+    if (idx === -1) return;
+    const swapIdx = idx + dir;
+    if (swapIdx < 0 || swapIdx >= POSTS.length) return;
+
+    const postA = POSTS[idx];
+    const postB = POSTS[swapIdx];
+
+    // Swap sort_order values in Supabase
+    const orderA = postA.sortOrder;
+    const orderB = postB.sortOrder;
+
+    try {
+        const { error: err1 } = await _supabase.from('posts').update({ sort_order: orderB }).eq('id', postA.id);
+        if (err1) throw err1;
+        const { error: err2 } = await _supabase.from('posts').update({ sort_order: orderA }).eq('id', postB.id);
+        if (err2) throw err2;
+
+        await fetchPostsFromDB();
+        currentVisiblePosts = [...POSTS];
+        applyFilters();
+        showToast('✅ 순서가 변경되었습니다');
+    } catch (e) {
+        console.error('Reorder failed:', e);
+        showToast('⚠️ 순서 변경 실패');
+    }
 }
 
 // ===================== FILE ATTACHMENTS =====================
@@ -1758,3 +1791,268 @@ function toggleLanguage() {
     applyLanguage(next);
     applySiteSettings(); // Re-apply user custom edits for this language
 }
+
+// ===================== POST PREVIEW =====================
+function previewPost() {
+    const cat = document.getElementById('editCat').value;
+    const dateVal = document.getElementById('editDate').value;
+    const title = document.getElementById('editPostTitle').value.trim() || '(제목 없음)';
+    const excerpt = document.getElementById('editExcerpt').value.trim();
+    const content = document.getElementById('editContent').value;
+    const hashtagsRaw = document.getElementById('editHashtags').value;
+    const imageData = document.getElementById('editImageData').value;
+    const linkedInUrl = document.getElementById('editLinkedInUrl').value.trim();
+    const date = dateVal ? dateVal.slice(0, 7) : '2026-03';
+    const hashtags = hashtagsRaw.split(',').map(h => h.trim()).filter(Boolean);
+
+    const cats = loadCategories();
+    const catObj = cats.find(c => c.id === cat);
+    const catLabel = catObj ? catObj.labelEn : (CAT_LABELS[cat] || cat);
+
+    // Build a temporary post object
+    const tempPost = {
+        id: '__preview__',
+        cat,
+        catLabel,
+        date,
+        title,
+        excerpt,
+        image: imageData || '',
+        imageType: imageData ? 'img' : 'emoji',
+        imageEmoji: getCatEmoji(cat),
+        hashtags,
+        content,
+        linkedInUrl,
+        attachments: [..._pendingAttachments],
+        sortOrder: 0
+    };
+
+    // Hide admin modal temporarily
+    document.getElementById('adminModal').style.display = 'none';
+
+    // Render into the post modal
+    const modal = document.getElementById('postModal');
+    const displayLabel = catObj ? catObj.labelEn : catLabel;
+
+    document.getElementById('modalTitle').textContent = tempPost.title;
+    document.getElementById('modalBadge').textContent = displayLabel;
+    document.getElementById('modalBadge').className = `modal-badge badge-${tempPost.cat}`;
+    document.getElementById('modalDate').textContent = formatDate(tempPost.date);
+    document.getElementById('modalReadTime').textContent = `⏱ ${readTime(tempPost.content)} min read`;
+    document.getElementById('modalContent').innerHTML = formatContent(tempPost.content);
+    document.getElementById('modalHashtags').innerHTML = tempPost.hashtags.map(h => `<span class="modal-hashtag">#${h}</span>`).join('');
+
+    const imgWrap = document.getElementById('modalImage');
+    if (tempPost.imageType === 'img' && tempPost.image) {
+        imgWrap.innerHTML = `<img src="${tempPost.image}" alt="${tempPost.title}" style="width:100%;border-radius:12px" />`;
+    } else {
+        imgWrap.innerHTML = `<div class="modal-img-placeholder">${tempPost.imageEmoji}</div>`;
+    }
+
+    // Hide nav buttons and edit row for preview
+    document.querySelector('.modal-nav').style.visibility = 'hidden';
+    const editRow = document.querySelector('.modal-edit-row');
+    if (editRow) editRow.style.display = 'none';
+
+    renderModalAttachments(tempPost.attachments);
+
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+
+    // Override close to return to editor
+    const origClose = closeModalDirect;
+    closeModalDirect = function () {
+        modal.classList.remove('open');
+        document.body.style.overflow = 'hidden'; // keep body locked for editor
+        document.getElementById('adminModal').style.display = '';
+        document.querySelector('.modal-nav').style.visibility = '';
+        if (editRow && isLoggedIn) editRow.style.display = 'flex';
+        closeModalDirect = origClose; // restore original
+    };
+}
+
+// ===================== PASSWORD CHANGE =====================
+function openPwChangeModal() {
+    const modal = document.getElementById('pwChangeModal');
+    modal.classList.add('open');
+    document.getElementById('pwChangeCurrent').value = '';
+    document.getElementById('pwChangeNew').value = '';
+    document.getElementById('pwChangeConfirm').value = '';
+    document.getElementById('pwChangeError').style.display = 'none';
+    setTimeout(() => document.getElementById('pwChangeCurrent').focus(), 100);
+}
+
+function closePwChangeModal() {
+    document.getElementById('pwChangeModal').classList.remove('open');
+}
+
+async function submitPwChange() {
+    const current = document.getElementById('pwChangeCurrent').value;
+    const newPw = document.getElementById('pwChangeNew').value;
+    const confirm = document.getElementById('pwChangeConfirm').value;
+    const errEl = document.getElementById('pwChangeError');
+
+    if (!current || !newPw || !confirm) {
+        errEl.textContent = '모든 필드를 입력해주세요.';
+        errEl.style.display = 'block';
+        return;
+    }
+    if (newPw !== confirm) {
+        errEl.textContent = '새 비밀번호가 일치하지 않습니다.';
+        errEl.style.display = 'block';
+        return;
+    }
+    if (newPw.length < 6) {
+        errEl.textContent = '비밀번호는 최소 6자 이상이어야 합니다.';
+        errEl.style.display = 'block';
+        return;
+    }
+
+    try {
+        const { error } = await _supabase.auth.updateUser({ password: newPw });
+        if (error) {
+            errEl.textContent = '비밀번호 변경 실패: ' + error.message;
+            errEl.style.display = 'block';
+            return;
+        }
+        closePwChangeModal();
+        showToast('✅ 비밀번호가 변경되었습니다');
+    } catch (e) {
+        errEl.textContent = '오류가 발생했습니다: ' + e.message;
+        errEl.style.display = 'block';
+    }
+}
+
+// Show/hide password change button based on login state
+const _origApplyLoginUI3 = applyLoginUI;
+applyLoginUI = async function () {
+    await _origApplyLoginUI3();
+    const pwBtn = document.getElementById('pwChangeBtn');
+    if (pwBtn) pwBtn.style.display = isLoggedIn ? 'inline-flex' : 'none';
+};
+
+// Enter key support for password change modal
+document.addEventListener('DOMContentLoaded', () => {
+    const pwConfirmInput = document.getElementById('pwChangeConfirm');
+    if (pwConfirmInput) pwConfirmInput.addEventListener('keydown', e => { if (e.key === 'Enter') submitPwChange(); });
+    // Escape key to close
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') closePwChangeModal();
+    });
+});
+
+// ===================== AUTO-SAVE DRAFT =====================
+let _draftAutoSaveTimer = null;
+const DRAFT_PREFIX = 'lydia_draft_';
+
+function _getDraftKey() {
+    const idRaw = document.getElementById('editPostId').value;
+    return DRAFT_PREFIX + (idRaw || 'new');
+}
+
+function _saveDraftToStorage() {
+    const modal = document.getElementById('adminModal');
+    if (!modal.classList.contains('open')) return;
+
+    const draft = {
+        title: document.getElementById('editPostTitle').value,
+        cat: document.getElementById('editCat').value,
+        date: document.getElementById('editDate').value,
+        excerpt: document.getElementById('editExcerpt').value,
+        content: document.getElementById('editContent').value,
+        hashtags: document.getElementById('editHashtags').value,
+        linkedInUrl: document.getElementById('editLinkedInUrl').value,
+        imageData: document.getElementById('editImageData').value,
+        savedAt: new Date().toISOString()
+    };
+
+    try {
+        localStorage.setItem(_getDraftKey(), JSON.stringify(draft));
+    } catch (e) {
+        console.warn('Draft save failed:', e);
+    }
+}
+
+function _loadDraftFromStorage(postId) {
+    const key = DRAFT_PREFIX + (postId || 'new');
+    try {
+        const raw = localStorage.getItem(key);
+        if (!raw) return null;
+        return JSON.parse(raw);
+    } catch (e) { return null; }
+}
+
+function _clearDraft(postId) {
+    const key = DRAFT_PREFIX + (postId || 'new');
+    localStorage.removeItem(key);
+}
+
+function _applyDraft(draft) {
+    if (draft.title) document.getElementById('editPostTitle').value = draft.title;
+    if (draft.cat) document.getElementById('editCat').value = draft.cat;
+    if (draft.date) document.getElementById('editDate').value = draft.date;
+    if (draft.excerpt !== undefined) document.getElementById('editExcerpt').value = draft.excerpt;
+    if (draft.content !== undefined) document.getElementById('editContent').value = draft.content;
+    if (draft.hashtags !== undefined) document.getElementById('editHashtags').value = draft.hashtags;
+    if (draft.linkedInUrl !== undefined) document.getElementById('editLinkedInUrl').value = draft.linkedInUrl;
+    if (draft.imageData) {
+        document.getElementById('editImageData').value = draft.imageData;
+        const prev = document.getElementById('editImagePreview');
+        prev.src = draft.imageData;
+        prev.style.display = 'block';
+        document.getElementById('editImageLabel').textContent = '클릭하여 이미지 변경';
+    }
+}
+
+function _startDraftAutoSave() {
+    _stopDraftAutoSave();
+    _draftAutoSaveTimer = setInterval(() => {
+        _saveDraftToStorage();
+    }, 30000); // 30 seconds
+}
+
+function _stopDraftAutoSave() {
+    if (_draftAutoSaveTimer) {
+        clearInterval(_draftAutoSaveTimer);
+        _draftAutoSaveTimer = null;
+    }
+}
+
+// Patch openPostEditor to check for drafts and start auto-save
+const _origOpenPostEditor2 = openPostEditor;
+openPostEditor = function (id) {
+    _origOpenPostEditor2(id);
+
+    // Check for saved draft
+    const draft = _loadDraftFromStorage(id);
+    if (draft) {
+        const savedTime = draft.savedAt ? new Date(draft.savedAt).toLocaleString('ko-KR') : '';
+        if (window.confirm(`임시저장된 내용이 있습니다.${savedTime ? ' (' + savedTime + ')' : ''}\n불러올까요?`)) {
+            _applyDraft(draft);
+            showToast('📝 임시저장 내용을 불러왔습니다');
+        } else {
+            _clearDraft(id);
+        }
+    }
+
+    _startDraftAutoSave();
+};
+
+// Patch closeAdminModal to stop auto-save
+const _origCloseAdminModal = closeAdminModal;
+closeAdminModal = function () {
+    _stopDraftAutoSave();
+    _origCloseAdminModal();
+};
+
+// Patch savePost to clear draft on successful save
+const _origSavePost = savePost;
+savePost = async function () {
+    const idRaw = document.getElementById('editPostId').value;
+    await _origSavePost();
+    // If modal closed (save succeeded), clear draft
+    if (!document.getElementById('adminModal').classList.contains('open')) {
+        _clearDraft(idRaw || null);
+        _stopDraftAutoSave();
+    }
+};

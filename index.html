@@ -35,7 +35,8 @@
                 <a class="nav-cta" href="https://www.linkedin.com/in/%EC%A7%80%EC%9C%A4-%EA%B6%8C-528452276/" target="_blank" rel="noopener">LinkedIn →</a>
                 <button id="adminLoginBtn" class="nav-admin-btn" onclick="openLoginModal()" title="관리자 로그인"
                     style="display:none">🔐 로그인</button>
-                <!-- password change removed: use Supabase dashboard -->
+                <button id="pwChangeBtn" class="nav-admin-btn" onclick="openPwChangeModal()" title="비밀번호 변경"
+                    style="display:none">🔑 비밀번호 변경</button>
                 <button id="adminLogoutBtn" class="nav-admin-btn nav-logout-btn" onclick="adminLogout()" title="로그아웃"
                     style="display:none">🔓 로그아웃</button>
             </div>
@@ -317,6 +318,7 @@
                 <button class="btn-ghost" onclick="closeAdminModal()">취소</button>
                 <button id="deletePostBtn" class="btn-danger" onclick="deleteCurrentPost()"
                     style="display:none">삭제</button>
+                <button class="btn-ghost" onclick="previewPost()" style="border:1px solid var(--accent);color:var(--accent)">👁 미리보기</button>
                 <button class="btn-primary" onclick="savePost()">저장</button>
             </div>
         </div>
@@ -343,7 +345,28 @@
         </div>
     </div>
 
-    <!-- Password change modal removed: use Supabase dashboard -->
+    <!-- ===== PASSWORD CHANGE MODAL ===== -->
+    <div id="pwChangeModal" class="modal-overlay" onclick="if(event.target===this)closePwChangeModal()">
+        <div class="login-modal-card">
+            <div class="login-modal-header">
+                <h3>🔑 비밀번호 변경</h3>
+                <button class="admin-close" onclick="closePwChangeModal()">✕</button>
+            </div>
+            <div class="login-modal-body">
+                <label for="pwChangeCurrent">현재 비밀번호</label>
+                <input type="password" id="pwChangeCurrent" placeholder="현재 비밀번호" autocomplete="current-password" />
+                <label for="pwChangeNew">새 비밀번호</label>
+                <input type="password" id="pwChangeNew" placeholder="새 비밀번호" autocomplete="new-password" />
+                <label for="pwChangeConfirm">새 비밀번호 확인</label>
+                <input type="password" id="pwChangeConfirm" placeholder="새 비밀번호 확인" autocomplete="new-password" />
+                <p id="pwChangeError" class="login-error" style="display:none"></p>
+            </div>
+            <div class="login-modal-footer">
+                <button class="btn-ghost" onclick="closePwChangeModal()">취소</button>
+                <button class="btn-primary" onclick="submitPwChange()">변경</button>
+            </div>
+        </div>
+    </div>
 
     <!-- ===== RICH TEXT FORMAT TOOLBAR ===== -->
     <div id="formatToolbar" class="format-toolbar" style="display:none">
