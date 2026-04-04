@@ -180,10 +180,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     await fetchPostsFromDB();
     currentVisiblePosts = [...POSTS];
 
-    // Apply lang first, then apply settings on top of it so user edits aren't clobbered
+    // 옛날 사이트 설정 localStorage 정리 (코드 값이 항상 우선)
+    localStorage.removeItem('lydia_site_settings');
+    localStorage.removeItem('lydia_site_images');
+
     const savedLang = localStorage.getItem(LANG_KEY) || 'ko';
     applyLanguage(savedLang);
-    applySiteSettings();
 
     renderGrid(POSTS);
     renderFeatured();
