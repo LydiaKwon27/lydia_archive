@@ -12,9 +12,13 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@300;400;500;700&family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;600;700&family=Nanum+Gothic:wght@400;700;800&family=Nanum+Myeongjo:wght@400;700;800&family=Black+Han+Sans&family=Noto+Serif+KR:wght@400;600;700&display=swap"
         rel="stylesheet" />
-    <link rel="stylesheet" href="portfolio.css?v=6" />
+    <link id="mainCSS" rel="stylesheet" href="portfolio.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script>
+    // 캐시 자동 무효화: CSS/JS 파일에 현재 시간을 붙여서 항상 최신 버전 로드
+    (function(){var t=Date.now();document.getElementById('mainCSS').href='portfolio.css?t='+t;})();
+    </script>
 </head>
 
 <body>
@@ -425,7 +429,7 @@
         </div>
     </div>
 
-    <script src="portfolio.js?v=3"></script>
+    <script>document.write('<script src="portfolio.js?t='+Date.now()+'"><\/script>');</script>
 
 <button id="scrollTopBtn" class="scroll-top-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="display:none">↑</button>
 </body>
