@@ -823,6 +823,7 @@ button {
 
 .about-photo {
   width: 100%;
+  max-width: 320px;
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
   object-fit: contain;
