@@ -2603,10 +2603,10 @@ button {
     min-height: 44px;
   }
 
-  /* 에이블리 스타일: 3열 컴팩트 카드 */
+  /* 2열 컴팩트 카드 */
   .post-grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 4px;
   }
 
   .search-wrap {
@@ -2640,6 +2640,17 @@ button {
   }
 
   .card-badge-row {
+    gap: 2px;
+    margin-bottom: 2px;
+  }
+
+  .card-badge {
+    font-size: 0.55rem;
+    padding: 1px 4px;
+    opacity: 0.8;
+  }
+
+  .card-read-time {
     display: none;
   }
 
@@ -2795,19 +2806,19 @@ button {
   }
 
   .post-grid {
-    gap: 4px;
+    gap: 3px;
   }
 
   .card-img-wrap {
-    height: 85px;
+    height: 110px;
   }
 
   .card-body {
-    padding: 4px;
+    padding: 5px;
   }
 
   .card-title {
-    font-size: 0.68rem;
+    font-size: 0.72rem;
   }
 }
 
