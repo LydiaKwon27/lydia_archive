@@ -18,12 +18,15 @@ async function fetchPostsFromDB() {
             catLabel: row.cat_label,
             date: row.date,
             title: row.title,
+            titleEn: row.title_en || '',
             excerpt: row.excerpt || '',
+            excerptEn: row.excerpt_en || '',
             image: row.image || '',
             imageType: row.image_type || 'img',
             imageEmoji: row.image_emoji || '',
             hashtags: row.hashtags || [],
             content: row.content,
+            contentEn: row.content_en || '',
             linkedInUrl: row.linkedin_url || '',
             attachments: row.attachments || [],
             sortOrder: row.sort_order || 0
@@ -32,6 +35,11 @@ async function fetchPostsFromDB() {
 }
 
 
+
+// ===================== LANGUAGE-AWARE GETTERS =====================
+function getPostTitle(p) { return (_currentLang === 'en' && p.titleEn) ? p.titleEn : p.title; }
+function getPostExcerpt(p) { return (_currentLang === 'en' && p.excerptEn) ? p.excerptEn : p.excerpt; }
+function getPostContent(p) { return (_currentLang === 'en' && p.contentEn) ? p.contentEn : p.content; }
 
 // ===================== CONTACT FORM =====================
 async function submitContact(e) {
@@ -200,10 +208,10 @@ function renderGrid(posts) {
       <div class="card-body">
         <div class="card-badge-row">
           <span class="card-badge badge-${p.cat}">${displayLabel}</span>
-          <span class="card-read-time">⏱ ${readTime(p.content)} min</span>
+          <span class="card-read-time">⏱ ${readTime(getPostContent(p))} min</span>
         </div>
-        <h3 class="card-title">${p.title}</h3>
-        <p class="card-excerpt">${p.excerpt}</p>
+        <h3 class="card-title">${getPostTitle(p)}</h3>
+        <p class="card-excerpt">${getPostExcerpt(p)}</p>
         <div class="card-footer">
           <span class="card-date">${formatDate(p.date)}</span>
           <span class="card-cta">읽기 →</span>
@@ -239,9 +247,9 @@ function applyFilters() {
     let posts = POSTS;
     if (currentCat !== 'all') posts = posts.filter(p => p.cat === currentCat);
     if (currentSearch) posts = posts.filter(p =>
-        p.title.toLowerCase().includes(currentSearch) ||
-        p.excerpt.toLowerCase().includes(currentSearch) ||
-        p.content.toLowerCase().includes(currentSearch) ||
+        getPostTitle(p).toLowerCase().includes(currentSearch) ||
+        getPostExcerpt(p).toLowerCase().includes(currentSearch) ||
+        getPostContent(p).toLowerCase().includes(currentSearch) ||
         p.hashtags.some(h => h.toLowerCase().includes(currentSearch))
     );
     renderGrid(posts);
@@ -259,12 +267,12 @@ function openPost(id) {
     const catObj = cats.find(c => c.id === p.cat);
     const displayLabel = catObj ? catObj.labelEn : p.catLabel;
 
-    document.getElementById('modalTitle').textContent = p.title;
+    document.getElementById('modalTitle').textContent = getPostTitle(p);
     document.getElementById('modalBadge').textContent = displayLabel;
     document.getElementById('modalBadge').className = `modal-badge badge-${p.cat}`;
     document.getElementById('modalDate').textContent = formatDate(p.date);
-    document.getElementById('modalReadTime').textContent = `⏱ ${readTime(p.content)} min read`;
-    document.getElementById('modalContent').innerHTML = formatContent(p.content);
+    document.getElementById('modalReadTime').textContent = `⏱ ${readTime(getPostContent(p))} min read`;
+    document.getElementById('modalContent').innerHTML = formatContent(getPostContent(p));
     document.getElementById('modalHashtags').innerHTML = p.hashtags.map(h => `<span class="modal-hashtag">#${h}</span>`).join('');
 
     const imgWrap = document.getElementById('modalImage');
@@ -1977,7 +1985,8 @@ function toggleLanguage() {
     const next = _currentLang === 'ko' ? 'en' : 'ko';
     localStorage.setItem(LANG_KEY, next);
     applyLanguage(next);
-    applySiteSettings(); // Re-apply user custom edits for this language
+    applySiteSettings();
+    applyFilters(); // 글 카드도 해당 언어로 다시 렌더링
 }
 
 // ===================== POST PREVIEW =====================
