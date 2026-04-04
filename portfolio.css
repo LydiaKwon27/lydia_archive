@@ -2464,29 +2464,38 @@ button {
   }
 
   .hero-profile-card {
+    display: flex;
     flex-direction: column;
     padding: 1rem 0.75rem 0.75rem;
     gap: 0.5rem;
   }
 
+  /* 프로필 상단: 사진 왼쪽 + 이름 오른쪽 (링크드인 스타일) */
+  .hero-profile-card > .hero-avatar-wrap,
+  .hero-profile-card > #hero-avatar-wrap {
+    position: absolute;
+  }
+
   .hero-avatar-wrap,
   #hero-avatar-wrap {
-    width: 64px;
-    height: 64px;
-    margin-top: -32px;
+    width: 60px;
+    height: 60px;
+    margin-top: -30px;
+    align-self: flex-start;
   }
 
   .hero-avatar {
-    width: 64px;
-    height: 64px;
+    width: 60px;
+    height: 60px;
   }
 
   .hero-info {
-    text-align: center;
+    text-align: left;
+    padding-top: 36px;
   }
 
   .hero-name {
-    font-size: 1.2rem;
+    font-size: 1.15rem;
   }
 
   .hero-headline {
@@ -2495,6 +2504,14 @@ button {
 
   .hero-sub {
     font-size: 0.72rem;
+  }
+
+  .hero-tags {
+    justify-content: flex-start;
+  }
+
+  .hero-ctas {
+    justify-content: flex-start;
   }
 
   .hero-ctas {
@@ -2696,18 +2713,22 @@ button {
 
   .hero-avatar-wrap,
   #hero-avatar-wrap {
-    width: 52px;
-    height: 52px;
-    margin-top: -26px;
+    width: 50px;
+    height: 50px;
+    margin-top: -25px;
   }
 
   .hero-avatar {
-    width: 52px;
-    height: 52px;
+    width: 50px;
+    height: 50px;
+  }
+
+  .hero-info {
+    padding-top: 28px;
   }
 
   .hero-name {
-    font-size: 1.1rem;
+    font-size: 1.05rem;
   }
 
   .sec-title {
