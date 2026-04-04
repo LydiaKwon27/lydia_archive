@@ -491,10 +491,12 @@ let _imgTouchStartX = 0;
 function initImageCarousel(images) {
     _imgCarouselImages = images;
     _imgCarouselIndex = 0;
+    // 모든 이미지 미리 로드 (깜빡임 방지)
+    images.forEach(src => { const i = new Image(); i.src = src; });
     const img = document.getElementById('imgCarouselImg');
-    if (img) img.src = images[0];
+    if (img) { img.src = images[0]; img.style.opacity = '1'; img.style.transform = 'none'; }
     _updateImgCarouselCounter();
-    // Touch support
+    // 터치 스와이프 지원
     const carousel = document.getElementById('imgCarousel');
     if (carousel) {
         carousel.addEventListener('touchstart', function (e) {
@@ -502,37 +504,36 @@ function initImageCarousel(images) {
         }, { passive: true });
         carousel.addEventListener('touchend', function (e) {
             const dx = e.changedTouches[0].clientX - _imgTouchStartX;
-            if (Math.abs(dx) > 40) {
+            if (Math.abs(dx) > 25) { // 감도 높임 (40→25)
                 imageCarouselNav(dx < 0 ? 1 : -1);
             }
         }, { passive: true });
     }
 }
 
+let _imgCarouselAnimating = false;
 function imageCarouselNav(dir) {
-    if (!_imgCarouselImages.length) return;
+    if (!_imgCarouselImages.length || _imgCarouselAnimating) return;
+    _imgCarouselAnimating = true;
     const img = document.getElementById('imgCarouselImg');
-    if (!img) return;
+    if (!img) { _imgCarouselAnimating = false; return; }
     let next = _imgCarouselIndex + dir;
     if (next < 0) next = _imgCarouselImages.length - 1;
     if (next >= _imgCarouselImages.length) next = 0;
-    // Slide animation (same pattern as pdfPageNav)
-    img.style.transition = 'opacity 0.2s, transform 0.2s';
-    img.style.opacity = '0';
-    img.style.transform = `translateX(${dir > 0 ? '30px' : '-30px'})`;
-    setTimeout(() => {
-        _imgCarouselIndex = next;
-        img.src = _imgCarouselImages[next];
-        _updateImgCarouselCounter();
-        img.style.transition = 'none';
-        img.style.opacity = '0';
-        img.style.transform = `translateX(${dir > 0 ? '-20px' : '20px'})`;
-        requestAnimationFrame(() => {
-            img.style.transition = 'opacity 0.2s, transform 0.2s';
+    // 새 이미지를 미리 준비한 후 전환
+    const nextImg = new Image();
+    nextImg.src = _imgCarouselImages[next];
+    nextImg.onload = nextImg.onerror = function () {
+        img.style.transition = 'opacity 0.15s ease';
+        img.style.opacity = '0.3';
+        setTimeout(() => {
+            _imgCarouselIndex = next;
+            img.src = _imgCarouselImages[next];
+            _updateImgCarouselCounter();
             img.style.opacity = '1';
-            img.style.transform = 'translateX(0)';
-        });
-    }, 200);
+            _imgCarouselAnimating = false;
+        }, 150);
+    };
 }
 
 function _updateImgCarouselCounter() {
