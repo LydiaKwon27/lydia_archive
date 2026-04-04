@@ -883,6 +883,15 @@ async function savePost() {
     currentVisiblePosts = [...POSTS];
     closeAdminModal();
     applyFilters();
+    // 저장 후 admin mode 유지
+    if (isLoggedIn) {
+        isAdminMode = true;
+        document.body.classList.add('admin-mode');
+        const bar = document.getElementById('adminBar');
+        const fab = document.getElementById('adminFab');
+        if (bar) bar.style.display = 'flex';
+        if (fab) fab.style.display = 'flex';
+    }
     showToast(idRaw ? '✅ 글이 수정되었습니다' : '✅ 새 글이 등록되었습니다');
 }
 
