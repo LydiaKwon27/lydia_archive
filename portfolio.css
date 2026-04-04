@@ -2752,8 +2752,9 @@ button {
     flex: 1;
     text-align: center;
     justify-content: center;
-    padding: 10px 0;
-    font-size: 0.88rem;
+    padding: 8px 6px;
+    font-size: 0.75rem;
+    white-space: nowrap;
   }
 
   .hero-stats-box {
