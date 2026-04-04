@@ -558,16 +558,14 @@ button {
 }
 
 .card-img-wrap.card-img-emoji {
-  height: 80px;
   display: flex;
   align-items: center;
   justify-content: center;
   background: linear-gradient(135deg, #f8fafc, #f1f5f9);
-  border-bottom: 1px solid var(--border);
 }
 
 .card-img-wrap.card-img-emoji span {
-  font-size: 2rem;
+  font-size: 3rem;
 }
 
 .card-img-wrap img {
@@ -2701,7 +2699,7 @@ button {
   }
 
   .lang-toggle-wrap {
-    display: none;
+    display: block;
   }
 
   .hero-archive-tagline {
