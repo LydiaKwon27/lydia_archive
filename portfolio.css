@@ -1289,6 +1289,58 @@ button {
   font-family: var(--font-en);
 }
 
+/* ===== IMAGE CAROUSEL ===== */
+.img-carousel {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 12px;
+  background: var(--surface2);
+}
+
+.img-carousel img {
+  width: 100%;
+  display: block;
+  border-radius: 12px;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.img-carousel-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background: rgba(255, 255, 255, 0.95);
+  border-top: 1px solid var(--border);
+}
+
+.img-carousel-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  font-size: 1.3rem;
+  color: var(--text2);
+  cursor: pointer;
+  transition: all var(--transition);
+  line-height: 1;
+}
+
+.img-carousel-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.img-carousel-counter {
+  font-size: 0.82rem;
+  color: var(--text3);
+  font-family: var(--font-en);
+}
+
 /* ===== ADMIN PANEL ===== */
 .admin-toggle {
   position: fixed;

@@ -171,7 +171,22 @@ function openPost(id) {
     document.getElementById('modalHashtags').innerHTML = p.hashtags.map(h => `<span class="modal-hashtag">#${h}</span>`).join('');
 
     const imgWrap = document.getElementById('modalImage');
-    if (p.imageType === 'img') {
+    // Check for multiple image attachments
+    const imageAttachments = (p.attachments || []).filter(a => a.type && a.type.startsWith('image/'));
+    if (p.imageType === 'img' && imageAttachments.length > 1) {
+        // Multiple images — show carousel
+        const imageUrls = imageAttachments.map(a => a.data || a.url);
+        imgWrap.innerHTML = `
+          <div class="img-carousel" id="imgCarousel">
+            <img id="imgCarouselImg" src="" alt="${p.title}" />
+            <div class="img-carousel-controls">
+              <button class="img-carousel-btn" onclick="imageCarouselNav(-1)">&#8249;</button>
+              <span class="img-carousel-counter" id="imgCarouselCounter">1 / ${imageUrls.length}</span>
+              <button class="img-carousel-btn" onclick="imageCarouselNav(1)">&#8250;</button>
+            </div>
+          </div>`;
+        initImageCarousel(imageUrls);
+    } else if (p.imageType === 'img') {
         imgWrap.innerHTML = `<img src="${p.image}" alt="${p.title}" style="width:100%;border-radius:12px" />`;
     } else if (p.imageType === 'pdf') {
         // PDF carousel: render all pages
@@ -206,6 +221,8 @@ function closeModalDirect() {
     currentPostId = null;
     clearInterval(_pdfAutoTimer);
     _pdfDoc = null;
+    _imgCarouselImages = [];
+    _imgCarouselIndex = 0;
 }
 
 // Open editor for the current post from within the modal
@@ -361,6 +378,63 @@ function pdfPageNav(dir, wrap) {
     }
     // Restart auto-advance
     _pdfAutoTimer = setInterval(() => pdfPageNav(1, true), 4000);
+}
+
+// ===================== IMAGE CAROUSEL =====================
+let _imgCarouselImages = [];
+let _imgCarouselIndex = 0;
+let _imgTouchStartX = 0;
+
+function initImageCarousel(images) {
+    _imgCarouselImages = images;
+    _imgCarouselIndex = 0;
+    const img = document.getElementById('imgCarouselImg');
+    if (img) img.src = images[0];
+    _updateImgCarouselCounter();
+    // Touch support
+    const carousel = document.getElementById('imgCarousel');
+    if (carousel) {
+        carousel.addEventListener('touchstart', function (e) {
+            _imgTouchStartX = e.changedTouches[0].clientX;
+        }, { passive: true });
+        carousel.addEventListener('touchend', function (e) {
+            const dx = e.changedTouches[0].clientX - _imgTouchStartX;
+            if (Math.abs(dx) > 40) {
+                imageCarouselNav(dx < 0 ? 1 : -1);
+            }
+        }, { passive: true });
+    }
+}
+
+function imageCarouselNav(dir) {
+    if (!_imgCarouselImages.length) return;
+    const img = document.getElementById('imgCarouselImg');
+    if (!img) return;
+    let next = _imgCarouselIndex + dir;
+    if (next < 0) next = _imgCarouselImages.length - 1;
+    if (next >= _imgCarouselImages.length) next = 0;
+    // Slide animation (same pattern as pdfPageNav)
+    img.style.transition = 'opacity 0.2s, transform 0.2s';
+    img.style.opacity = '0';
+    img.style.transform = `translateX(${dir > 0 ? '30px' : '-30px'})`;
+    setTimeout(() => {
+        _imgCarouselIndex = next;
+        img.src = _imgCarouselImages[next];
+        _updateImgCarouselCounter();
+        img.style.transition = 'none';
+        img.style.opacity = '0';
+        img.style.transform = `translateX(${dir > 0 ? '-20px' : '20px'})`;
+        requestAnimationFrame(() => {
+            img.style.transition = 'opacity 0.2s, transform 0.2s';
+            img.style.opacity = '1';
+            img.style.transform = 'translateX(0)';
+        });
+    }, 200);
+}
+
+function _updateImgCarouselCounter() {
+    const counter = document.getElementById('imgCarouselCounter');
+    if (counter) counter.textContent = `${_imgCarouselIndex + 1} / ${_imgCarouselImages.length}`;
 }
 
 // ===================== SLIDE NAVIGATION =====================
@@ -1357,7 +1431,8 @@ const DEFAULT_CATEGORIES = [
     { id: 'martech', labelKo: '🔮 마테크 & 소비자', labelEn: 'MarTech & Consumer' },
     { id: 'ai', labelKo: '🤖 AI 실험실', labelEn: 'AI Experiments' },
     { id: 'networking', labelKo: '🤝 네트워킹', labelEn: 'Networking' },
-    { id: 'claudecode', labelKo: '🧑‍💻 Claude Code', labelEn: 'Claude Code' }
+    { id: 'claudecode', labelKo: '🧑‍💻 Claude Code', labelEn: 'Claude Code' },
+    { id: 'linkedin', labelKo: '💬 링크드인 일기', labelEn: 'LinkedIn Diary' }
 ];
 
 function loadCategories() {
@@ -1684,14 +1759,20 @@ async function attachPdfFileNav(dir) {
     await _loadAttachPDF(_attachPdfAttachments[_attachPdfAttachmentIndex]);
 }
 
-// Patch renderModalAttachments to also render PDF carousel
+// Patch renderModalAttachments to also render PDF carousel and exclude carousel images
 const _origRenderModalAttachments = renderModalAttachments;
 renderModalAttachments = function (attachments) {
-    // Show non-PDF attachments as download list
-    const nonPdf = (attachments || []).filter(a => !(a.type === 'application/pdf' || a.name?.endsWith('.pdf')));
-    _origRenderModalAttachments(nonPdf);
+    const all = attachments || [];
+    // Exclude PDFs (shown in PDF carousel)
+    let filtered = all.filter(a => !(a.type === 'application/pdf' || a.name?.endsWith('.pdf')));
+    // Exclude images if image carousel is active (multiple image attachments)
+    const imageAtts = all.filter(a => a.type && a.type.startsWith('image/'));
+    if (imageAtts.length > 1) {
+        filtered = filtered.filter(a => !(a.type && a.type.startsWith('image/')));
+    }
+    _origRenderModalAttachments(filtered);
     // Render PDF carousel if PDFs present
-    renderPDFAttachmentCarousel(attachments || []);
+    renderPDFAttachmentCarousel(all);
 };
 
 // Patch openPost to clear old PDF state
