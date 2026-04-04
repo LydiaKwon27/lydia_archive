@@ -8,7 +8,7 @@ let POSTS = [];
 
 // Fetch posts from Supabase and populate POSTS array
 async function fetchPostsFromDB() {
-    const { data, error } = await _supabase.from('posts').select('*').order('sort_order');
+    const { data, error } = await _supabase.from('posts').select('*').order('date', { ascending: false });
     if (error) { console.error('Failed to load posts:', error); return; }
     POSTS.length = 0;
     (data || []).forEach(row => {
