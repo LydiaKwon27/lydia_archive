@@ -1468,6 +1468,23 @@ document.addEventListener('DOMContentLoaded', () => {
         const btn = document.getElementById('scrollTopBtn');
         if (btn) btn.style.display = window.scrollY > 400 ? 'flex' : 'none';
     });
+
+    // LinkedIn 링크: 모바일이면 앱으로 열기 시도 → 실패 시 웹으로
+    const isMobile = /iPhone|iPad|Android/i.test(navigator.userAgent);
+    if (isMobile) {
+        document.querySelectorAll('a[href*="linkedin.com/in/"]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const webUrl = this.href;
+                const profilePath = webUrl.replace(/https?:\/\/(www\.)?linkedin\.com/, '');
+                const appUrl = 'linkedin:/' + profilePath;
+                // 앱 열기 시도
+                window.location.href = appUrl;
+                // 1.5초 안에 앱이 안 열리면 웹으로
+                setTimeout(() => { window.open(webUrl, '_blank'); }, 1500);
+            });
+        });
+    }
 });
 
 // Update HTML: tabs wrap needs id="tabsWrap"
