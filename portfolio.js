@@ -933,12 +933,24 @@ function _linkedInEditClick(e) {
 function _addImageOverlay(wrapId, inputId, label) {
     const wrap = document.getElementById(wrapId);
     if (!wrap || wrap.querySelector('.img-edit-overlay')) return;
+    const type = inputId.includes('Banner') ? 'banner' : 'avatar';
     const overlay = document.createElement('div');
     overlay.className = 'img-edit-overlay';
-    overlay.innerHTML = '<span>' + label + '</span>';
-    overlay.addEventListener('click', () => {
+    overlay.innerHTML = `<span>${label}</span><span class="img-crop-btn" data-crop-type="${type}">✂️ 크롭</span>`;
+    // "변경" 클릭 → 새 이미지 업로드
+    overlay.querySelector('span:first-child').addEventListener('click', () => {
         const inp = document.getElementById(inputId);
         if (inp) inp.click();
+    });
+    // "크롭" 클릭 → 현재 이미지로 크롭 창 열기
+    overlay.querySelector('.img-crop-btn').addEventListener('click', (e) => {
+        e.stopPropagation();
+        const imgEl = wrap.querySelector('img');
+        if (imgEl && imgEl.src) {
+            openCropModal(imgEl.src, type);
+        } else {
+            showToast('크롭할 이미지가 없습니다');
+        }
     });
     wrap.style.position = 'relative';
     wrap.appendChild(overlay);
