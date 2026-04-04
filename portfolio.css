@@ -1207,34 +1207,7 @@ button {
 }
 
 @media (max-width: 600px) {
-  .hero-profile-card {
-    grid-template-columns: 1fr;
-  }
-
-  .hero-avatar-wrap {
-    margin: -50px auto 0;
-  }
-
-  .hero-info {
-    text-align: center;
-  }
-
-  .hero-tags,
-  .hero-ctas {
-    justify-content: center;
-  }
-
-  .post-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .modal-body {
-    padding: 1.25rem;
-  }
-
-  .modal-footer {
-    gap: 0.4rem;
-  }
+  /* hero는 768px 쿼리의 LinkedIn 스타일을 유지 (덮어쓰지 않음) */
 
   .slide-btn {
     display: none;
@@ -1242,15 +1215,6 @@ button {
 
   .nav-links .nav-cta {
     display: none;
-  }
-
-  .tabs-wrap {
-    gap: 0.4rem;
-  }
-
-  .tab {
-    padding: 7px 14px;
-    font-size: 0.78rem;
   }
 }
 
@@ -2464,31 +2428,33 @@ button {
   }
 
   .hero-profile-card {
-    display: flex;
-    flex-direction: column;
-    padding: 0 16px 16px;
-    gap: 0;
-    background: none;
-    border: none;
-    box-shadow: none;
+    display: flex !important;
+    flex-direction: column !important;
+    padding: 0 16px 16px !important;
+    gap: 0 !important;
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
   }
 
   .hero-avatar-wrap,
   #hero-avatar-wrap {
-    width: 120px;
-    height: 120px;
-    margin-top: -60px;
-    align-self: flex-start;
+    width: 120px !important;
+    height: 120px !important;
+    margin-top: -60px !important;
+    margin-left: 0 !important;
+    margin-right: auto !important;
+    align-self: flex-start !important;
   }
 
   .hero-avatar {
-    width: 120px;
-    height: 120px;
-    border: 4px solid white;
+    width: 120px !important;
+    height: 120px !important;
+    border: 4px solid white !important;
   }
 
   .hero-info {
-    text-align: left;
+    text-align: left !important;
     margin-top: 8px;
   }
 
