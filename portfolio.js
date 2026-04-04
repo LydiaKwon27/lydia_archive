@@ -179,11 +179,9 @@ function openPost(id) {
         imgWrap.innerHTML = `
           <div class="img-carousel" id="imgCarousel">
             <img id="imgCarouselImg" src="" alt="${p.title}" />
-            <div class="img-carousel-controls">
-              <button class="img-carousel-btn" onclick="imageCarouselNav(-1)">&#8249;</button>
-              <span class="img-carousel-counter" id="imgCarouselCounter">1 / ${imageUrls.length}</span>
-              <button class="img-carousel-btn" onclick="imageCarouselNav(1)">&#8250;</button>
-            </div>
+            <button class="img-carousel-btn-overlay prev" onclick="imageCarouselNav(-1)">&#8249;</button>
+            <button class="img-carousel-btn-overlay next" onclick="imageCarouselNav(1)">&#8250;</button>
+            <span class="img-carousel-counter-overlay" id="imgCarouselCounter">1 / ${imageUrls.length}</span>
           </div>`;
         initImageCarousel(imageUrls);
     } else if (p.imageType === 'img') {

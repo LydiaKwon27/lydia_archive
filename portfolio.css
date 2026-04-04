@@ -1305,13 +1305,52 @@ button {
   transition: opacity 0.25s ease, transform 0.25s ease;
 }
 
-.img-carousel-controls {
+/* 화살표: 사진 위에 반투명으로 오버레이 */
+.img-carousel-btn-overlay {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.3);
+  border: none;
+  font-size: 1.4rem;
+  color: rgba(255, 255, 255, 0.85);
+  cursor: pointer;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 10px 20px;
-  background: rgba(255, 255, 255, 0.95);
-  border-top: 1px solid var(--border);
+  justify-content: center;
+  z-index: 5;
+  transition: background 0.2s;
+}
+
+.img-carousel-btn-overlay:hover {
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+}
+
+.img-carousel-btn-overlay.prev { left: 10px; }
+.img-carousel-btn-overlay.next { right: 10px; }
+
+/* 카운터: 사진 하단에 오버레이 */
+.img-carousel-counter-overlay {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.45);
+  color: #fff;
+  font-size: 0.78rem;
+  padding: 3px 12px;
+  border-radius: 12px;
+  font-family: var(--font-en);
+  z-index: 5;
+}
+
+/* 기존 컨트롤 바 (fallback용 유지) */
+.img-carousel-controls {
+  display: none;
 }
 
 .img-carousel-btn {
