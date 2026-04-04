@@ -2478,20 +2478,19 @@ button {
 
   .hero-avatar-wrap,
   #hero-avatar-wrap {
-    width: 60px;
-    height: 60px;
-    margin-top: -30px;
+    width: 80px;
+    height: 80px;
+    margin-top: -40px;
     align-self: flex-start;
   }
 
   .hero-avatar {
-    width: 60px;
-    height: 60px;
+    width: 80px;
+    height: 80px;
   }
 
   .hero-info {
     text-align: left;
-    padding-top: 36px;
   }
 
   .hero-name {
@@ -2713,18 +2712,14 @@ button {
 
   .hero-avatar-wrap,
   #hero-avatar-wrap {
-    width: 50px;
-    height: 50px;
-    margin-top: -25px;
+    width: 70px;
+    height: 70px;
+    margin-top: -35px;
   }
 
   .hero-avatar {
-    width: 50px;
-    height: 50px;
-  }
-
-  .hero-info {
-    padding-top: 28px;
+    width: 70px;
+    height: 70px;
   }
 
   .hero-name {
