@@ -1561,8 +1561,9 @@ function initDynamicCategories() {
 // Patch openPostEditor to re-render cat select each time
 const _origOpenPostEditor = openPostEditor;
 openPostEditor = function (id) {
+    renderCatSelect(); // 카테고리 목록을 먼저 렌더링해야 값이 제대로 세팅됨
     _origOpenPostEditor(id);
-    renderCatSelect();
+    renderCatSelect(); // 값 세팅 후 다시 한번 동기화
 };
 
 // Patch applyLoginUI to re-render tabs (show/hide add/edit buttons)
