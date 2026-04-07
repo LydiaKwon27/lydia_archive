@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="딥링크데모">
+<title>에어브릿지 딥링크 데모</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo',sans-serif;background:#000;display:flex;justify-content:center;align-items:center;min-height:100vh;overflow:hidden;user-select:none;-webkit-user-select:none}
+.phone{width:100vw;height:100vh;max-width:393px;max-height:852px;background:#fff;position:relative;overflow:hidden}
+.sc{position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;pointer-events:none;transition:opacity .35s ease;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch}
+.sc.on{opacity:1;pointer-events:auto}
+.sc::-webkit-scrollbar{display:none}
+.sb{display:flex;justify-content:space-between;align-items:center;padding:14px 24px 6px;font-size:15px;font-weight:700;position:sticky;top:0;z-index:100}
+.sb .r{display:flex;align-items:center;gap:5px;font-size:12px;font-weight:500}
+.sb .bat{width:22px;height:10px;border:1.5px solid #333;border-radius:2.5px;position:relative;display:inline-block}
+.sb .bat::after{content:'';position:absolute;right:-3.5px;top:2px;width:1.5px;height:4px;background:#333;border-radius:0 1px 1px 0}
+.sb .bat::before{content:'';position:absolute;left:2px;top:2px;width:12px;height:4.5px;background:#333;border-radius:1px}
+
+/* ── 손가락 커서 ── */
+.finger{position:fixed;z-index:9999;pointer-events:none;opacity:0;transition:opacity .2s ease}
+.finger svg{width:40px;height:40px;filter:drop-shadow(2px 4px 6px rgba(0,0,0,.3))}
+
+/* ── 탭 ripple ── */
+.ripple{position:fixed;z-index:9998;pointer-events:none;width:50px;height:50px;border-radius:50%;background:rgba(255,122,156,.35);transform:translate(-50%,-50%) scale(0);opacity:0}
+.ripple.go{animation:rip .5s ease-out forwards}
+@keyframes rip{0%{transform:translate(-50%,-50%) scale(0);opacity:.8}100%{transform:translate(-50%,-50%) scale(2.5);opacity:0}}
+
+/* ── 프로그레스 바 ── */
+.pgb{position:fixed;top:0;left:0;height:2.5px;background:linear-gradient(90deg,#FF7A9C,#6366F1);z-index:9990;transition:width .4s ease}
+
+/* ── 딥링크 배지 ── */
+.dlb{position:fixed;top:56px;right:8px;background:linear-gradient(135deg,#6366F1,#8B5CF6);color:#fff;padding:5px 11px;border-radius:16px;font-size:10.5px;font-weight:700;z-index:9000;display:none;box-shadow:0 2px 10px rgba(99,102,241,.4);align-items:center;gap:4px}
+.dlb.show{display:flex;animation:si .4s ease}
+@keyframes si{from{transform:translateX(60px);opacity:0}to{transform:translateX(0);opacity:1}}
+.dlb .dot{width:5px;height:5px;background:#22C55E;border-radius:50%;animation:bl 1s infinite}
+@keyframes bl{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* ── 단계 라벨 ── */
+.step-label{position:fixed;bottom:32px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.78);color:#fff;padding:8px 18px;border-radius:18px;font-size:11.5px;z-index:9990;pointer-events:none;white-space:nowrap;max-width:92vw;text-align:center;transition:opacity .3s}
+
+/* ── 재시작 버튼 ── */
+.restart{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#FF7A9C;color:#fff;padding:10px 24px;border-radius:22px;font-size:13px;font-weight:600;z-index:9990;cursor:pointer;display:none;box-shadow:0 4px 12px rgba(255,122,156,.4)}
+
+/* ══════════════════════════════════════ */
+/* 카카오톡 */
+/* ══════════════════════════════════════ */
+.kt{background:#B2C7D9}
+.kt .sb{background:#B2C7D9}
+.kt-h{display:flex;align-items:center;justify-content:space-between;padding:2px 14px 8px}
+.kt-h .l{font-size:16px;color:#333}
+.kt-h .c{text-align:center}
+.kt-h .c .n{font-size:14.5px;font-weight:700;display:flex;align-items:center;gap:3px;justify-content:center}
+.kt-h .c .ck{color:#4DABF7;font-size:12px}
+.kt-h .c .p{font-size:10.5px;color:#5A7D9A;margin-top:1px}
+.kt-h .ri{display:flex;gap:12px;color:#333;font-size:15px}
+.kt-lk{text-align:center;padding:4px 16px;font-size:10.5px;color:#5A7D9A;text-decoration:underline}
+.kt-tg{display:flex;justify-content:center;padding:3px 16px 6px}
+.kt-tg span{background:rgba(255,255,255,.42);padding:4px 10px;border-radius:12px;font-size:10.5px;color:#4A6B8A}
+.kt-dt{text-align:center;font-size:10.5px;color:#6B8DAF;padding:12px 0 8px}
+.kt-m{display:flex;gap:7px;padding:5px 14px;align-items:flex-start}
+.kt-av{width:36px;height:36px;border-radius:11px;flex-shrink:0;overflow:hidden}
+.kt-b{background:#fff;border-radius:2px 12px 12px 12px;padding:9px 12px;font-size:12.5px;line-height:1.6;color:#333;max-width:72%;box-shadow:0 1px 2px rgba(0,0,0,.05)}
+.kt-b .sn{font-size:10.5px;color:#888;margin-bottom:2px;font-weight:500}
+.kt-tm{font-size:9px;color:#8EACC4;align-self:flex-end;white-space:nowrap;margin-bottom:2px}
+.kt-bot{position:absolute;bottom:0;left:0;right:0;background:#fff;z-index:50}
+.kt-ben{display:flex;align-items:center;justify-content:center;padding:9px 16px;gap:5px;border-top:1px solid #e8e8e8;font-size:12.5px;font-weight:500;color:#333}
+.kt-mg{display:grid;grid-template-columns:repeat(3,1fr);padding:10px 10px 2px}
+.kt-mi{text-align:center;padding:4px 0}
+.kt-mi .ic{width:48px;height:48px;border-radius:13px;margin:0 auto 5px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:20px;position:relative}
+.kt-mi .ic.pk{background:linear-gradient(135deg,#FF6B8A,#FF8FA3)}
+.kt-mi .ic.bl{background:linear-gradient(135deg,#4DABF7,#74C0FC)}
+.kt-mi .ic.gn{background:linear-gradient(135deg,#51CF66,#8CE99A)}
+.kt-mi .ic .nb{position:absolute;top:3px;right:3px;background:#FF3B30;color:#fff;font-size:7px;font-weight:700;width:13px;height:13px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.kt-mi .lb{font-size:10.5px;color:#333;font-weight:500}
+.kt-mr{display:grid;grid-template-columns:repeat(3,1fr);padding:0 10px 6px}
+.kt-mr .i{text-align:center;padding:7px 0;font-size:10.5px;color:#666}
+.kt-in{display:flex;align-items:center;gap:7px;padding:7px 11px 26px;border-top:1px solid #f0f0f0}
+.kt-in .pl{width:28px;height:28px;border-radius:50%;border:1.5px solid #ccc;display:flex;align-items:center;justify-content:center;font-size:16px;color:#999;flex-shrink:0}
+.kt-in .fi{flex:1;background:#f5f5f5;border-radius:16px;padding:8px 12px;font-size:12px;color:#aaa}
+
+/* 인앱브라우저 */
+.iab{background:#fff}
+.iab .sb{background:#f8f8f8}
+.iab-bar{display:flex;align-items:center;gap:10px;padding:4px 14px 10px;background:#f8f8f8;border-bottom:.5px solid #ddd}
+.iab-bar .x{font-size:20px;color:#333;font-weight:300;width:28px;text-align:center}
+.iab-bar .nv{display:flex;gap:14px;color:#bbb;font-size:18px}
+.iab-bar .url{flex:1;text-align:center}
+.iab-bar .url .tt{font-size:12px;color:#333;font-weight:500}
+.iab-bar .url .u{font-size:10px;color:#999}
+.iab-bar .ch{width:28px;height:28px;border-radius:50%;background:#FEE500;display:flex;align-items:center;justify-content:center;font-size:13px}
+.iab-pg{height:2.5px;background:linear-gradient(90deg,#FEE500,#FAC800);width:0;transition:width 1s ease}
+.iab-pg.go{width:100%}
+.iab-body{display:flex;align-items:center;justify-content:center;height:calc(100vh - 110px);flex-direction:column;gap:10px;color:#ccc;font-size:13px}
+.spinner{width:28px;height:28px;border:3px solid #eee;border-top-color:#FFB3C1;border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* 앱스토어 */
+.as{background:#fff}
+.as-nv{padding:2px 16px 6px;font-size:15px;color:#007AFF}
+.as-hr{display:flex;padding:0 18px 14px;gap:13px;align-items:flex-start}
+.as-ic{width:100px;height:100px;border-radius:22px;overflow:hidden;flex-shrink:0;box-shadow:0 1px 8px rgba(0,0,0,.08)}
+.as-inf{flex:1;padding-top:2px}
+.as-inf .t{font-size:18px;font-weight:700;line-height:1.3}
+.as-inf .su{font-size:12px;color:#888;margin-top:3px}
+/* 받기/열기 버튼 */
+.as-btn{display:inline-flex;align-items:center;justify-content:center;width:72px;height:30px;background:#007AFF;color:#fff;border-radius:15px;font-size:14px;font-weight:700;margin-top:8px;position:relative;overflow:hidden;transition:all .3s}
+.as-btn.loading{background:#E8E8E8;color:transparent}
+.as-btn .ring{position:absolute;width:22px;height:22px;border:2.5px solid #ddd;border-top-color:#007AFF;border-radius:50%;display:none}
+.as-btn.loading .ring{display:block;animation:spin .8s linear infinite}
+.as-btn.open{background:#34C759}
+.as-st{display:flex;padding:10px 18px;justify-content:space-around;border-top:.5px solid #eee;border-bottom:.5px solid #eee}
+.as-s{text-align:center}
+.as-s .v{font-size:16px;font-weight:700;color:#333}
+.as-s .st{color:#FF9500;font-size:9px}
+.as-s .la{font-size:9.5px;color:#999;margin-top:1px}
+.as-sect{padding:16px 18px 4px;font-size:18px;font-weight:700}
+.as-ver{padding:1px 18px;font-size:11.5px;color:#888;display:flex;justify-content:space-between}
+.as-desc{padding:8px 18px 12px;font-size:12.5px;color:#333;line-height:1.55}
+.as-desc .mo{color:#007AFF}
+.as-pt{padding:14px 18px 8px;font-size:18px;font-weight:700}
+.as-pv{display:flex;gap:8px;padding:0 18px 18px;overflow-x:auto}
+.as-pv::-webkit-scrollbar{display:none}
+.as-pc{width:145px;height:260px;border-radius:14px;flex-shrink:0;padding:14px;color:#fff;display:flex;flex-direction:column;justify-content:space-between}
+.as-pc:nth-child(1){background:linear-gradient(155deg,#4A90D9,#7EC8E3)}
+.as-pc:nth-child(2){background:linear-gradient(155deg,#FF8FA3,#FFB3C1)}
+.as-pc:nth-child(3){background:linear-gradient(155deg,#8B5CF6,#A78BFA)}
+.as-pc .sm{font-size:10.5px;opacity:.7}
+.as-pc .bg{font-size:28px;font-weight:800}
+.as-pc h4{font-size:12px;font-weight:500;opacity:.85;line-height:1.4}
+.as-tb{position:absolute;bottom:0;left:0;right:0;display:flex;justify-content:space-around;background:rgba(250,250,250,.97);border-top:.5px solid #d0d0d0;padding:5px 0 24px;z-index:50}
+.as-tb .ta{text-align:center;font-size:9px;color:#999}
+.as-tb .ta.ac{color:#007AFF}
+.as-tb .ta .ti{font-size:20px;margin-bottom:1px}
+
+/* 온보딩 */
+.ob{background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.ob .sb{position:absolute;top:0;left:0;right:0;background:transparent}
+.ob .tx{font-size:25px;font-weight:800;color:#333;text-align:center;line-height:1.5}
+.ob .tx span{color:#FF7A9C}
+.ob2{background:#fff;display:flex;flex-direction:column;align-items:center;padding-top:100px}
+.ob2 .sb{position:absolute;top:0;left:0;right:0;background:transparent}
+.ob2 h2{font-size:24px;font-weight:800;line-height:1.4;text-align:center;padding:0 30px;margin-bottom:24px}
+.ob2 .pm{padding:0 30px;width:100%}
+.ob2 .pm .nt{font-size:12px;color:#888;margin-bottom:12px}
+.ob2 .pm .it{font-size:13px;color:#444;line-height:1.8;padding:4px 0}
+.ob2 .pm .it b{color:#000}
+.ob2 .nb{margin-top:30px;padding:14px 0;width:calc(100% - 60px);background:#333;color:#fff;border-radius:10px;font-size:15px;font-weight:700;text-align:center}
+
+/* 브랜드데이 */
+.bd{background:#fff}
+.bd-h{display:flex;align-items:center;justify-content:space-between;padding:2px 14px 8px}
+.bd-h .bk{font-size:20px;color:#333}
+.bd-h .tt{font-size:15px;font-weight:600}
+.bd-h .ic{display:flex;gap:14px;font-size:17px;color:#333}
+.bd-bn{background:linear-gradient(135deg,#1B1B2F,#162447);padding:24px 18px;color:#fff;position:relative}
+.bd-bn .sn{position:absolute;top:12px;right:14px;font-size:10px;background:rgba(255,255,255,.2);padding:2px 8px;border-radius:8px}
+.bd-bn .lb{font-size:10px;opacity:.5;margin-bottom:6px;letter-spacing:1px}
+.bd-bn h2{font-size:22px;font-weight:800;line-height:1.35}
+.bd-bn .su{font-size:12px;opacity:.6;margin-top:4px}
+.bd-tb{display:flex;border-bottom:.5px solid #eee}
+.bd-tb span{flex:1;text-align:center;padding:11px 0;font-size:12.5px;color:#999}
+.bd-tb span.on{color:#000;font-weight:700;border-bottom:2px solid #000}
+.bd-stt{text-align:center;padding:18px 0 3px;font-size:17px;font-weight:700}
+.bd-ss{text-align:center;font-size:11.5px;color:#888;padding-bottom:12px}
+.bd-ct{display:flex;gap:6px;padding:0 14px 14px;overflow-x:auto}
+.bd-ct::-webkit-scrollbar{display:none}
+.bd-ct span{padding:7px 14px;border-radius:18px;font-size:11.5px;white-space:nowrap}
+.bd-ct span.on{background:#333;color:#fff;font-weight:600}
+.bd-ct span:not(.on){background:#f5f5f5;color:#666}
+/* 상품 */
+.pc{padding:0 14px 12px}
+.pc .tg{display:flex;gap:4px;margin-bottom:6px}
+.pc .tg span{font-size:9.5px;padding:2px 6px;border-radius:3px;font-weight:600}
+.pc .tg .rd{background:#FFF0F3;color:#FF4D6D}
+.pc .tg .bu{background:#EFF6FF;color:#3B82F6}
+.pc .rw{display:flex;gap:10px}
+.pc .th{width:90px;height:90px;border-radius:7px;flex-shrink:0;overflow:hidden}
+.pc .dt{flex:1}
+.pc .br{font-size:10px;color:#999;margin-bottom:1px}
+.pc .nm{font-size:12px;line-height:1.4;color:#333;margin-bottom:4px}
+.pc .pr{display:flex;align-items:baseline;gap:3px}
+.pc .ds{font-size:15px;font-weight:800;color:#FF4D6D}
+.pc .pv{font-size:15px;font-weight:700}
+.pc .cp{margin-top:4px;display:inline-block;padding:2px 6px;background:#f0f0f0;border-radius:3px;font-size:9.5px;color:#666}
+.pc+.pc{border-top:.5px solid #f0f0f0;padding-top:12px}
+/* 상품 이미지 - 사실적 스타일 */
+.pimg{width:100%;height:100%;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+
+/* BEST */
+.bs{background:#fff}
+.bs-h{display:flex;align-items:center;justify-content:space-between;padding:2px 14px 8px}
+.bs-h .bk{font-size:20px;color:#333}
+.bs-h .tt{font-size:15px;font-weight:600}
+.bs-h .ic{display:flex;gap:14px;font-size:17px;color:#333}
+.bs-t{display:flex;border-bottom:2px solid #eee}
+.bs-t span{flex:1;text-align:center;padding:10px 0;font-size:13.5px;color:#999}
+.bs-t span.on{color:#000;font-weight:700;border-bottom:2.5px solid #007AFF;margin-bottom:-2px}
+.bs-c{display:flex;gap:6px;padding:12px 14px;overflow-x:auto}
+.bs-c::-webkit-scrollbar{display:none}
+.bs-c span{padding:5px 12px;border-radius:16px;font-size:11.5px;white-space:nowrap;border:1px solid #ddd;color:#555}
+.bs-c span.on{background:#000;color:#fff;border-color:#000;font-weight:600}
+.bs-dt{text-align:center;font-size:10px;color:#bbb;padding:4px 0 8px}
+.bs-g{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 14px 80px}
+.bs-i .thumb{height:160px;border-radius:8px;position:relative;overflow:hidden}
+.bs-i .thumb .rk{position:absolute;top:6px;left:6px;background:rgba(0,0,0,.65);color:#fff;width:20px;height:20px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;z-index:2}
+.bs-i .ib{font-size:9.5px;color:#999;margin-top:6px}
+.bs-i .in{font-size:11.5px;color:#333;line-height:1.3;margin-top:1px}
+.bs-i .ir{display:flex;align-items:center;gap:2px;margin-top:3px;font-size:9.5px}
+.bs-i .star{color:#FF9500}
+.bs-i .cnt{color:#bbb}
+.bs-i .ip{display:flex;align-items:baseline;gap:3px;margin-top:3px}
+.bs-i .id{font-size:13px;font-weight:800;color:#FF4D6D}
+.bs-i .ipv{font-size:13px;font-weight:700}
+
+/* 블로그 */
+.bl{background:#fff}
+.bl-h{display:flex;align-items:center;justify-content:space-between;padding:2px 14px 8px}
+.bl-h .bk{font-size:20px;color:#333}
+.bl-h .ic{display:flex;gap:14px;font-size:17px;color:#333}
+.bl-hero{width:100%;height:220px;overflow:hidden}
+.bl-bd{padding:18px}
+.bl-bd h1{font-size:21px;font-weight:800;line-height:1.4;margin-bottom:8px}
+.bl-bd .vw{font-size:11px;color:#999;margin-bottom:14px}
+.bl-bd p{font-size:13px;line-height:1.8;color:#444}
+.bl-bd .hl{color:#FF7A9C;font-weight:500}
+.bl-cta{margin-top:18px;font-size:14px;font-weight:700;color:#333}
+
+/* ── 로고 SVG (귀여운 베이비) ── */
+.logo-svg{width:100%;height:100%}
+</style>
+</head>
+<body>
+
+<div class="pgb" id="pgb" style="width:0%"></div>
+
+<!-- 손가락 커서 -->
+<div class="finger" id="finger">
+  <svg viewBox="0 0 40 50"><path d="M20 0C20 0 8 12 8 20c0 4 2 6 4 7l-1 18c0 2 2 4 4 4h10c2 0 4-2 4-4l-1-18c2-1 4-3 4-7C32 12 20 0 20 0z" fill="#FFD6A8" stroke="#E8B88A" stroke-width="1"/><circle cx="20" cy="20" r="6" fill="#FFCBA4"/></svg>
+</div>
+
+<!-- 탭 ripple -->
+<div class="ripple" id="ripple"></div>
+
+<div class="phone" id="ph">
+
+<!-- ═══ S1: 카카오톡 ═══ -->
+<div class="sc kt on" id="s1">
+  <div class="sb" style="background:#B2C7D9"><span>9:08</span><div class="r"><span>LTE</span><span class="bat"></span></div></div>
+  <div class="kt-h">
+    <div class="l">‹ 886</div>
+    <div class="c"><div class="n">리틀블룸 <span class="ck">☑</span></div><div class="p">070-1234-5678▾</div></div>
+    <div class="ri">🔍 ☰</div>
+  </div>
+  <div class="kt-lk">서비스 품질 관리를 위한 대화내용 보관안내</div>
+  <div class="kt-tg"><span>🏢 사업자/기관 정보가 확인된 채널</span></div>
+  <div class="kt-dt">2026년 4월 7일 월요일</div>
+  <div class="kt-m">
+    <div class="kt-av">
+      <svg class="logo-svg" viewBox="0 0 100 100">
+        <circle cx="50" cy="42" r="28" fill="#FFD6DE"/>
+        <circle cx="50" cy="95" r="35" fill="#FFD6DE"/>
+        <circle cx="50" cy="42" r="24" fill="#FFEEF2"/>
+        <circle cx="42" cy="40" r="3.5" fill="#333"/><circle cx="58" cy="40" r="3.5" fill="#333"/>
+        <circle cx="43" cy="40" r="1.2" fill="#fff"/><circle cx="59" cy="40" r="1.2" fill="#fff"/>
+        <path d="M45 48q5 5 10 0" stroke="#FF8FA3" fill="none" stroke-width="2" stroke-linecap="round"/>
+        <ellipse cx="34" cy="45" rx="5" ry="3.5" fill="#FFB3C1" opacity=".5"/>
+        <ellipse cx="66" cy="45" rx="5" ry="3.5" fill="#FFB3C1" opacity=".5"/>
+        <circle cx="50" cy="22" r="4" fill="#FF7A9C"/>
+        <path d="M46 19q4-6 8 0" stroke="#FF7A9C" fill="none" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="42" cy="18" r="2.5" fill="#FFD166"/>
+        <circle cx="58" cy="18" r="2.5" fill="#FFD166"/>
+        <path d="M40 16q2-3 4 0" stroke="#FFD166" fill="none" stroke-width="1.5"/><path d="M56 16q2-3 4 0" stroke="#FFD166" fill="none" stroke-width="1.5"/>
+      </svg>
+    </div>
+    <div>
+      <div class="kt-b"><div class="sn">리틀블룸</div>'리틀블룸' 채널을 추가해 주셔서 감사합니다.<br>앞으로 다양한 소식과 혜택/정보를 메시지로 받으실 수 있습니다.<br><br><span style="font-size:11px;color:#777">채널 추가 일시(한국시간 기준): 2026년 04월 07일 09:08<br>수신거부: 홈>채널 차단</span></div>
+    </div>
+    <span class="kt-tm">오전 9:08</span>
+  </div>
+  <div style="height:280px"></div>
+  <div class="kt-bot" id="ktBot1">
+    <div class="kt-ben">혜택 보기 ∧</div>
+    <div class="kt-mg">
+      <div class="kt-mi"><div class="ic pk"><span class="nb">N</span>🏷️</div><div class="lb">원데이특가</div></div>
+      <div class="kt-mi"><div class="ic bl">🔥</div><div class="lb">핫딜 쓱살이</div></div>
+      <div class="kt-mi"><div class="ic gn">🎁</div><div class="lb">출산 준비물</div></div>
+    </div>
+    <div class="kt-mr"><div class="i">오늘의 랭킹</div><div class="i" style="color:#4DABF7;font-weight:600">배동 인기글</div><div class="i">자주하는질문</div></div>
+    <div class="kt-in"><div class="pl">+</div><div class="fi">메시지를 입력해 주세요</div></div>
+  </div>
+</div>
+
+<!-- ═══ S2: 인앱브라우저 ═══ -->
+<div class="sc iab" id="s2">
+  <div class="sb" style="background:#f8f8f8"><span>9:08</span><div class="r"><span>LTE</span><span class="bat"></span></div></div>
+  <div class="iab-bar"><span class="x">✕</span><span class="nv">‹ ›</span><span class="url"><div class="tt"></div><div class="u"></div></span><span class="ch">💬</span></div>
+  <div class="iab-pg" id="iabPg1"></div>
+  <div class="iab-body"><div class="spinner"></div><div>불러오는 중...</div></div>
+</div>
+
+<!-- ═══ S3: 앱스토어 ═══ -->
+<div class="sc as" id="s3">
+  <div class="sb" style="background:#fff"><span>9:08</span><div class="r"><span>LTE</span><span class="bat"></span></div></div>
+  <div class="as-nv">◁ 카카오톡</div>
+  <div class="as-hr">
+    <div class="as-ic">
+      <svg class="logo-svg" viewBox="0 0 100 100">
+        <rect width="100" height="100" rx="22" fill="url(#lgrd)"/>
+        <defs><linearGradient id="lgrd" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FFDEE6"/><stop offset="100%" stop-color="#FFC4D4"/></linearGradient></defs>
+        <circle cx="50" cy="42" r="22" fill="#FFEEF2"/>
+        <circle cx="50" cy="85" r="28" fill="#FFEEF2"/>
+        <circle cx="43" cy="40" r="3" fill="#333"/><circle cx="57" cy="40" r="3" fill="#333"/>
+        <circle cx="44" cy="40" r="1" fill="#fff"/><circle cx="58" cy="40" r="1" fill="#fff"/>
+        <path d="M46 47q4 4 8 0" stroke="#FF8FA3" fill="none" stroke-width="1.8" stroke-linecap="round"/>
+        <ellipse cx="36" cy="44" rx="4" ry="3" fill="#FFB3C1" opacity=".4"/>
+        <ellipse cx="64" cy="44" rx="4" ry="3" fill="#FFB3C1" opacity=".4"/>
+        <circle cx="50" cy="24" r="3.5" fill="#FF7A9C"/>
+        <path d="M47 21q3-5 6 0" stroke="#FF7A9C" fill="none" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="42" cy="20" r="2" fill="#FFD166"/><circle cx="58" cy="20" r="2" fill="#FFD166"/>
+      </svg>
+    </div>
+    <div class="as-inf">
+      <div class="t">리틀블룸 - 임신,<br>임신준비, 육아, 태교 앱</div>
+      <div class="su">LittleBloom Inc</div>
+      <div class="as-btn" id="asBtn"><span id="asBtnTxt">받기</span><span class="ring" id="asRing"></span></div>
+    </div>
+  </div>
+  <div class="as-st">
+    <div class="as-s"><div class="v">4.8 <span class="st">★★★★★</span></div><div class="la">1.2만개의 평가</div></div>
+    <div class="as-s"><div class="v">12+</div><div class="la">연령</div></div>
+    <div class="as-s"><div class="v">#7</div><div class="la">쇼핑</div></div>
+    <div class="as-s"><div class="v" style="font-size:12px">🏢</div><div class="la">개발자</div></div>
+  </div>
+  <div class="as-sect">새로운 소식 ›</div>
+  <div class="as-ver"><span>버전 4.38.1</span><span>2일 전</span></div>
+  <div class="as-desc">추웠던 겨울이 지나고, 조금씩 따뜻한 바람이 느껴지는 요즘이에요. 계절이 바뀌듯, 리틀블룸도 엄빠들의 일상에 더 깊... <span class="mo">더 보기</span></div>
+  <div class="as-pt">미리 보기</div>
+  <div class="as-pv">
+    <div class="as-pc"><div><div class="sm">누적 다운로드수</div><div class="bg">200만+</div></div><div><div class="sm">평균 평점</div><div class="bg">4.8</div></div></div>
+    <div class="as-pc"><h4>임신준비부터<br>육아까지</h4><div class="bg" style="font-size:15px;font-weight:700">하나의 앱으로</div></div>
+    <div class="as-pc"><h4>매주 새로운<br>특가 & 할인</h4><div class="bg" style="font-size:15px;font-weight:700">최대 70% OFF</div></div>
+  </div>
+  <div style="height:70px"></div>
+  <div class="as-tb"><div class="ta"><div class="ti">⭐</div>투데이</div><div class="ta"><div class="ti">🎮</div>게임</div><div class="ta ac"><div class="ti">📱</div>앱</div><div class="ta"><div class="ti">🕹️</div>Arcade</div><div class="ta"><div class="ti">🔍</div>검색</div></div>
+</div>
+
+<!-- ═══ S4: 온보딩 스플래시 ═══ -->
+<div class="sc ob" id="s4">
+  <div class="sb" style="position:absolute;top:0;left:0;right:0;background:transparent"><span>9:09</span><div class="r">◁ App Store<span style="margin-left:8px">LTE</span><span class="bat"></span></div></div>
+  <div class="tx">최저가 무료배송도<br><span>블룸쇼핑</span>과 함께</div>
+  <svg width="240" height="180" viewBox="0 0 260 200" style="margin-top:24px">
+    <rect x="80" y="60" width="130" height="85" rx="8" fill="#5B9BD5"/>
+    <rect x="80" y="60" width="130" height="18" rx="4" fill="#4A8BC2"/>
+    <rect x="60" y="88" width="35" height="55" rx="4" fill="#4A8BC2"/>
+    <rect x="130" y="48" width="55" height="65" rx="4" fill="#FFD700"/>
+    <rect x="152" y="38" width="10" height="75" fill="#FF6B6B"/>
+    <rect x="130" y="72" width="55" height="8" fill="#FF6B6B"/>
+    <circle cx="110" cy="150" r="12" fill="#333"/><circle cx="110" cy="150" r="5" fill="#888"/>
+    <circle cx="180" cy="150" r="12" fill="#333"/><circle cx="180" cy="150" r="5" fill="#888"/>
+    <rect x="155" y="88" width="36" height="16" rx="3" fill="#FF6B6B"/>
+    <text x="173" y="100" font-size="8" fill="#fff" text-anchor="middle" font-weight="700">FREE</text>
+    <circle cx="38" cy="115" r="18" fill="#FFD6DE"/>
+    <circle cx="33" cy="112" r="2" fill="#333"/><circle cx="43" cy="112" r="2" fill="#333"/>
+    <path d="M35 118q3 3 6 0" stroke="#333" fill="none" stroke-width="1.2"/>
+    <rect x="28" y="132" width="20" height="22" rx="3" fill="#4A6B8A"/>
+    <circle cx="235" cy="125" r="14" fill="#81C784"/>
+    <rect x="232" y="138" width="6" height="18" fill="#8D6E63"/>
+  </svg>
+</div>
+
+<!-- ═══ S5: 온보딩 권한 ═══ -->
+<div class="sc ob2" id="s5">
+  <div class="sb" style="position:absolute;top:0;left:0;right:0;background:transparent"><span>9:09</span><div class="r">◁ App Store<span style="margin-left:8px">LTE</span><span class="bat"></span></div></div>
+  <h2>리틀블룸이<br>더 똑똑해져요!</h2>
+  <div class="pm">
+    <div class="nt">👋 다음 화면에서 권한을 허용하면</div>
+    <div class="it">궁금했던 <b>임신/육아 정보, 정책</b>들을 추천해드려요.</div>
+    <div class="it">같은 시기 <b>엄빠들의 고민</b>을 공유해드려요.</div>
+    <div class="it">지금 필요한 <b>임신/육아 초특가 상품</b>을 알려드려요.</div>
+  </div>
+  <div class="nb" id="nextBtn">다음</div>
+  <div style="margin-top:20px;text-align:center">
+    <svg width="90" height="90" viewBox="0 0 100 100">
+      <circle cx="50" cy="42" r="22" fill="#FFD6DE"/><circle cx="50" cy="85" r="28" fill="#FFD6DE"/>
+      <circle cx="43" cy="40" r="2.5" fill="#333"/><circle cx="57" cy="40" r="2.5" fill="#333"/>
+      <path d="M46 47q4 4 8 0" stroke="#FF8FA3" fill="none" stroke-width="1.5" stroke-linecap="round"/>
+      <rect x="40" y="20" width="20" height="14" rx="3" fill="#4A6B8A"/>
+      <rect x="43" y="17" width="14" height="5" rx="2.5" fill="#333"/>
+    </svg>
+    <div style="font-size:12px;color:#888;margin-top:4px">엄빠, 제가<br>더 똑똑해질 수 있어요!</div>
+  </div>
+</div>
+
+<!-- ═══ S6: 브랜드데이 (딥링크 #1) ═══ -->
+<div class="sc bd" id="s6">
+  <div class="sb" style="background:#fff"><span>9:09</span><div class="r">◁ 카카오톡<span style="margin-left:8px">LTE</span><span class="bat"></span></div></div>
+  <div class="bd-h"><span class="bk">←</span><span class="tt">브랜드데이</span><span class="ic">🔍 🛒</span></div>
+  <div class="bd-bn"><span class="sn">1 / 2</span><div class="lb">SPRING SALE</div><h2>바로 발급되는<br>인기 입장권</h2><div class="su">주말 인기 티켓패스</div></div>
+  <div class="bd-tb"><span class="on">추천</span><span>오픈예정</span><span>진행중</span><span>BEST</span><span>신규입점</span></div>
+  <div class="bd-stt">추천 특가</div>
+  <div class="bd-ss">지금 엄빠에게 가장 추천하는 특가 기획전이에요</div>
+  <div class="bd-ct"><span class="on">퍼기</span><span>엘레뉴</span><span>네이처러브메레</span><span>보솜이</span></div>
+  <div class="pc"><div class="tg"><span class="rd">#5%쿠폰</span><span class="bu">#이유식</span></div><div class="rw"><div class="th"><div class="pimg" style="background:linear-gradient(145deg,#FFF5EE,#FFECD2);border:1px solid #f0e0d0;border-radius:7px"><svg viewBox="0 0 90 90"><rect x="22" y="8" width="46" height="58" rx="6" fill="#F5E6D3" stroke="#D4B896" stroke-width=".8"/><rect x="24" y="12" width="42" height="22" rx="3" fill="#fff"/><text x="45" y="20" font-size="5" fill="#999" text-anchor="middle">PURGI</text><text x="45" y="28" font-size="6.5" fill="#8B6914" text-anchor="middle" font-weight="700">이유식</text><rect x="20" y="4" width="50" height="7" rx="3.5" fill="#7CB9E8"/><ellipse cx="45" cy="62" rx="22" ry="5" fill="rgba(0,0,0,.06)"/><circle cx="32" cy="48" r="5.5" fill="#FF8C42" opacity=".7"/><circle cx="45" cy="50" r="4.5" fill="#6BCB77" opacity=".6"/><circle cx="56" cy="47" r="5" fill="#FFB347" opacity=".6"/></svg></div></div><div class="dt"><div class="br">퍼기</div><div class="nm">[쿠폰5%]퍼기 큐피드 무첨소 치발기...<br>우리아이 첫 이유식 준비</div><div class="pr"><span class="ds">55%</span><span class="pv">8,900원</span></div><div class="cp">쿠폰</div></div></div></div>
+  <div class="pc"><div class="tg"><span class="rd">#특가</span></div><div class="rw"><div class="th"><div class="pimg" style="background:linear-gradient(145deg,#F0FFF4,#E0F5E9);border:1px solid #C8E6C9;border-radius:7px"><svg viewBox="0 0 90 90"><path d="M28 16h34l4 52H24z" fill="#81C784" opacity=".85"/><rect x="31" y="7" width="28" height="11" rx="4" fill="#66BB6A"/><rect x="34" y="28" width="22" height="12" rx="2" fill="#fff" opacity=".9"/><text x="45" y="37" font-size="5.5" fill="#2E7D32" text-anchor="middle" font-weight="600">유기농</text><ellipse cx="45" cy="62" rx="20" ry="4" fill="rgba(0,0,0,.06)"/></svg></div></div><div class="dt"><div class="br">퍼기</div><div class="nm">[쿠폰5%]퍼기 유아 이유식 파우치토퍼...</div><div class="pr"><span class="ds">40%</span><span class="pv">14,900원</span></div><div class="cp">쿠폰</div></div></div></div>
+  <div class="pc"><div class="tg"><span class="rd">#5%쿠폰</span></div><div class="rw"><div class="th"><div class="pimg" style="background:linear-gradient(145deg,#FFF8E1,#FFF3CD);border:1px solid #FFE082;border-radius:7px"><svg viewBox="0 0 90 90"><rect x="25" y="12" width="40" height="54" rx="8" fill="#B3E5FC" stroke="#81D4FA" stroke-width=".8"/><rect x="30" y="7" width="30" height="9" rx="4.5" fill="#4FC3F7"/><rect x="32" y="28" width="26" height="14" rx="2" fill="#fff" opacity=".9"/><text x="45" y="38" font-size="5" fill="#0277BD" text-anchor="middle" font-weight="600">실리콘</text><text x="45" y="52" font-size="4.5" fill="#999" text-anchor="middle">마스터</text><ellipse cx="45" cy="62" rx="18" ry="4" fill="rgba(0,0,0,.06)"/></svg></div></div><div class="dt"><div class="br">퍼기</div><div class="nm">[쿠폰5%]퍼기 실리콘 마스터 이유식...</div><div class="pr"><span class="ds">54%</span><span class="pv">22,900원</span></div><div class="cp">쿠폰</div></div></div></div>
+  <div style="height:20px"></div>
+</div>
+
+<!-- ═══ S7: 카톡 돌아감 ═══ -->
+<div class="sc kt" id="s7">
+  <div class="sb" style="background:#B2C7D9"><span>9:09</span><div class="r"><span>LTE</span><span class="bat"></span></div></div>
+  <div class="kt-h"><div class="l">‹ 886</div><div class="c"><div class="n">리틀블룸 <span class="ck">☑</span></div><div class="p">070-1234-5678▾</div></div><div class="ri">🔍 ☰</div></div>
+  <div class="kt-lk">서비스 품질 관리를 위한 대화내용 보관안내</div>
+  <div class="kt-tg"><span>🏢 사업자/기관 정보가 확인된 채널</span></div>
+  <div class="kt-dt">2026년 4월 7일 월요일</div>
+  <div class="kt-m">
+    <div class="kt-av"><svg class="logo-svg" viewBox="0 0 100 100"><circle cx="50" cy="42" r="28" fill="#FFD6DE"/><circle cx="50" cy="95" r="35" fill="#FFD6DE"/><circle cx="50" cy="42" r="24" fill="#FFEEF2"/><circle cx="42" cy="40" r="3.5" fill="#333"/><circle cx="58" cy="40" r="3.5" fill="#333"/><circle cx="43" cy="40" r="1.2" fill="#fff"/><circle cx="59" cy="40" r="1.2" fill="#fff"/><path d="M45 48q5 5 10 0" stroke="#FF8FA3" fill="none" stroke-width="2" stroke-linecap="round"/><ellipse cx="34" cy="45" rx="5" ry="3.5" fill="#FFB3C1" opacity=".5"/><ellipse cx="66" cy="45" rx="5" ry="3.5" fill="#FFB3C1" opacity=".5"/><circle cx="50" cy="22" r="4" fill="#FF7A9C"/><path d="M46 19q4-6 8 0" stroke="#FF7A9C" fill="none" stroke-width="2.5" stroke-linecap="round"/></svg></div>
+    <div><div class="kt-b"><div class="sn">리틀블룸</div>'리틀블룸' 채널을 추가해 주셔서 감사합니다. ...</div></div>
+    <span class="kt-tm">오전 9:08</span>
+  </div>
+  <div style="height:280px"></div>
+  <div class="kt-bot">
+    <div class="kt-ben">혜택 보기 ∧</div>
+    <div class="kt-mg">
+      <div class="kt-mi"><div class="ic pk"><span class="nb">N</span>🏷️</div><div class="lb">원데이특가</div></div>
+      <div class="kt-mi" id="hotdeal"><div class="ic bl">🔥</div><div class="lb">핫딜 쓱살이</div></div>
+      <div class="kt-mi"><div class="ic gn">🎁</div><div class="lb">출산 준비물</div></div>
+    </div>
+    <div class="kt-mr"><div class="i">오늘의 랭킹</div><div class="i">배동 인기글</div><div class="i">자주하는질문</div></div>
+    <div class="kt-in"><div class="pl">+</div><div class="fi">메시지를 입력해 주세요</div></div>
+  </div>
+</div>
+
+<!-- ═══ S8: BEST (딥링크 #2) ═══ -->
+<div class="sc bs" id="s8">
+  <div class="sb" style="background:#fff"><span>9:09</span><div class="r">◁ 카카오톡<span style="margin-left:8px">LTE</span><span class="bat"></span></div></div>
+  <div class="bs-h"><span class="bk">←</span><span class="tt">BEST</span><span class="ic">🔍 🛒</span></div>
+  <div class="bs-t"><span class="on">실시간 베스트</span><span>주간 베스트</span></div>
+  <div class="bs-c"><span class="on">전체</span><span>베이비패션</span><span>키즈패션</span><span>완구/발육</span><span>이유식/간식</span></div>
+  <div class="bs-dt">2026.04.07 09~10시 기준 ⓘ</div>
+  <div class="bs-g">
+    <div class="bs-i"><div class="thumb" style="background:linear-gradient(135deg,#FFF3E0,#FFE0B2)"><span class="rk">1</span><svg viewBox="0 0 100 100"><circle cx="25" cy="40" r="14" fill="#FFCC80" opacity=".7"/><circle cx="55" cy="35" r="12" fill="#A5D6A7" opacity=".6"/><circle cx="40" cy="58" r="10" fill="#FFAB91" opacity=".6"/><circle cx="70" cy="50" r="11" fill="#FFE082" opacity=".5"/><circle cx="35" cy="30" r="6" fill="#8D6E63" opacity=".3"/><circle cx="60" cy="60" r="8" fill="#CE93D8" opacity=".3"/></svg></div><div class="ib">무쏭</div><div class="in">[쿠폰7%][예약배송]초기 닭입소스 반찬 골라담기...</div><div class="ir"><span class="star">★ 4.9</span> <span class="cnt">리뷰 7,666</span></div><div class="ip"><span class="id">32%</span><span class="ipv">2,850원</span></div></div>
+    <div class="bs-i"><div class="thumb" style="background:linear-gradient(135deg,#E8F5E9,#C8E6C9)"><span class="rk">2</span><svg viewBox="0 0 100 100"><circle cx="30" cy="38" r="13" fill="#81C784" opacity=".5"/><circle cx="60" cy="32" r="11" fill="#FFF59D" opacity=".5"/><circle cx="45" cy="55" r="12" fill="#FFAB91" opacity=".5"/><circle cx="72" cy="50" r="9" fill="#B2DFDB" opacity=".4"/></svg></div><div class="ib">무쏭</div><div class="in">[쿠폰7%] 이유식 4단계 아기밥 골라담...</div><div class="ir"><span class="star">★ 4.9</span> <span class="cnt">리뷰 2,931</span></div><div class="ip"><span class="id">35%</span><span class="ipv">2,750원</span></div></div>
+    <div class="bs-i"><div class="thumb" style="background:linear-gradient(135deg,#FFF8E1,#FFECB3)"><span class="rk">3</span><svg viewBox="0 0 100 100"><circle cx="35" cy="42" r="16" fill="#FFE082" opacity=".5"/><circle cx="62" cy="38" r="14" fill="#A5D6A7" opacity=".4"/><circle cx="48" cy="60" r="10" fill="#FFAB91" opacity=".4"/></svg></div><div class="ib">무쏭</div><div class="in">[쿠폰7%] 이유식 3단계 진밥 골라담기/...</div><div class="ir"><span class="star">★ 4.8</span> <span class="cnt">리뷰 3,142</span></div><div class="ip"><span class="id">28%</span><span class="ipv">3,200원</span></div></div>
+    <div class="bs-i"><div class="thumb" style="background:linear-gradient(135deg,#E3F2FD,#BBDEFB)"><span class="rk">4</span><svg viewBox="0 0 100 100"><rect x="18" y="20" width="64" height="50" rx="6" fill="#E3F2FD" stroke="#90CAF9" stroke-width="1"/><rect x="24" y="28" width="52" height="14" rx="2" fill="#BBDEFB"/><text x="50" y="38" font-size="6" fill="#1565C0" text-anchor="middle" font-weight="600">BABY ROOM</text></svg></div><div class="ib">아기밀</div><div class="in">[최대10%쿠폰]아기방 여름 티치리포원...</div><div class="ir"><span class="star">★ 4.7</span> <span class="cnt">리뷰 1,205</span></div><div class="ip"><span class="id">22%</span><span class="ipv">14,900원</span></div></div>
+  </div>
+</div>
+
+<!-- ═══ S9: 카톡 두 번째 메시지 ═══ -->
+<div class="sc kt" id="s9">
+  <div class="sb" style="background:#B2C7D9"><span>9:10</span><div class="r"><span>LTE</span><span class="bat"></span></div></div>
+  <div class="kt-h"><div class="l">‹ 886</div><div class="c"><div class="n">리틀블룸 <span class="ck">☑</span></div><div class="p">070-1234-5678▾</div></div><div class="ri">🔍 ☰</div></div>
+  <div class="kt-lk">서비스 품질 관리를 위한 대화내용 보관안내</div>
+  <div class="kt-tg"><span>🏢 사업자/기관 정보가 확인된 채널</span></div>
+  <div class="kt-dt">2026년 4월 7일 월요일</div>
+  <div class="kt-m">
+    <div class="kt-av"><svg class="logo-svg" viewBox="0 0 100 100"><circle cx="50" cy="42" r="28" fill="#FFD6DE"/><circle cx="50" cy="95" r="35" fill="#FFD6DE"/><circle cx="50" cy="42" r="24" fill="#FFEEF2"/><circle cx="42" cy="40" r="3.5" fill="#333"/><circle cx="58" cy="40" r="3.5" fill="#333"/><circle cx="43" cy="40" r="1.2" fill="#fff"/><circle cx="59" cy="40" r="1.2" fill="#fff"/><path d="M45 48q5 5 10 0" stroke="#FF8FA3" fill="none" stroke-width="2" stroke-linecap="round"/><ellipse cx="34" cy="45" rx="5" ry="3.5" fill="#FFB3C1" opacity=".5"/><ellipse cx="66" cy="45" rx="5" ry="3.5" fill="#FFB3C1" opacity=".5"/><circle cx="50" cy="22" r="4" fill="#FF7A9C"/><path d="M46 19q4-6 8 0" stroke="#FF7A9C" fill="none" stroke-width="2.5" stroke-linecap="round"/></svg></div>
+    <div><div class="kt-b"><div class="sn">리틀블룸</div>'리틀블룸' 채널을 추가해 주셔서 감사합니다. ...</div></div>
+    <span class="kt-tm">오전 9:08</span>
+  </div>
+  <div style="padding:10px 56px 0"><span class="kt-tm">오전 9:10</span></div>
+  <div class="kt-m">
+    <div class="kt-av"><svg class="logo-svg" viewBox="0 0 100 100"><circle cx="50" cy="42" r="28" fill="#FFD6DE"/><circle cx="50" cy="95" r="35" fill="#FFD6DE"/><circle cx="50" cy="42" r="24" fill="#FFEEF2"/><circle cx="42" cy="40" r="3.5" fill="#333"/><circle cx="58" cy="40" r="3.5" fill="#333"/><circle cx="43" cy="40" r="1.2" fill="#fff"/><circle cx="59" cy="40" r="1.2" fill="#fff"/><path d="M45 48q5 5 10 0" stroke="#FF8FA3" fill="none" stroke-width="2" stroke-linecap="round"/><ellipse cx="34" cy="45" rx="5" ry="3.5" fill="#FFB3C1" opacity=".5"/><ellipse cx="66" cy="45" rx="5" ry="3.5" fill="#FFB3C1" opacity=".5"/><circle cx="50" cy="22" r="4" fill="#FF7A9C"/><path d="M46 19q4-6 8 0" stroke="#FF7A9C" fill="none" stroke-width="2.5" stroke-linecap="round"/></svg></div>
+    <div>
+      <div class="kt-b"><div class="sn">리틀블룸</div>출산준비물 리스트 찾느라 힘드셨죠? 😊 리틀블룸이 클릭 한 번에 안녕.한 출산 준비물 리스트.zip을 선물할게요 🎁<br><br><b>클릭은 공짜!</b></div>
+      <div id="dlLink" style="background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:10px;margin-top:6px;text-align:center;font-size:12px;font-weight:600;color:#333;cursor:pointer">📋 출산준비물 리스트 다운</div>
+    </div>
+    <span class="kt-tm">오전 9:10</span>
+  </div>
+  <div style="height:280px"></div>
+  <div class="kt-bot">
+    <div class="kt-ben">혜택 보기 ∧</div>
+    <div class="kt-mg">
+      <div class="kt-mi"><div class="ic pk"><span class="nb">N</span>🏷️</div><div class="lb">원데이특가</div></div>
+      <div class="kt-mi"><div class="ic bl">🔥</div><div class="lb">핫딜 쓱살이</div></div>
+      <div class="kt-mi"><div class="ic gn">🎁</div><div class="lb">출산 준비물</div></div>
+    </div>
+    <div class="kt-mr"><div class="i">오늘의 랭킹</div><div class="i">배동 인기글</div><div class="i">자주하는질문</div></div>
+    <div class="kt-in"><div class="pl">+</div><div class="fi">메시지를 입력해 주세요</div></div>
+  </div>
+</div>
+
+<!-- ═══ S10: 인앱브라우저 (airbridge URL) ═══ -->
+<div class="sc iab" id="s10">
+  <div class="sb" style="background:#f8f8f8"><span>9:10</span><div class="r"><span>LTE</span><span class="bat"></span></div></div>
+  <div class="iab-bar"><span class="x">✕</span><span class="nv">‹ ›</span><span class="url"><div class="tt">불러오는 중...</div><div class="u" style="color:#6366F1;font-weight:500">littlebloom.airbridge.io</div></span><span class="ch">💬</span></div>
+  <div class="iab-pg" id="iabPg2"></div>
+  <div class="iab-body"><div class="spinner"></div><div style="margin-top:8px">littlebloom.airbridge.io</div></div>
+</div>
+
+<!-- ═══ S11: 블로그 (딥링크 #3) ═══ -->
+<div class="sc bl" id="s11">
+  <div class="sb" style="background:#fff"><span>9:10</span><div class="r">◁ 카카오톡<span style="margin-left:8px">LTE</span><span class="bat"></span></div></div>
+  <div class="bl-h"><span class="bk">←</span><span class="ic">⊕ 🔖</span></div>
+  <div class="bl-hero" style="background:linear-gradient(135deg,#FFE0B2,#FFCC80);display:flex;align-items:center;justify-content:center">
+    <svg viewBox="0 0 400 240" width="100%">
+      <circle cx="150" cy="80" r="28" fill="#FFAB91"/><path d="M122 108q0 75 28 110q28-35 28-110z" fill="#FFAB91"/><ellipse cx="150" cy="175" rx="38" ry="45" fill="#FFF3E0"/>
+      <rect x="275" y="40" width="7" height="75" rx="3" fill="#FFD54F" transform="rotate(-18 278 77)"/><polygon points="270,110 278,118 273,121" fill="#333"/>
+      <circle cx="295" cy="58" r="22" fill="#FF8A65"/>
+      <rect x="25" y="55" width="55" height="75" rx="4" fill="#fff" opacity=".65"/><rect x="32" y="68" width="28" height="2.5" rx="1" fill="#ddd"/><rect x="32" y="76" width="22" height="2.5" rx="1" fill="#ddd"/><rect x="32" y="84" width="32" height="2.5" rx="1" fill="#ddd"/>
+    </svg>
+  </div>
+  <div class="bl-bd">
+    <h1>출산&육아 준비물 리스트,<br>여기서 PDF로 받으세요!</h1>
+    <div class="vw">👁 조회 234,408</div>
+    <p>맘카페에 여기저기 떠돌아다니는 출산준비물 리스트, 형식도 파일도 다 제각각이죠. 예쁘고 깔끔한 리스트를 찾고 계셨다면? 👆 여기 <span class="hl">리틀블룸</span> 출산준비물 리스트가 있어요.</p>
+    <div class="bl-cta" style="margin-top:16px">리틀블룸 출산준비물 리스트 구경할래요?</div>
+    <div class="bl-au" style="margin-top:8px">
+      <svg width="28" height="28" viewBox="0 0 100 100"><circle cx="50" cy="42" r="28" fill="#FFD6DE"/><circle cx="50" cy="95" r="35" fill="#FFD6DE"/><circle cx="50" cy="42" r="24" fill="#FFEEF2"/><circle cx="42" cy="40" r="3.5" fill="#333"/><circle cx="58" cy="40" r="3.5" fill="#333"/><path d="M45 48q5 5 10 0" stroke="#FF8FA3" fill="none" stroke-width="2" stroke-linecap="round"/></svg>
+      <div><div class="nm" style="font-size:11px;font-weight:600">리틀블룸 출산준비물리스트</div><div class="tag" style="font-size:9.5px;color:#999">Daily</div></div>
+    </div>
+  </div>
+</div>
+
+</div><!-- phone -->
+
+<div class="step-label" id="label">① 카카오톡 채널 메시지</div>
+<div class="dlb" id="dlb"><span class="dot"></span> Airbridge Deeplink</div>
+<div class="restart" id="restart" onclick="startDemo()">▶ 다시 재생</div>
+
+<script>
+const F=document.getElementById('finger');
+const R=document.getElementById('ripple');
+const P=document.getElementById('pgb');
+const D=document.getElementById('dlb');
+const L=document.getElementById('label');
+const RB=document.getElementById('restart');
+let T=11, timers=[];
+
+function clearAll(){timers.forEach(t=>clearTimeout(t));timers=[];}
+function at(fn,ms){timers.push(setTimeout(fn,ms));}
+
+function show(n){
+  for(let i=1;i<=T;i++) document.getElementById('s'+i).classList.remove('on');
+  document.getElementById('s'+n).classList.add('on');
+  P.style.width=(n/T*100)+'%';
+}
+function label(t){L.textContent=t;L.style.opacity=1;}
+function dlOn(){D.classList.add('show');}
+function dlOff(){D.classList.remove('show');}
+
+// 손가락 이동 + 탭
+function moveFinger(x,y,cb){
+  const ph=document.getElementById('ph').getBoundingClientRect();
+  const fx=ph.left+x-20, fy=ph.top+y-5;
+  F.style.left=fx+'px';F.style.top=fy+'px';
+  F.style.opacity=1;
+  at(()=>{
+    // ripple
+    R.style.left=(ph.left+x)+'px';R.style.top=(ph.top+y)+'px';
+    R.classList.remove('go');void R.offsetWidth;R.classList.add('go');
+    F.style.transform='scale(.9)';
+    at(()=>{F.style.transform='scale(1)';},150);
+    if(cb) at(cb,400);
+  },600);
+}
+function hideFinger(){F.style.opacity=0;}
+
+function startDemo(){
+  clearAll();RB.style.display='none';dlOff();hideFinger();
+  show(1);label('① 카카오톡 채널 메시지');P.style.width='9%';
+
+  // S1: 카톡 (2초 보여주고 혜택보기 탭)
+  at(()=>moveFinger(196,680,()=>{hideFinger();}),1500);
+  at(()=>{show(2);label('② 인앱 브라우저 (앱스토어 이동 중...)');
+    document.getElementById('iabPg1').classList.add('go');
+  },2800);
+
+  // S2: 인앱브라우저 (1.5초)
+  at(()=>{show(3);label('③ 앱스토어 → 설치하기');},4300);
+
+  // S3: 앱스토어 - 받기 클릭
+  at(()=>{
+    const btn=document.getElementById('asBtn');
+    moveFinger(280,178,()=>{
+      // 받기 → 로딩
+      btn.classList.add('loading');
+      document.getElementById('asBtnTxt').textContent='';
+      document.getElementById('asRing').style.display='block';
+      hideFinger();
+      at(()=>{
+        // 로딩 → 열기
+        btn.classList.remove('loading');btn.classList.add('open');
+        document.getElementById('asRing').style.display='none';
+        document.getElementById('asBtnTxt').textContent='열기';
+        label('③ 설치 완료 → 열기 누르기');
+        at(()=>{
+          moveFinger(280,178,()=>{hideFinger();
+            at(()=>{show(4);label('④ 앱 실행 중...');},300);
+          });
+        },800);
+      },1800);
+    });
+  },5300);
+
+  // S4: 온보딩1 (자동 1.5초)
+  at(()=>{show(5);label('⑤ 권한 안내 → "다음" 클릭');},11000);
+
+  // S5: 온보딩2 - 다음 클릭
+  at(()=>moveFinger(196,480,()=>{hideFinger();}),12000);
+  at(()=>{show(6);label('🔗 딥링크 #1 → 브랜드데이 페이지 도착!');dlOn();},13200);
+
+  // S6: 브랜드데이 (3초) - 자동 스크롤
+  at(()=>{document.getElementById('s6').scrollTo({top:200,behavior:'smooth'});},14500);
+  at(()=>{document.getElementById('s6').scrollTo({top:400,behavior:'smooth'});},15500);
+  at(()=>{dlOff();hideFinger();label('⑦ 뒤로가기 → 카톡 돌아감');},16500);
+  at(()=>{show(7);},16800);
+
+  // S7: 카톡 - 핫딜쓱살이 탭
+  at(()=>{label('⑦ 카톡 메뉴에서 "핫딜 쓱살이" 탭');moveFinger(196,720,()=>{hideFinger();});},17500);
+  at(()=>{show(8);label('🔗 딥링크 #2 → BEST 실시간 베스트!');dlOn();},19200);
+
+  // S8: BEST (2.5초) - 스크롤
+  at(()=>{document.getElementById('s8').scrollTo({top:150,behavior:'smooth'});},20500);
+  at(()=>{dlOff();hideFinger();label('⑨ 카톡으로 돌아감');},21700);
+  at(()=>{show(9);label('⑨ 두 번째 메시지 → 링크 클릭');},22000);
+
+  // S9: 두 번째 메시지 - 출산준비물 링크 탭
+  at(()=>{
+    document.getElementById('s9').scrollTo({top:200,behavior:'smooth'});
+  },22500);
+  at(()=>moveFinger(220,445,()=>{hideFinger();}),23500);
+  at(()=>{show(10);label('⑩ 인앱 브라우저 → littlebloom.airbridge.io');
+    document.getElementById('iabPg2').classList.add('go');
+  },24800);
+
+  // S10: 인앱브라우저 (1.5초)
+  at(()=>{show(11);label('🔗 딥링크 #3 → 블로그 콘텐츠 도착!');dlOn();},26300);
+
+  // S11: 블로그 (3초) - 스크롤
+  at(()=>{document.getElementById('s11').scrollTo({top:100,behavior:'smooth'});},27500);
+  at(()=>{document.getElementById('s11').scrollTo({top:250,behavior:'smooth'});},28500);
+
+  // 완료
+  at(()=>{
+    dlOff();
+    label('✅ 데모 완료! 카톡 링크 → 딥링크 → 앱 내 페이지 직접 이동');
+    RB.style.display='block';
+  },30000);
+}
+
+// 시작
+startDemo();
+
+// 수동 탭으로도 재시작 가능
+document.getElementById('ph').addEventListener('click',(e)=>{
+  if(RB.style.display==='block'){startDemo();}
+});
+</script>
+</body>
+</html>
