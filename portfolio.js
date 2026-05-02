@@ -293,6 +293,12 @@ function applyFilters() {
 function openPost(id) {
     const p = POSTS.find(x => x.id === id);
     if (!p) return;
+
+    if (p.linkedin_url) {
+        window.open(p.linkedin_url, '_blank', 'noopener,noreferrer');
+        return;
+    }
+
     currentPostId = id;
 
     const modal = document.getElementById('postModal');
