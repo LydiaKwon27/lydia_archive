@@ -294,7 +294,7 @@ function openPost(id) {
     const p = POSTS.find(x => x.id === id);
     if (!p) return;
 
-    if (p.linkedInUrl) {
+    if (_currentLang !== 'en' && p.linkedInUrl) {
         window.open(p.linkedInUrl, '_blank', 'noopener,noreferrer');
         return;
     }
