@@ -1986,7 +1986,7 @@ const TRANSLATIONS = {
         heroArchiveTagline: "Lydia's LinkedIn Content Archive.",
         heroNameKo: '권지윤',
         heroNameEn: 'Lydia Kwon',
-        heroHeadline: '웹투앱, 끊기지 않는 유저 경험으로 앱 성장을 만들어냅니다',
+        heroHeadline: 'Driving App Growth Through Seamless Web-to-App Experiences',
         heroSub: 'Sales in SaaS X Marketing Tech X AI \u00b7 Seoul, South Korea',
         heroScrollBtn: 'Read Writing \u2193',
         heroLinkedInLink: 'Connect on LinkedIn',
