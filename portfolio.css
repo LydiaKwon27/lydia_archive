@@ -265,31 +265,49 @@ button {
 .hero-linkedin-btn {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 8px 18px;
-  background: #0A66C2;
-  color: #fff;
-  font-size: 0.9rem;
-  font-weight: 600;
-  font-family: var(--font-en);
-  border-radius: 99px;
+  padding: 0;
+  background: transparent;
   text-decoration: none;
-  transition: background 0.2s;
   align-self: flex-start;
-  margin-top: 0.4rem;
+  margin-top: 0.5rem;
   border: none;
   cursor: pointer;
+  transition: opacity 0.2s;
 }
 
 .hero-linkedin-btn:hover {
-  background: #004182;
-  color: #fff;
+  opacity: 0.75;
 }
 
-.hero-linkedin-btn svg {
-  width: 20px;
-  height: 20px;
-  flex-shrink: 0;
+.linkedin-wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  font-family: 'Helvetica Neue', 'Inter', Arial, sans-serif;
+  font-weight: 900;
+  font-size: 1.5rem;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.linkedin-text {
+  color: #0A66C2;
+  padding-bottom: 2px;
+}
+
+.linkedin-in-box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #0A66C2;
+  color: #fff;
+  width: 1.35em;
+  height: 1.35em;
+  border-radius: 5px;
+  font-size: 0.8em;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  padding-bottom: 1px;
 }
 
 .hero-sub {
