@@ -350,39 +350,33 @@ button {
 
 /* ===================== ARCHIVE ===================== */
 #archive {
-  padding: 80px 2rem;
+  padding: 1rem 2rem 80px;
   background: var(--bg);
+  border-top: 1px solid var(--border);
 }
 
 .archive-inner {
-  max-width: 1100px;
+  max-width: 900px;
   margin: 0 auto;
 }
 
 .sec-header {
-  text-align: center;
-  margin-bottom: 2.5rem;
+  display: none;
 }
 
 .sec-title {
-  font-family: var(--font-en);
-  font-size: clamp(1.8rem, 3vw, 2.4rem);
-  font-weight: 800;
-  color: var(--text);
-  margin-bottom: 0.4rem;
-  letter-spacing: -0.02em;
+  display: none;
 }
 
 .sec-sub {
-  color: var(--text3);
-  font-size: 0.875rem;
+  display: none;
 }
 
-/* Search */
+/* Search - minimal */
 .search-wrap {
   position: relative;
-  max-width: 480px;
-  margin: 0 auto 2rem;
+  max-width: 360px;
+  margin: 0 auto 1.5rem;
 }
 
 .search-ic {
