@@ -276,8 +276,8 @@ button {
 .hero-linkedin-btn {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 5px 14px 5px 6px;
+  gap: 4px;
+  padding: 5px 6px 5px 14px;
   background: #0A66C2;
   text-decoration: none;
   align-self: flex-start;
