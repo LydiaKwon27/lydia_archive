@@ -276,23 +276,26 @@ button {
 .hero-linkedin-btn {
   display: inline-flex;
   align-items: center;
-  padding: 0;
+  padding: 8px 18px;
   background: transparent;
   text-decoration: none;
   align-self: flex-start;
-  margin-top: 0.5rem;
-  border: none;
+  margin-top: 0.6rem;
+  border: 1.5px solid #0A66C2;
+  border-radius: 99px;
   cursor: pointer;
-  transition: opacity 0.2s;
+  transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
 }
 
 .hero-linkedin-btn:hover {
-  opacity: 0.75;
+  background: rgba(10, 102, 194, 0.08);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(10, 102, 194, 0.15);
 }
 
 .linkedin-logo-svg {
-  width: 110px;
-  height: 28px;
+  width: 100px;
+  height: 26px;
   display: block;
 }
 
