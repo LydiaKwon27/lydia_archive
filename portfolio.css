@@ -160,61 +160,36 @@ button {
   padding-top: 60px;
 }
 
-.hero-banner {
-  position: relative;
-  width: 100%;
-  height: 220px;
-  overflow: hidden;
-  background: linear-gradient(135deg, #dbeafe 0%, #e0f2fe 50%, #f0f9ff 100%);
-}
-
-.banner-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  image-rendering: -webkit-optimize-contrast;
-  image-rendering: crisp-edges;
-}
-
-.banner-overlay {
-  position: absolute;
-  inset: 0;
-  background: none;
-}
-
 .hero-profile-card {
-  max-width: 1100px;
+  max-width: 900px;
   margin: 0 auto;
-  padding: 0 2rem 3rem;
-  display: grid;
-  grid-template-columns: auto 1fr auto;
+  padding: 3rem 2rem;
+  display: flex;
+  align-items: center;
   gap: 2rem;
-  align-items: flex-start;
 }
 
 .hero-avatar-wrap {
   position: relative;
-  margin-top: -100px;
-  z-index: 2;
-  width: 200px;
-  height: 240px;
+  width: 160px;
+  height: 160px;
   flex-shrink: 0;
 }
 
 .hero-avatar {
-  width: 200px;
-  height: 240px;
-  border-radius: 16px;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
   border: none;
   object-fit: cover;
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-sm);
   position: relative;
   z-index: 1;
 }
 
 .avatar-placeholder {
   position: absolute;
-  inset: 4px;
+  inset: 0;
   border-radius: 50%;
   background: linear-gradient(135deg, #dbeafe, #bfdbfe);
   display: flex;
@@ -224,21 +199,25 @@ button {
   font-size: 2rem;
   font-weight: 700;
   color: var(--accent);
-  border: 4px solid white;
-  box-shadow: var(--shadow-md);
+  border: 2px solid white;
+  box-shadow: var(--shadow-sm);
 }
 
 .hero-info {
-  padding-top: 1rem;
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 .hero-name {
   font-family: var(--font-ko);
-  font-size: 1.6rem;
+  font-size: 1.5rem;
   font-weight: 700;
   color: var(--text);
   letter-spacing: -0.02em;
-  margin-bottom: 0.35rem;
+  margin: 0;
   line-height: 1.2;
 }
 
@@ -248,11 +227,12 @@ button {
 }
 
 .hero-headline {
-  font-size: 0.9rem;
+  font-size: 0.875rem;
   color: var(--text2);
-  line-height: 1.5;
-  margin-bottom: 0.35rem;
-  max-width: 520px;
+  line-height: 1.6;
+  margin: 0;
+  max-width: 560px;
+  white-space: pre-wrap;
 }
 
 .hero-sub {
@@ -448,65 +428,55 @@ button {
   cursor: pointer;
 }
 
-/* Tabs */
+/* Tabs - kimjiyun-style minimal */
 .tabs-wrap {
   display: flex;
-  gap: 0.5rem;
+  gap: 1.5rem;
   flex-wrap: wrap;
   justify-content: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
+  padding-bottom: 0.25rem;
 }
 
 .tab {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 9px 20px;
-  border-radius: 99px;
-  background: var(--surface);
-  border: 1.5px solid var(--border);
-  color: var(--text2);
-  font-size: 0.85rem;
+  padding: 6px 0;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--text3);
+  font-size: 0.9rem;
   font-weight: 500;
-  transition: all var(--transition);
   font-family: var(--font-ko);
-  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  transition: color var(--transition), border-color var(--transition);
+  box-shadow: none;
+  border-radius: 0;
 }
 
 .tab:hover {
-  border-color: var(--accent);
-  color: var(--accent);
+  color: var(--text);
+  border-bottom-color: transparent;
 }
 
 .tab.active {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: #fff;
-  box-shadow: 0 2px 12px rgba(59, 110, 255, 0.3);
+  background: transparent;
+  color: var(--text);
+  font-weight: 700;
+  border-bottom: 2px solid var(--text);
+  box-shadow: none;
 }
 
-.tab.active[data-cat="career"] {
-  background: var(--cat-career);
-  border-color: var(--cat-career);
-  box-shadow: 0 2px 12px rgba(245, 158, 11, 0.3);
-}
-
-.tab.active[data-cat="sales"] {
-  background: var(--cat-sales);
-  border-color: var(--cat-sales);
-  box-shadow: 0 2px 12px rgba(16, 185, 129, 0.3);
-}
-
-.tab.active[data-cat="martech"] {
-  background: var(--cat-martech);
-  border-color: var(--cat-martech);
-  box-shadow: 0 2px 12px rgba(6, 182, 212, 0.3);
-}
-
+.tab.active[data-cat="career"],
+.tab.active[data-cat="sales"],
+.tab.active[data-cat="martech"],
 .tab.active[data-cat="ai"] {
-  background: var(--cat-ai);
-  border-color: var(--cat-ai);
-  box-shadow: 0 2px 12px rgba(139, 92, 246, 0.3);
+  background: transparent;
+  color: var(--text);
+  border-bottom-color: var(--text);
+  box-shadow: none;
 }
 
 .results-count {
@@ -1255,12 +1225,22 @@ button {
 /* ===================== RESPONSIVE ===================== */
 @media (max-width: 900px) {
   .hero-profile-card {
-    grid-template-columns: auto 1fr;
-    grid-template-rows: auto auto;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 2rem 1.5rem;
+    gap: 1.25rem;
   }
 
-  .hero-stats-box {
-    grid-column: 1/-1;
+  .hero-info {
+    align-items: center;
+  }
+
+  .hero-headline {
+    text-align: center;
+  }
+
+  .hero-ctas {
     justify-content: center;
   }
 
@@ -2706,7 +2686,7 @@ button {
   #hero-avatar-wrap {
     width: 120px !important;
     height: 120px !important;
-    margin-top: -60px !important;
+    margin-top: 0 !important;
     margin-left: 0 !important;
     margin-right: auto !important;
     align-self: flex-start !important;
@@ -3024,7 +3004,7 @@ button {
   #hero-avatar-wrap {
     width: 100px;
     height: 100px;
-    margin-top: -50px;
+    margin-top: 0;
   }
 
   .hero-avatar {
