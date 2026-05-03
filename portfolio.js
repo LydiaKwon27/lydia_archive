@@ -2043,7 +2043,7 @@ function applyLanguage(lang) {
     if (t.heroHeadline) setText('heroHeadline', t.heroHeadline);
     setText('heroSub', t.heroSub);
     setText('heroScrollBtn', t.heroScrollBtn);
-    setText('heroLinkedInLink', t.heroLinkedInLink);
+    // heroLinkedInLink: SVG 로고가 들어있어 텍스트 덮어쓰지 않음
     setText('aboutLabel', t.aboutLabel);
     setText('aboutName', t.aboutName);
     setText('aboutP1', t.aboutP1);
