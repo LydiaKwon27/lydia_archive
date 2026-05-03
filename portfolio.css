@@ -234,11 +234,23 @@ button {
 }
 
 .hero-subtitle {
-  font-size: 0.95rem;
+  font-size: 0.875rem;
   color: var(--text);
   font-weight: 600;
   margin: 0;
   letter-spacing: -0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 900px) {
+  .hero-subtitle {
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+    text-align: center;
+  }
 }
 
 .hero-headline {
