@@ -171,14 +171,14 @@ button {
 
 .hero-avatar-wrap {
   position: relative;
-  width: 200px;
-  height: 200px;
+  width: 240px;
+  height: 240px;
   flex-shrink: 0;
 }
 
 .hero-avatar {
-  width: 200px;
-  height: 200px;
+  width: 240px;
+  height: 240px;
   border-radius: 50%;
   border: none;
   object-fit: cover;
